@@ -13,6 +13,11 @@
   },
   "packageManager": "npm@10.9.3",
   "scripts": {
+    "db:env": "node scripts/init-db-env.mjs",
+    "db:up": "docker compose up -d --wait --wait-timeout 120 postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs --tail 100 postgres",
+    "db:check": "node scripts/verify-db.mjs",
     "verify:setup": "node scripts/verify-setup.mjs",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
