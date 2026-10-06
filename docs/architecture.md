@@ -97,8 +97,10 @@ Marketplace público comercial y visual; dashboard vendedor orientado a operacio
 administrativo orientado a control. Diseño mobile-first, componentes reutilizables y estados
 de carga, error, vacío y confirmación. Las rutas protegidas de React complementan los guards del backend.
 
-## Alcance de la fase 1
+## Estado de implementación
 
 Solo estructura, herramientas comunes y documentación. Los workspaces son manifiestos mínimos;
 los tsconfig específicos extenderán `tsconfig.base.json` cuando existan las aplicaciones.
-No hay esquema Prisma, contenedores, endpoints ni interfaces comerciales en esta etapa.
+La fase 2 añade un contenedor PostgreSQL 17, volumen persistente, healthcheck y comprobación SQL.
+No hay esquema Prisma, endpoints ni interfaces comerciales todavía.
+Consulta [la guía de base de datos](database.md) para operar el entorno.

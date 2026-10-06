@@ -3,8 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 1 — arquitectura y configuración inicial.** Todavía no hay servidores,
-pantallas comerciales ni base de datos. Las características siguientes son el alcance planificado.
+**Estado actual: FASE 2 — PostgreSQL local con Docker Compose.** La infraestructura de base de datos
+está configurada; todavía no hay esquema del marketplace, API ni pantallas comerciales.
+Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
 
@@ -22,6 +23,7 @@ Consulta [arquitectura](docs/architecture.md), [tecnologías](docs/technology.md
 [plan de desarrollo](docs/roadmap.md) y [guía de contribución](docs/contributing.md).
 El repositorio oficial es [MARKETPLACE_PATZISHOP](https://github.com/joshi20022021/MARKETPLACE_PATZISHOP).
 El [registro de cambios](CHANGELOG.md) documenta los avances y sus comprobaciones.
+Consulta la [guía de PostgreSQL local](docs/database.md) para iniciar, verificar y detener la BD.
 
 ```text
 PROYECTO_VENTAS/
@@ -35,6 +37,8 @@ PROYECTO_VENTAS/
 │   └── package.json
 ├── docs/                 # Decisiones, tecnologías y fases
 ├── scripts/              # Verificación de configuración
+├── docker-compose.yml    # PostgreSQL local y volumen persistente
+├── .env.example          # Plantilla de configuración Docker
 ├── eslint.config.mjs
 ├── tsconfig.base.json
 ├── package.json
@@ -46,7 +50,7 @@ PROYECTO_VENTAS/
 - Node.js 22.18.0 o posterior dentro de la rama 22 (consulta `.nvmrc`).
 - npm 10; la configuración inicial se verificó con npm 10.9.3.
 - Git.
-- Docker Desktop con Compose será necesario desde la fase 2.
+- Docker Desktop iniciado con motor Linux y Docker Compose v2.
 
 ## Instalación y comprobación
 
@@ -72,8 +76,9 @@ npm run format
 
 ## Variables de entorno
 
-Las plantillas están en `backend/.env.example` y `frontend/.env.example`.
-No es necesario crear `.env` en esta fase; se completarán cuando existan sus consumidores.
+Las plantillas están en `.env.example`, `backend/.env.example` y `frontend/.env.example`.
+El `.env` raíz configura Docker; `npm run db:env` lo genera con contraseña aleatoria sin sobrescribirlo.
+Los entornos de las aplicaciones se completarán cuando existan sus consumidores.
 Los secretos están vacíos deliberadamente y deben generarse localmente. Nunca versionar `.env`.
 Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente configuración pública.
 
@@ -90,9 +95,21 @@ Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente con
 
 ## Etapas posteriores
 
-Docker Compose y PostgreSQL: fase 2. Modelo entidad-relación, Prisma y migraciones: fase 3.
+Para iniciar y comprobar PostgreSQL:
+
+```powershell
+npm run db:env
+npm run db:up
+npm run db:check
+```
+
+Debe mostrarse `FASE 2 OK`. `npm run db:down` detiene el entorno conservando datos.
+Los detalles de conexión, variables, persistencia y solución de problemas están en
+[docs/database.md](docs/database.md).
+
+Modelo entidad-relación, Prisma y migraciones: fase 3.
 API REST bajo `/api/v1` y Swagger: fase 4 en adelante. Seed y usuarios de prueba se incorporarán
 cuando existan las entidades y autenticación; actualmente no hay credenciales de prueba.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **Docker + PostgreSQL**.
+El proyecto avanzará por etapas verificables; la siguiente es **Prisma y modelo de datos**.
