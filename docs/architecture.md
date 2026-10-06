@@ -1,0 +1,104 @@
+# Arquitectura propuesta
+
+## Visión general
+
+Un monolito modular NestJS atiende una SPA React a través de REST. PostgreSQL es la fuente de
+verdad de usuarios, catálogo, pedidos e inventario. Prisma reside exclusivamente en el backend.
+Separar frontend y backend permite desplegarlos independientemente sin acoplar sus dependencias.
+
+```mermaid
+flowchart LR
+  U[Cliente / vendedor / administrador] --> F[React + Vite]
+  F -->|REST / JWT| API[NestJS]
+  API --> AUTH[Autenticación y autorización]
+  API --> DOMAIN[Módulos de negocio]
+  DOMAIN --> ORM[Prisma]
+  ORM --> DB[(PostgreSQL)]
+  DOMAIN --> PAY[PaymentService]
+  DOMAIN --> MEDIA[ImageStorage]
+```
+
+## Organización
+
+Frontend: `components`, `pages`, `layouts`, `services`, `hooks`, `store`, `types`, `schemas`,
+`utils` y `routes`. TanStack Query administra datos remotos; Zustand conserva estado global pequeño.
+React Hook Form y Zod validan formularios. El backend vuelve a validar todas las entradas.
+
+Backend: módulos `auth`, `users`, `businesses`, `products`, `categories`, `carts`, `orders`,
+`inventory` y `admin`, junto a `common` y `config`. Cada módulo añadirá sus controllers, services y DTO
+al implementarse. Controllers coordinan HTTP; services aplican reglas; Prisma maneja persistencia.
+No se añadirán repositorios que simplemente dupliquen todos los métodos de Prisma.
+Reseñas, promociones y notificaciones se agregarán posteriormente como módulos independientes.
+
+## Flujo principal
+
+1. Un usuario se registra como cliente o vendedor; el registro público nunca concede ADMIN.
+2. Un vendedor crea su tienda en PENDING. Solo una tienda ACTIVE puede vender públicamente.
+3. ADMIN aprueba o rechaza tiendas. SELLER administra exclusivamente su tienda.
+4. CUSTOMER explora un catálogo paginado y agrega cantidades válidas al carrito.
+5. Checkout recibe dirección y método de pago, y vuelve a leer productos y precios desde la BD.
+6. Una transacción crea Order, SellerOrder por tienda y los OrderItem correspondientes.
+7. Cada vendedor confirma su subpedido: se valida y descuenta inventario de forma atómica.
+8. El vendedor avanza estados permitidos; el cliente consulta la compra y todos sus subpedidos.
+
+## Entidades conceptuales
+
+Esta lista es conceptual. El modelo entidad-relación completo se presentará en la fase 3,
+antes de escribir el esquema o migraciones.
+
+| Entidad            | Responsabilidad y relación principal                         |
+| ------------------ | ------------------------------------------------------------ |
+| User / Role        | Identidad y uno de tres roles iniciales; Role puede ser enum |
+| Business           | Tienda de un propietario; ownerId único en el MVP            |
+| Category           | Categoría global; parentId opcional para jerarquías futuras  |
+| Product            | Producto de una tienda, categoría, precio y existencias      |
+| ProductImage       | Imágenes ordenadas del producto                              |
+| Cart / CartItem    | Carrito de cliente; una línea por producto                   |
+| Order              | Compra global, cliente, dirección y total                    |
+| SellerOrder        | Parte de la compra correspondiente a un negocio              |
+| OrderItem          | Producto y valores históricos de la compra                   |
+| Address            | Dirección guardada de usuario                                |
+| InventoryMovement  | Entrada, salida o ajuste con stock anterior y posterior      |
+| RefreshToken       | Sesión revocable con hash, expiración y familia de rotación  |
+| OrderStatusHistory | Historial por subpedido, actor, fecha y transición           |
+
+## Decisiones de consistencia y seguridad
+
+- IDs opacos y slugs únicos; los IDs no sustituyen las verificaciones de autorización.
+- Cada operación de vendedor aplica filtros de propiedad desde su identidad autenticada.
+  No se acepta el businessId del cliente como prueba de pertenencia.
+- Precios en decimal de precisión fija; moneda inicial GTQ. Las operaciones de dinero no deben
+  depender de aritmética binaria de punto flotante. Se transportarán valores decimales explícitos.
+- OrderItem conserva nombre, SKU y precio unitario; Order conserva una copia de la dirección.
+  Editar un producto o una dirección guardada no altera compras históricas.
+- PENDING no reserva existencias. CONFIRMED descuenta stock por subpedido con actualización
+  condicional y transacción; si falta inventario, no se confirma parcialmente ese subpedido.
+  Un carrito o pedido pendiente no garantiza disponibilidad hasta la confirmación.
+- Se permiten PENDING → CONFIRMED → PREPARING → SHIPPED → DELIVERED. La cancelación será
+  posible desde PENDING, CONFIRMED o PREPARING según actor; no desde SHIPPED ni DELIVERED.
+  Solo se restaura stock previamente descontado, una vez, en la misma transacción.
+- Estado global de Order se deriva de los subpedidos; una compra puede tener estados mixtos.
+  No se usa un estado global para sobrescribir decisiones de distintos vendedores.
+- Contraseñas bcrypt y refresh tokens con hash. Access JWT breve, refresh HttpOnly, rotación,
+  revocación y protección CSRF/origen cuando se implementen cookies.
+- El cierre de sesión revoca la sesión renovable; el access token expira según su TTL.
+- Validación DTO, CORS explícito, Helmet, límites de solicitudes y errores sin detalles internos.
+- Se planifica pago contra entrega y simulado; no se almacenan números de tarjetas.
+  PaymentService permitirá proveedores futuros. ImageStorage permitirá almacenamiento local o remoto
+  con validación de formato, tamaño y cantidad durante la implementación.
+
+## API y experiencias
+
+Base prevista: `/api/v1`. Recursos públicos de catálogo; `/auth`, `/cart`, `/orders`,
+`/seller` y `/admin` para flujos específicos. Swagger documentará los contratos implementados.
+Paginación y filtros se ejecutan en backend. Los datos de dashboards se calculan dentro de su ámbito.
+
+Marketplace público comercial y visual; dashboard vendedor orientado a operaciones; dashboard
+administrativo orientado a control. Diseño mobile-first, componentes reutilizables y estados
+de carga, error, vacío y confirmación. Las rutas protegidas de React complementan los guards del backend.
+
+## Alcance de la fase 1
+
+Solo estructura, herramientas comunes y documentación. Los workspaces son manifiestos mínimos;
+los tsconfig específicos extenderán `tsconfig.base.json` cuando existan las aplicaciones.
+No hay esquema Prisma, contenedores, endpoints ni interfaces comerciales en esta etapa.
