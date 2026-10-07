@@ -1,7 +1,7 @@
 # PostgreSQL local con Docker Compose
 
-La fase 2 añade únicamente infraestructura de desarrollo. Las entidades y migraciones Prisma
-se diseñarán en la fase 3; todavía no hay tablas del marketplace.
+La fase 2 añadió infraestructura de desarrollo. La fase 3 incorpora las entidades y migraciones
+Prisma: consulta [el modelo de datos](data-model.md) y [la guía de Prisma](prisma.md).
 
 ## Decisiones
 
@@ -57,7 +57,7 @@ La conexión TCP interna del verificador no comprueba el puerto publicado en Win
 puedes comprobarlo con `Test-NetConnection 127.0.0.1 -Port 5432`.
 
 El futuro backend local usará `127.0.0.1:POSTGRES_PORT`; un backend dentro del mismo Compose
-usará `postgres:5432`. `DATABASE_URL` en `backend/.env` se configurará en la fase 3.
+usará `postgres:5432`. `npm run db:backend-env` prepara `DATABASE_URL` en `backend/.env`.
 El `.env` raíz configura Docker y es independiente de los entornos de frontend y backend.
 
 En el equipo de desarrollo actual se usa `POSTGRES_PORT=5433` porque 5432 ya está ocupado.

@@ -4,6 +4,38 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-06 — Modelo de datos, Prisma y migración inicial
+
+### Modelo y persistencia
+
+- Diagrama entidad-relación presentado antes de implementar el esquema; 14 modelos y siete enums.
+- Prisma ORM, Client y adaptador PostgreSQL fijados en 7.10.0.
+- Migración inicial con claves foráneas, índices, unicidad y 19 restricciones CHECK adicionales.
+- Claves compuestas para impedir cruces de negocio en ítems de pedido y movimientos de inventario.
+- Importes decimales, snapshots de compra, sesiones renovables y protección de referencias históricas.
+- Cliente generado excluido de Git, configuración TypeScript estricta y comandos de migraciones.
+- Preparación de backend/.env a partir del entorno Docker sin imprimir secretos ni sobrescribirlo.
+- Seed repetible de ocho categorías globales; no se crean credenciales ni pedidos ficticios todavía.
+
+### Pruebas y dependencias
+
+- Diez pruebas de integración contra PostgreSQL: subpedidos, snapshots, decimales, aislamiento,
+  stock, precios, cantidades, totales, SKU y protección del historial.
+- Las fixtures se revierten con rollback; se comprobó que no quedan usuarios, productos,
+  pedidos ni movimientos de prueba y que solo existen las ocho categorías del seed.
+- Seed ejecutado dos veces sin duplicados; migración aplicada y estado al día.
+- Validación del esquema, generación del cliente y typecheck correctos.
+- Instalación reproducida con `npm ci`, cliente regenerado y diez pruebas correctas tras reinstalar.
+- Comparación Prisma sin diferencias entre el esquema y la BD; lint y formato correctos.
+- Overrides limitados para deepmerge-ts y mysql2, dependencias transitivas de la CLI Prisma;
+  npm audit sin vulnerabilidades reportadas. Motivos y compatibilidad en docs/prisma.md.
+
+### Estado
+
+FASE 3 completada. La estructura de datos está disponible; no hay endpoints, autenticación,
+confirmación transaccional de pedidos ni interfaces comerciales implementadas.
+La siguiente etapa prevista es FASE 4: Backend NestJS.
+
 ## 2026-10-06 — PostgreSQL local con Docker Compose
 
 ### Infraestructura y herramientas

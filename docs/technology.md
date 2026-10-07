@@ -23,7 +23,9 @@ después de verificar engines y peerDependencies; las versiones exactas quedará
 ## Configuración instalada
 
 Los manifiestos fijan TypeScript 5.9.3, ESLint 10.12.0 y @eslint/js 10.0.1,
-typescript-eslint 8.57.0 y Prettier 3.9.9. No se instalan todavía librerías funcionales del MVP.
+typescript-eslint 8.57.0 y Prettier 3.9.9. La fase 3 añade Prisma ORM, Client y adaptador
+PostgreSQL 7.10.0, pg 8.23.1, dotenv 18.0.6 y tsx 4.23.15.
+No hay módulos funcionales de API ni librerías de frontend todavía.
 `npm ci` reproduce las dependencias del lockfile; `npm install` se usa al cambiar manifiestos.
 Se eligió ESLint 10 al comprobar que npm marca ESLint 9 como fuera de soporte.
 ESLint 10 admite Node 22.13+ y typescript-eslint 8.57.0 declara compatibilidad con ESLint 10.
@@ -36,6 +38,6 @@ ESLint 10 admite Node 22.13+ y typescript-eslint 8.57.0 declara compatibilidad c
 - [NestJS: versiones oficiales](https://github.com/nestjs/nest/releases).
 
 Las líneas elegidas son una base deliberada; no se migrará automáticamente a una nueva versión
-principal. Prisma CLI y Client tendrán la misma versión exacta al instalarse.
-Se definirá su generador, adaptador PostgreSQL y configuración en la fase 3.
+principal. Prisma CLI, Client y adaptador utilizan la misma versión exacta.
+Su configuración y overrides de dependencias transitivas se documentan en [la guía de Prisma](prisma.md).
 Tailwind 4 utilizará su integración oficial con Vite en la fase 10.

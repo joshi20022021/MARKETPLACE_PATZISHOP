@@ -3,8 +3,8 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 2 — PostgreSQL local con Docker Compose.** La infraestructura de base de datos
-está configurada; todavía no hay esquema del marketplace, API ni pantallas comerciales.
+**Estado actual: FASE 3 — modelo de datos y Prisma.** PostgreSQL tiene el esquema inicial,
+restricciones y categorías de referencia; todavía no hay API ni pantallas comerciales.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -24,6 +24,8 @@ Consulta [arquitectura](docs/architecture.md), [tecnologías](docs/technology.md
 El repositorio oficial es [MARKETPLACE_PATZISHOP](https://github.com/joshi20022021/MARKETPLACE_PATZISHOP).
 El [registro de cambios](CHANGELOG.md) documenta los avances y sus comprobaciones.
 Consulta la [guía de PostgreSQL local](docs/database.md) para iniciar, verificar y detener la BD.
+El [modelo entidad-relación](docs/data-model.md) explica las decisiones y la
+[guía de Prisma](docs/prisma.md) describe migraciones, seed y pruebas.
 
 ```text
 PROYECTO_VENTAS/
@@ -33,6 +35,8 @@ PROYECTO_VENTAS/
 │   └── package.json
 ├── backend/              # Workspace reservado para NestJS (fase 4)
 │   ├── src/              # Módulos por dominio
+│   ├── prisma/           # Esquema, migraciones y seed de categorías
+│   ├── test/             # Integración real con PostgreSQL
 │   ├── .env.example
 │   └── package.json
 ├── docs/                 # Decisiones, tecnologías y fases
@@ -61,12 +65,22 @@ Set-Location 'C:\Users\edgar\Downloads\PROYECTO_VENTAS'
 node --version
 npm --version
 npm ci
+npm run db:env
+npm run db:up
+npm run db:backend-env
+npm run prisma:validate
+npm run prisma:generate
+npm run prisma:deploy
+npm run db:seed
+npm run typecheck
+npm run test:database
 npm run check
 ```
 
 `check` verifica los workspaces, la estructura, la configuración estricta, ESLint y el formato.
 Debe finalizar con código 0 y el mensaje `FASE 1 OK`, sin errores de lint ni formato.
-Esta comprobación corresponde al repositorio inicial; no valida flujos comerciales todavía.
+`typecheck` comprueba el código TypeScript del backend y `test:database` verifica restricciones
+en PostgreSQL. No se validan flujos HTTP comerciales todavía.
 
 Para dar formato tras editar archivos:
 
@@ -78,7 +92,9 @@ npm run format
 
 Las plantillas están en `.env.example`, `backend/.env.example` y `frontend/.env.example`.
 El `.env` raíz configura Docker; `npm run db:env` lo genera con contraseña aleatoria sin sobrescribirlo.
-Los entornos de las aplicaciones se completarán cuando existan sus consumidores.
+`npm run db:backend-env` crea la conexión Prisma en `backend/.env` desde los datos locales,
+sin mostrar secretos ni sobrescribir un entorno existente. Frontend y variables JWT se configurarán
+en sus fases.
 Los secretos están vacíos deliberadamente y deben generarse localmente. Nunca versionar `.env`.
 Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente configuración pública.
 
@@ -107,9 +123,10 @@ Debe mostrarse `FASE 2 OK`. `npm run db:down` detiene el entorno conservando dat
 Los detalles de conexión, variables, persistencia y solución de problemas están en
 [docs/database.md](docs/database.md).
 
-Modelo entidad-relación, Prisma y migraciones: fase 3.
-API REST bajo `/api/v1` y Swagger: fase 4 en adelante. Seed y usuarios de prueba se incorporarán
-cuando existan las entidades y autenticación; actualmente no hay credenciales de prueba.
+Para revisar la migración aplicada, ejecuta `npm run prisma:status`.
+El seed actual incluye ocho categorías y es repetible; los usuarios, tiendas, productos y pedidos
+de demostración se agregarán cuando existan sus reglas de negocio. No hay credenciales de prueba.
+API REST bajo `/api/v1` y Swagger: fase 4 en adelante.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **Prisma y modelo de datos**.
+El proyecto avanzará por etapas verificables; la siguiente es **Backend NestJS**.

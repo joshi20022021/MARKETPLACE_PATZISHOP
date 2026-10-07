@@ -43,8 +43,8 @@ Reseñas, promociones y notificaciones se agregarán posteriormente como módulo
 
 ## Entidades conceptuales
 
-Esta lista es conceptual. El modelo entidad-relación completo se presentará en la fase 3,
-antes de escribir el esquema o migraciones.
+El [modelo entidad-relación](data-model.md) detalla las decisiones de la fase 3 y su correspondencia
+con el esquema Prisma y las restricciones SQL.
 
 | Entidad            | Responsabilidad y relación principal                         |
 | ------------------ | ------------------------------------------------------------ |
@@ -99,8 +99,9 @@ de carga, error, vacío y confirmación. Las rutas protegidas de React complemen
 
 ## Estado de implementación
 
-Solo estructura, herramientas comunes y documentación. Los workspaces son manifiestos mínimos;
-los tsconfig específicos extenderán `tsconfig.base.json` cuando existan las aplicaciones.
+Frontend conserva su estructura inicial. Backend tiene Prisma, herramientas de datos y pruebas
+de integración; su tsconfig extiende `tsconfig.base.json`.
 La fase 2 añade un contenedor PostgreSQL 17, volumen persistente, healthcheck y comprobación SQL.
-No hay esquema Prisma, endpoints ni interfaces comerciales todavía.
+La fase 3 añade el esquema Prisma, migración inicial con restricciones SQL y seed de categorías.
+No hay endpoints ni interfaces comerciales todavía.
 Consulta [la guía de base de datos](database.md) para operar el entorno.
