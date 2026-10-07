@@ -1,6 +1,7 @@
 node_modules/
 dist/
 coverage/
+.test-dist/
 package-lock.json
 **/generated/
 **/uploads/

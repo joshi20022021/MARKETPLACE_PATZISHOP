@@ -13,6 +13,10 @@
   },
   "packageManager": "npm@10.9.3",
   "scripts": {
+    "build:backend": "npm run build --workspace backend",
+    "start:backend": "npm run start --workspace backend",
+    "dev:backend": "npm run start:dev --workspace backend",
+    "test:api": "npm run test:api --workspace backend",
     "db:env": "node scripts/init-db-env.mjs",
     "db:up": "docker compose up -d --wait --wait-timeout 120 postgres",
     "db:down": "docker compose down",
@@ -34,6 +38,9 @@
     "check": "npm run verify:setup && npm run lint && npm run format:check"
   },
   "overrides": {
+    "@nestjs/swagger": {
+      "js-yaml": "5.4.3"
+    },
     "@prisma/config": {
       "deepmerge-ts": "8.0.2"
     },
