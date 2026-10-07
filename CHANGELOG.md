@@ -4,6 +4,34 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-07 — Autenticación JWT y sesiones renovables
+
+### Implementación
+
+- AuthModule y UsersModule: registro CUSTOMER/SELLER, login, perfil protegido y logout.
+- Contraseñas bcrypt coste 12, validación UTF-8 de hasta 72 bytes, correo normalizado y rechazo de ADMIN.
+- Access JWT HS256 con emisor/audiencia y familia; guard Passport verifica usuario y sesión activos en BD.
+- Refresh aleatorio HttpOnly con SHA-256 en PostgreSQL, rotación transaccional y revocación por reutilización.
+- Bloqueo por familia para serializar refresh/logout; vigencia absoluta y sesiones independientes por login.
+- Cookie SameSite=Strict, Secure en producción, protección por encabezado/origen y respuestas no-store.
+- Secreto JWT generado localmente sin imprimirlo ni sobrescribir uno existente; Swagger actualizado.
+- Se reutiliza el modelo de la fase 3 sin modificar migraciones.
+
+### Verificación
+
+- TypeScript estricto y build correctos; trece pruebas auth con PostgreSQL real y catorce de API/entorno.
+- Diez pruebas SQL existentes correctas; cookies, JWT, concurrencia, reutilización y logout comprobados.
+- Las cuentas de prueba se eliminan al terminar y sus sesiones se borran por cascada.
+- Instalación reproducida con npm ci, cliente Prisma regenerado y auth correcto tras reinstalar.
+- Build HTTP en production comprobado: cookie Secure, perfil, logout, JWT revocado y Swagger oculto.
+- Generador JWT conserva byte por byte un entorno existente; archivos privados y compilados ignorados.
+- npm run check correcto y npm audit sin vulnerabilidades reportadas.
+
+### Estado
+
+FASE 5 completada. Guía de contratos y pruebas en docs/auth.md. RBAC y rate limiting corresponden
+a la fase 6; recuperación de contraseña, verificación de correo y OAuth siguen pendientes.
+
 ## 2026-10-06 — Base API NestJS
 
 ### Backend
