@@ -2,5 +2,27 @@
   "name": "@marketplace/backend",
   "version": "0.1.0",
   "private": true,
-  "description": "API NestJS; implementación prevista en la fase 4"
+  "scripts": {
+    "prisma:validate": "prisma validate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:status": "prisma migrate status",
+    "db:seed": "prisma db seed",
+    "typecheck": "tsc --noEmit",
+    "test:database": "tsx --test --test-concurrency=1 test/database.integration.test.ts"
+  },
+  "description": "API NestJS; implementación prevista en la fase 4",
+  "dependencies": {
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "dotenv": "18.0.6",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.0",
+    "@types/pg": "8.23.1",
+    "prisma": "7.10.0",
+    "tsx": "4.23.15"
+  }
 }

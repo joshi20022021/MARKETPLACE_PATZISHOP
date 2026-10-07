@@ -18,11 +18,28 @@
     "db:down": "docker compose down",
     "db:logs": "docker compose logs --tail 100 postgres",
     "db:check": "node scripts/verify-db.mjs",
+    "db:backend-env": "node scripts/init-backend-env.mjs",
+    "prisma:validate": "npm run prisma:validate --workspace backend",
+    "prisma:generate": "npm run prisma:generate --workspace backend",
+    "prisma:migrate": "npm run prisma:migrate --workspace backend --",
+    "prisma:deploy": "npm run prisma:deploy --workspace backend",
+    "prisma:status": "npm run prisma:status --workspace backend",
+    "db:seed": "npm run db:seed --workspace backend",
+    "test:database": "npm run test:database --workspace backend",
+    "typecheck": "npm run typecheck --workspace backend",
     "verify:setup": "node scripts/verify-setup.mjs",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "npm run verify:setup && npm run lint && npm run format:check"
+  },
+  "overrides": {
+    "@prisma/config": {
+      "deepmerge-ts": "8.0.2"
+    },
+    "prisma": {
+      "mysql2": "3.24.5"
+    }
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
