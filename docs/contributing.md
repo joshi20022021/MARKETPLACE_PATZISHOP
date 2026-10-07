@@ -44,7 +44,9 @@ git diff --check
 
 `check` verifica configuración, lint y formato. Para cambios en backend, ejecutar también
 `npm run typecheck`, `npm run build:backend`, `npm run test:api` y las pruebas de datos pertinentes
-con `npm run test:database`. Las fases funcionales agregarán pruebas de sus reglas críticas.
+con `npm run test:database`. Para autenticación ejecutar también `npm run test:auth`;
+requiere PostgreSQL, migraciones aplicadas y `npm run auth:env`. Las fases funcionales
+agregarán pruebas de sus reglas críticas.
 
 El propietario autorizó publicar el proyecto y guardar los avances mediante commits frecuentes.
 Para una unidad de trabajo, seleccionar explícitamente sus archivos y revisar el contenido preparado:

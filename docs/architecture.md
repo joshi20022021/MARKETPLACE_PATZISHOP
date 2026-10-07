@@ -11,6 +11,7 @@ flowchart LR
   U[Cliente / vendedor / administrador] --> F[React + Vite]
   F -->|REST / JWT| API[NestJS]
   API --> AUTH[Autenticación y autorización]
+  AUTH --> ORM
   API --> DOMAIN[Módulos de negocio]
   DOMAIN --> ORM[Prisma]
   ORM --> DB[(PostgreSQL)]
@@ -80,8 +81,11 @@ con el esquema Prisma y las restricciones SQL.
 - Estado global de Order se deriva de los subpedidos; una compra puede tener estados mixtos.
   No se usa un estado global para sobrescribir decisiones de distintos vendedores.
 - Contraseñas bcrypt y refresh tokens con hash. Access JWT breve, refresh HttpOnly, rotación,
-  revocación y protección CSRF/origen cuando se implementen cookies.
-- El cierre de sesión revoca la sesión renovable; el access token expira según su TTL.
+  revocación y protección mediante encabezado personalizado y origen.
+- El cierre de sesión revoca la familia renovable. El guard JWT consulta usuario y familia activos
+  en PostgreSQL en cada petición: logout, reutilización e inactivación deniegan el siguiente acceso.
+  La rotación conserva el vencimiento absoluto; el frontend deberá coordinar una renovación
+  en vuelo para evitar que peticiones simultáneas provoquen detección de reutilización.
 - Validación DTO, CORS explícito, Helmet, límites de solicitudes y errores sin detalles internos.
 - Se planifica pago contra entrega y simulado; no se almacenan números de tarjetas.
   PaymentService permitirá proveedores futuros. ImageStorage permitirá almacenamiento local o remoto
@@ -105,6 +109,8 @@ La fase 2 añade un contenedor PostgreSQL 17, volumen persistente, healthcheck y
 La fase 3 añade el esquema Prisma, migración inicial con restricciones SQL y seed de categorías.
 La fase 4 añade AppModule, DatabaseModule y HealthModule; configuración validada, errores HTTP,
 ValidationPipe, CORS, Helmet y Swagger. La inyección de Prisma controla su ciclo de vida.
-Los endpoints actuales son de salud; no hay autenticación ni interfaces comerciales todavía.
+La fase 5 añade AuthModule y UsersModule: registro, login, JWT/Passport, refresh rotativos,
+logout y perfil autenticado. Sus contratos y decisiones se detallan en [auth.md](auth.md).
+No hay permisos RBAC de negocio ni interfaces comerciales todavía.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

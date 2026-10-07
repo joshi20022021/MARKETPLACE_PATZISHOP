@@ -28,6 +28,9 @@ PostgreSQL 7.10.0, pg 8.23.1, dotenv 18.0.6 y tsx 4.23.15.
 La fase 4 añade NestJS 11.2.7, Config 4.0.4, Swagger 11.4.7, Nest CLI 11.0.24,
 class-validator 0.15.1, class-transformer 0.5.1 y Helmet 8.3.0. Las pruebas HTTP utilizan
 Nest Testing 11.2.7 y Supertest 7.3.1, ejecutados con node:test después de compilar.
+La fase 5 añade @nestjs/jwt 11.0.2, @nestjs/passport 11.0.5, passport 0.7.0,
+passport-jwt 4.0.1, bcrypt 6.0.0 y cookie-parser 1.4.7, con sus tipos TypeScript.
+Se verificaron peerDependencies compatibles con NestJS 11 y bcrypt con Node 22.
 No hay endpoints comerciales ni librerías de frontend todavía.
 `npm ci` reproduce las dependencias del lockfile; `npm install` se usa al cambiar manifiestos.
 Se eligió ESLint 10 al comprobar que npm marca ESLint 9 como fuera de soporte.

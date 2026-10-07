@@ -1,16 +1,17 @@
-# Base API NestJS — fase 4
+# API NestJS — fases 4 y 5
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
-configuración, persistencia y salud. No existen todavía endpoints de usuarios, JWT, negocios,
-categorías, productos o pedidos. Los directorios de esos dominios siguen reservados para sus fases.
+configuración, persistencia, salud y autenticación. AuthModule y UsersModule implementan las
+sesiones; consulta [autenticación](auth.md). Los módulos comerciales siguen reservados.
 
 ## Archivos y responsabilidades
 
 - `src/main.ts`: arranque, escucha y cierre del proceso.
-- `src/app.module.ts`: módulos de configuración, salud y filtro global.
+- `src/app.module.ts`: módulos de configuración, salud, autenticación y filtro global.
 - `src/config/environment.ts`: validación del entorno sin mostrar valores privados.
-- `src/config/configure-app.ts`: prefijo, CORS, Helmet, ValidationPipe y Swagger.
+- `src/config/configure-app.ts`: prefijo, CORS, Helmet, cookies, no-store, ValidationPipe y Swagger.
 - `src/database/`: PrismaService inyectable y control de conexión/desconexión.
+- `src/auth/` y `src/users/`: registro, credenciales, JWT, sesiones y perfil público.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.
 - `nest-cli.json`, `tsconfig.build.json` y `tsconfig.test.json`: compilación y pruebas con metadata.
@@ -25,6 +26,7 @@ npm ci
 npm run db:env
 npm run db:up
 npm run db:backend-env
+npm run auth:env
 npm run prisma:generate
 npm run prisma:deploy
 npm run dev:backend
@@ -58,7 +60,9 @@ ejecutan la aplicación dentro del workspace backend para cargar su `.env`.
 
 `HOST` y `SWAGGER_ENABLED` son opcionales: los `.env` existentes funcionan sin sobrescribirlos.
 Los errores de configuración enumeran nombres de variables, nunca la URL privada o contraseña.
-JWT_ACCESS_SECRET y otras variables de autenticación aún no se consumen.
+JWT_ACCESS_SECRET es obligatorio (64–512 caracteres sin espacios). Ejecuta `npm run auth:env`
+para generarlo. JWT_ACCESS_TTL usa s/m/h, hasta una hora (15m por defecto);
+REFRESH_TOKEN_TTL_DAYS admite 1–30 días (7 por defecto). Detalles en [auth.md](auth.md).
 
 Prisma usa un pool de hasta diez conexiones y límites de cinco segundos para conexión y consultas.
 El arranque verifica SQL antes de empezar a escuchar; si falla, la API cierra recursos y termina
@@ -85,6 +89,9 @@ Invoke-RestMethod http://127.0.0.1:3000/api/v1/health/ready
 La primera respuesta indica `success=true` y `status=ok`; la segunda añade `database=up`.
 Swagger se abre en `http://127.0.0.1:3000/api/docs`. La ruta raíz `/` no es un catálogo y devuelve 404.
 
+Registro, login, refresh, logout y perfil protegido están bajo `/api/v1/auth`; los contratos y
+los encabezados necesarios están documentados en [auth.md](auth.md) y Swagger.
+
 ## Errores y validación
 
 ```json
@@ -104,9 +111,10 @@ ValidationPipe rechaza campos extra y DTO inválidos; desactiva conversiones imp
 y omite datos privados de los errores. Cada endpoint futuro necesita DTO con sus decoradores.
 
 Helmet añade encabezados de seguridad. CORS declara únicamente el origen configurado y permite
-credenciales para la futura autenticación. Un origen distinto no recibe autorización para leer
+credenciales para la autenticación con cookies. Un origen distinto no recibe autorización para leer
 desde el navegador; CORS no sustituye guards, permisos o protección CSRF.
-Rate limiting y RBAC se implementarán en la fase 6, junto con los endpoints sensibles.
+Rate limiting y RBAC se implementarán en la fase 6. Los POST auth ya verifican encabezado
+y origen, y el guard JWT verifica usuario y sesión activos en PostgreSQL.
 
 ## Pruebas
 
@@ -114,19 +122,21 @@ Rate limiting y RBAC se implementarán en la fase 6, junto con los endpoints sen
 npm run typecheck
 npm run build:backend
 npm run test:api
+npm run test:auth
 npm run test:database
 npm run check
 ```
 
-Las trece pruebas nuevas cubren validación del entorno, flags de Swagger, salud, fallo de BD,
+Las catorce pruebas de API y entorno cubren validación del entorno, flags de Swagger, salud, fallo de BD,
 errores, DTO, JSON malformado, CORS, encabezados, OpenAPI y el módulo Prisma real. Algunas usan un proveedor
 controlado para simular fallos sin detener PostgreSQL; una inicializa y consulta la BD real.
 Se usan node:test, Nest Testing y Supertest. Las pruebas HTTP se compilan antes de ejecutarse
 para probar metadata y DI. Los controllers de prueba nunca se importan en la aplicación real.
 Los resultados compilados quedan en `.test-dist`, excluido de Git.
 
-Las diez pruebas de integridad SQL de la fase 3 se mantienen. No se prueban todavía login,
-autorización o operaciones comerciales porque aún no están implementados.
+Las trece pruebas de autenticación verifican flujos reales y concurrencia; se detallan en auth.md.
+Las diez pruebas de integridad SQL de la fase 3 se mantienen. La autorización por rol y
+las operaciones comerciales se comprobarán al implementar sus fases.
 También se comprobó el proceso compilado escuchando en 3000, Swagger oculto por defecto en
 producción y salida con código 1 sin revelar secretos al fallar la conexión de arranque.
 Los procesos usados para estas comprobaciones se detuvieron al terminar.

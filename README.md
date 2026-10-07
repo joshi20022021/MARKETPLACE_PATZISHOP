@@ -3,9 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 4 — base API NestJS.** PostgreSQL tiene el esquema inicial y la API
-ofrece salud, conexión Prisma, validación, errores consistentes y Swagger. Todavía no hay
-autenticación, endpoints comerciales ni pantallas del marketplace.
+**Estado actual: FASE 5 — autenticación JWT y refresh tokens.** La API ofrece registro, login,
+perfil protegido, renovación con detección de reutilización y logout. PostgreSQL, Prisma, salud,
+validación y Swagger están disponibles. Los permisos de negocio y las pantallas siguen pendientes.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -28,6 +28,7 @@ Consulta la [guía de PostgreSQL local](docs/database.md) para iniciar, verifica
 El [modelo entidad-relación](docs/data-model.md) explica las decisiones y la
 [guía de Prisma](docs/prisma.md) describe migraciones, seed y pruebas.
 La [guía del backend](docs/backend.md) documenta el arranque, entorno y endpoints disponibles.
+La [guía de autenticación](docs/auth.md) explica sesiones, cookies y cómo probar los cinco endpoints.
 
 ```text
 PROYECTO_VENTAS/
@@ -35,7 +36,7 @@ PROYECTO_VENTAS/
 │   ├── src/              # Componentes, páginas, estado, servicios y rutas
 │   ├── .env.example
 │   └── package.json
-├── backend/              # API NestJS, salud y autenticaci?n
+├── backend/              # API NestJS, salud y autenticación
 │   ├── src/              # Módulos por dominio
 │   ├── prisma/           # Esquema, migraciones y seed de categorías
 │   ├── test/             # Integración real con PostgreSQL
@@ -87,7 +88,7 @@ npm run check
 Debe finalizar con código 0 y el mensaje `FASE 1 OK`, sin errores de lint ni formato.
 `typecheck` comprueba el código TypeScript del backend y `test:database` verifica restricciones
 en PostgreSQL. `test:api` comprueba la base HTTP de NestJS y la configuración del entorno.
-No se validan flujos comerciales todavía.
+`test:auth` comprueba las sesiones con PostgreSQL real. No se validan flujos comerciales todavía.
 
 Para iniciar la API con recompilación automática:
 
@@ -111,7 +112,8 @@ Las plantillas están en `.env.example`, `backend/.env.example` y `frontend/.env
 El `.env` raíz configura Docker; `npm run db:env` lo genera con contraseña aleatoria sin sobrescribirlo.
 `npm run db:backend-env` crea la conexión Prisma en `backend/.env` desde los datos locales,
 sin mostrar secretos ni sobrescribir un entorno existente. NestJS valida su entorno antes de iniciar.
-Frontend y variables JWT se configurarán en sus fases.
+`npm run auth:env` genera el secreto JWT faltante sin mostrarlo ni cambiar un secreto existente.
+Frontend se configurará en la fase 10.
 Los secretos están vacíos deliberadamente y deben generarse localmente. Nunca versionar `.env`.
 Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente configuración pública.
 
@@ -148,4 +150,4 @@ de demostración se agregarán cuando existan sus reglas de negocio. No hay cred
 La API usa `/api/v1`; los recursos de negocio se incorporarán en sus fases.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **Autenticación JWT + Refresh Token**.
+El proyecto avanzará por etapas verificables; la siguiente es **RBAC y seguridad**.

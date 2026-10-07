@@ -125,6 +125,9 @@ duplicados concurrentes, JWT inválidos, rotación, reutilización, logout, sesi
 vencimiento, inactivación, perfil actual, CSRF y OpenAPI. Las cuentas tienen correos UUID y se
 eliminan al terminar; sus sesiones se borran por cascada. No se borran datos ajenos al test.
 `npm run test:api` cubre también el entorno auth. Mantener las pruebas SQL de la fase 3.
+También se verificó npm ci seguido de generación Prisma, typecheck, build y auth; el proceso
+compilado en production emitió cookie Secure, protegió el perfil, revocó acceso al cerrar sesión
+y mantuvo Swagger oculto. La cuenta temporal y el proceso de comprobación se eliminaron al terminar.
 
 Rate limiting y permisos de negocio corresponden a la fase 6. Recuperación de contraseña,
 verificación de correo, OAuth y un panel para administrar sesiones quedan fuera de esta etapa.
