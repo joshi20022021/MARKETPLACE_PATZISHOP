@@ -24,7 +24,7 @@ Frontend: `components`, `pages`, `layouts`, `services`, `hooks`, `store`, `types
 `utils` y `routes`. TanStack Query administra datos remotos; Zustand conserva estado global pequeño.
 React Hook Form y Zod validan formularios. El backend vuelve a validar todas las entradas.
 
-Backend: módulos `auth`, `users`, `businesses`, `products`, `categories`, `carts`, `orders`,
+Backend: módulos previstos `auth`, `users`, `businesses`, `products`, `categories`, `carts`, `orders`,
 `inventory` y `admin`, junto a `common` y `config`. Cada módulo añadirá sus controllers, services y DTO
 al implementarse. Controllers coordinan HTTP; services aplican reglas; Prisma maneja persistencia.
 No se añadirán repositorios que simplemente dupliquen todos los métodos de Prisma.
@@ -99,9 +99,12 @@ de carga, error, vacío y confirmación. Las rutas protegidas de React complemen
 
 ## Estado de implementación
 
-Frontend conserva su estructura inicial. Backend tiene Prisma, herramientas de datos y pruebas
-de integración; su tsconfig extiende `tsconfig.base.json`.
+Frontend conserva su estructura inicial. Backend tiene Prisma, API NestJS, herramientas de datos
+y pruebas de integración; su tsconfig extiende `tsconfig.base.json`.
 La fase 2 añade un contenedor PostgreSQL 17, volumen persistente, healthcheck y comprobación SQL.
 La fase 3 añade el esquema Prisma, migración inicial con restricciones SQL y seed de categorías.
-No hay endpoints ni interfaces comerciales todavía.
+La fase 4 añade AppModule, DatabaseModule y HealthModule; configuración validada, errores HTTP,
+ValidationPipe, CORS, Helmet y Swagger. La inyección de Prisma controla su ciclo de vida.
+Los endpoints actuales son de salud; no hay autenticación ni interfaces comerciales todavía.
+Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

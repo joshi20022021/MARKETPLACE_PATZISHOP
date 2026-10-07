@@ -1,8 +1,8 @@
 # Prisma, migraciones y comprobaciones
 
 La fase 3 incorpora Prisma ORM 7.10.0, Client y adaptador PostgreSQL en la misma versión.
-El esquema se explica en [modelo de datos](data-model.md). NestJS y las reglas de negocio
-todavía no están implementados.
+El esquema se explica en [modelo de datos](data-model.md). La fase 4 integra el cliente en NestJS
+mediante PrismaService; las reglas comerciales y de autenticación todavía no están implementadas.
 
 ## Archivos
 
@@ -10,6 +10,7 @@ todavía no están implementados.
 - `backend/prisma.config.ts`: ubicación del esquema, migraciones, seed y URL privada.
 - `backend/prisma/migrations/`: historial SQL versionado, incluyendo restricciones CHECK.
 - `backend/src/config/database.ts`: cliente con adaptador PostgreSQL para herramientas CLI.
+- `backend/src/database/`: módulo Prisma inyectable de la API, añadido en la fase 4.
 - `backend/prisma/seed.ts`: ocho categorías iniciales, sin usuarios ni contraseñas.
 - `backend/test/`: pruebas de restricciones reales sobre PostgreSQL.
 - `backend/src/generated/prisma/`: cliente generado localmente, excluido de Git.

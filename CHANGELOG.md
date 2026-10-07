@@ -4,6 +4,33 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-06 — Base API NestJS
+
+### Backend
+
+- NestJS 11.2.7 con Express, módulos de configuración, persistencia y salud.
+- Inyección de PrismaService con comprobación de conexión al arrancar y desconexión al cerrar.
+- Entorno validado sin mostrar secretos, escucha local y comandos de build, ejecución y watch.
+- Endpoints `/api/v1/health` y `/api/v1/health/ready`, con 503 cuando no responde PostgreSQL.
+- Swagger UI en `/api/docs` y contrato JSON en `/api/docs-json`; desactivado por defecto en producción.
+- CORS explícito, Helmet y ValidationPipe global con rechazo de campos extra.
+- Formato de errores consistente, sin stack, mensajes internos ni query strings en errores genéricos.
+
+### Verificación
+
+- Pruebas unitarias de entorno y E2E con Nest Testing/Supertest, compiladas con metadata de TypeScript.
+- Trece pruebas nuevas correctas, junto a typecheck, build, lint y formato.
+- Arranque del build comprobado en el puerto 3000, consulta SQL real y acceso a Swagger/OpenAPI.
+- Producción comprobada con Swagger desactivado; sin BD el proceso termina con código 1 sin revelar secretos.
+- Instalación reproducida con npm ci y build correcto después de reinstalar.
+- Las diez pruebas de integridad PostgreSQL de la fase 3 siguen pasando.
+- Override limitado de js-yaml 5.4.3 para Swagger 11; npm audit sin vulnerabilidades reportadas.
+
+### Estado
+
+FASE 4 completada. Solo hay endpoints de infraestructura; no se añaden todavía autenticación,
+RBAC ni operaciones comerciales. La siguiente etapa es FASE 5: JWT y Refresh Token.
+
 ## 2026-10-06 — Modelo de datos, Prisma y migración inicial
 
 ### Modelo y persistencia

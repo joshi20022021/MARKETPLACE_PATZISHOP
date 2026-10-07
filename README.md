@@ -3,8 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 3 — modelo de datos y Prisma.** PostgreSQL tiene el esquema inicial,
-restricciones y categorías de referencia; todavía no hay API ni pantallas comerciales.
+**Estado actual: FASE 4 — base API NestJS.** PostgreSQL tiene el esquema inicial y la API
+ofrece salud, conexión Prisma, validación, errores consistentes y Swagger. Todavía no hay
+autenticación, endpoints comerciales ni pantallas del marketplace.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -26,6 +27,7 @@ El [registro de cambios](CHANGELOG.md) documenta los avances y sus comprobacione
 Consulta la [guía de PostgreSQL local](docs/database.md) para iniciar, verificar y detener la BD.
 El [modelo entidad-relación](docs/data-model.md) explica las decisiones y la
 [guía de Prisma](docs/prisma.md) describe migraciones, seed y pruebas.
+La [guía del backend](docs/backend.md) documenta el arranque, entorno y endpoints disponibles.
 
 ```text
 PROYECTO_VENTAS/
@@ -74,13 +76,26 @@ npm run prisma:deploy
 npm run db:seed
 npm run typecheck
 npm run test:database
+npm run build:backend
+npm run test:api
 npm run check
 ```
 
 `check` verifica los workspaces, la estructura, la configuración estricta, ESLint y el formato.
 Debe finalizar con código 0 y el mensaje `FASE 1 OK`, sin errores de lint ni formato.
 `typecheck` comprueba el código TypeScript del backend y `test:database` verifica restricciones
-en PostgreSQL. No se validan flujos HTTP comerciales todavía.
+en PostgreSQL. `test:api` comprueba la base HTTP de NestJS y la configuración del entorno.
+No se validan flujos comerciales todavía.
+
+Para iniciar la API con recompilación automática:
+
+```powershell
+npm run dev:backend
+```
+
+Salud: `http://127.0.0.1:3000/api/v1/health`. Conexión PostgreSQL:
+`http://127.0.0.1:3000/api/v1/health/ready`. Swagger: `http://127.0.0.1:3000/api/docs`.
+Detén el servidor con Ctrl+C. Para ejecutar el build, utiliza `npm run start:backend`.
 
 Para dar formato tras editar archivos:
 
@@ -93,8 +108,8 @@ npm run format
 Las plantillas están en `.env.example`, `backend/.env.example` y `frontend/.env.example`.
 El `.env` raíz configura Docker; `npm run db:env` lo genera con contraseña aleatoria sin sobrescribirlo.
 `npm run db:backend-env` crea la conexión Prisma en `backend/.env` desde los datos locales,
-sin mostrar secretos ni sobrescribir un entorno existente. Frontend y variables JWT se configurarán
-en sus fases.
+sin mostrar secretos ni sobrescribir un entorno existente. NestJS valida su entorno antes de iniciar.
+Frontend y variables JWT se configurarán en sus fases.
 Los secretos están vacíos deliberadamente y deben generarse localmente. Nunca versionar `.env`.
 Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente configuración pública.
 
@@ -102,7 +117,9 @@ Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente con
 | ----------------------- | ------------------------------- | ---- |
 | NODE_ENV                | Entorno de ejecución            | 4    |
 | PORT                    | Puerto de la API                | 4    |
-| CORS_ORIGIN             | Origen permitido del frontend   | 6    |
+| HOST                    | IP de escucha (127.0.0.1)       | 4    |
+| CORS_ORIGIN             | Origen permitido del frontend   | 4    |
+| SWAGGER_ENABLED         | Activar documentación HTTP      | 4    |
 | DATABASE_URL            | Conexión privada a PostgreSQL   | 3    |
 | JWT_ACCESS_SECRET       | Firma de access tokens          | 5    |
 | JWT_ACCESS_TTL          | Duración de access tokens       | 5    |
@@ -126,7 +143,7 @@ Los detalles de conexión, variables, persistencia y solución de problemas est�
 Para revisar la migración aplicada, ejecuta `npm run prisma:status`.
 El seed actual incluye ocho categorías y es repetible; los usuarios, tiendas, productos y pedidos
 de demostración se agregarán cuando existan sus reglas de negocio. No hay credenciales de prueba.
-API REST bajo `/api/v1` y Swagger: fase 4 en adelante.
+La API usa `/api/v1`; los recursos de negocio se incorporarán en sus fases.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **Backend NestJS**.
+El proyecto avanzará por etapas verificables; la siguiente es **Autenticación JWT + Refresh Token**.
