@@ -35,7 +35,7 @@ PROYECTO_VENTAS/
 │   ├── src/              # Componentes, páginas, estado, servicios y rutas
 │   ├── .env.example
 │   └── package.json
-├── backend/              # Workspace reservado para NestJS (fase 4)
+├── backend/              # API NestJS, salud y autenticaci?n
 │   ├── src/              # Módulos por dominio
 │   ├── prisma/           # Esquema, migraciones y seed de categorías
 │   ├── test/             # Integración real con PostgreSQL
@@ -70,6 +70,7 @@ npm ci
 npm run db:env
 npm run db:up
 npm run db:backend-env
+npm run auth:env
 npm run prisma:validate
 npm run prisma:generate
 npm run prisma:deploy
@@ -78,6 +79,7 @@ npm run typecheck
 npm run test:database
 npm run build:backend
 npm run test:api
+npm run test:auth
 npm run check
 ```
 

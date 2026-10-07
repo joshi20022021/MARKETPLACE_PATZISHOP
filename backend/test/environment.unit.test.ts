@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { validateEnvironment } from '../src/config/environment';
 
-const valid = { DATABASE_URL: 'postgresql://user:PRIVATE_PASSWORD@127.0.0.1:5433/test' };
+const valid = {
+  DATABASE_URL: 'postgresql://user:PRIVATE_PASSWORD@127.0.0.1:5433/test',
+  JWT_ACCESS_SECRET: 'a'.repeat(64),
+};
 
 test('aplica valores por defecto y transforma el puerto', () => {
   const config = validateEnvironment({ ...valid, PORT: '3001' });
@@ -36,7 +39,7 @@ test('rechaza URL ausente, incorrecta o sin base de datos, sin revelar secretos'
     'postgresql://localhost',
   ]) {
     assert.throws(
-      () => validateEnvironment({ DATABASE_URL }),
+      () => validateEnvironment({ ...valid, DATABASE_URL }),
       (error: unknown) => {
         assert(error instanceof Error);
         assert.equal(error.message, 'Configuración inválida: DATABASE_URL.');
@@ -44,6 +47,26 @@ test('rechaza URL ausente, incorrecta o sin base de datos, sin revelar secretos'
         return true;
       },
     );
+  }
+});
+
+test('valida secretos y límites de duración sin revelar valores', () => {
+  assert.equal(validateEnvironment(valid).JWT_ACCESS_TTL_SECONDS, 900);
+  assert.equal(
+    validateEnvironment({ ...valid, JWT_ACCESS_TTL: '1h' }).JWT_ACCESS_TTL_SECONDS,
+    3600,
+  );
+  for (const invalid of [
+    { JWT_ACCESS_SECRET: undefined },
+    { JWT_ACCESS_SECRET: 'short' },
+    { JWT_ACCESS_SECRET: ' '.repeat(64) },
+    { JWT_ACCESS_TTL: '0s' },
+    { JWT_ACCESS_TTL: '2h' },
+    { JWT_ACCESS_TTL: '15' },
+    { REFRESH_TOKEN_TTL_DAYS: 0 },
+    { REFRESH_TOKEN_TTL_DAYS: 31 },
+  ]) {
+    assert.throws(() => validateEnvironment({ ...valid, ...invalid }), /Configuración inválida/u);
   }
 });
 
