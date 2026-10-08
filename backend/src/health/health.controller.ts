@@ -9,9 +9,11 @@ import { ApiErrorResponse } from '../common/api-error.dto';
 import { HealthResponse, ReadyResponse } from './health.dto';
 import { HealthService } from './health.service';
 import { Public } from '../auth/public.decorator';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @ApiTags('Salud')
 @Public()
+@SkipThrottle()
 @Controller('health')
 export class HealthController {
   constructor(private readonly health: HealthService) {}

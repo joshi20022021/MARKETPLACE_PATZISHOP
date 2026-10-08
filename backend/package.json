@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit",
     "test:database": "tsx --test --test-concurrency=1 test/database.integration.test.ts",
     "test:auth": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/auth.e2e.test.js",
-    "test:security": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/roles.e2e.test.js .test-dist/test/resource-scope.e2e.test.js"
+    "test:security": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/roles.e2e.test.js .test-dist/test/resource-scope.e2e.test.js .test-dist/test/rate-limit.e2e.test.js"
   },
   "description": "API REST modular NestJS para PatziShop",
   "dependencies": {

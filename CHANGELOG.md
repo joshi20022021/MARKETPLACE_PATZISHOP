@@ -11,7 +11,12 @@ al cierre de una fase completa.
 - SecurityModule con filtros Prisma de propiedad para tiendas, productos, subpedidos, pedidos y direcciones.
 - Diez pruebas de seguridad con PostgreSQL real: matriz de roles, aislamiento, datos manipulados y escrituras acotadas.
 - Guía de integración para futuros módulos en docs/security.md; no se añaden endpoints comerciales.
-- Fase 6 en curso: resta añadir y comprobar los límites de solicitudes.
+- Throttler 6.7.1 con cuotas por IP/handler: API 120/minuto, registro 5, login 10, refresh/logout 30.
+- Guard de cuota previo a JWT/roles, 429 consistente con Retry-After y encabezados accesibles por CORS.
+- JSON limitado a 32 KiB con errores seguros; salud exenta y storage en memoria por proceso.
+- Seis pruebas adicionales de cuotas, bloqueo, IP falsificada, JSON, CORS y OpenAPI: dieciséis de seguridad.
+- Regresión completa correcta: catorce pruebas API/entorno, trece auth y diez SQL, más build y typecheck.
+- FASE 6 completada; siguiente etapa: negocios. Sin migraciones nuevas ni CRUD de fases posteriores.
 
 ## 2026-10-07 — Autenticación JWT y sesiones renovables
 

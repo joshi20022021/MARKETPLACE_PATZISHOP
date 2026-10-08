@@ -80,4 +80,45 @@ parámetros manipulados y escrituras con filtros de propiedad. Los controllers `
 y `_ownership` existen únicamente en los módulos de prueba: AppModule no los monta ni documenta.
 Las fixtures se eliminan por sus IDs, respetando las claves foráneas; no se modifica información ajena.
 
-Los límites de solicitudes se incorporan en la siguiente unidad de esta fase.
+## Límites de solicitudes y cuerpos
+
+ApiThrottleGuard se ejecuta antes de JWT y roles, usando @nestjs/throttler 6.7.1.
+La política está centralizada en `src/security/rate-limit.policy.ts`:
+
+| Ámbito                     | Solicitudes por IP y handler en 60 segundos |
+| -------------------------- | ------------------------------------------- |
+| Rutas NestJS sin excepción | 120                                         |
+| POST /auth/register        | 5                                           |
+| POST /auth/login           | 10                                          |
+| POST /auth/refresh         | 30                                          |
+| POST /auth/logout          | 30                                          |
+
+Se cuentan solicitudes exitosas y fallidas, incluidas las rechazadas por JWT, origen o DTO.
+Al exceder el límite se devuelve 429 TOO_MANY_REQUESTS con Retry-After en segundos; el cliente
+debe respetarlo antes de repetir. El bloqueo dura 60 segundos desde que se supera la cuota.
+Los contadores de los handlers son independientes; variar IDs o query strings no los reinicia.
+Salud/readiness quedan exentos para comprobaciones operativas; Swagger y rutas sin handler no
+están cubiertos por el guard. Un JSON de más de 32 KiB se rechaza en middleware con 413
+PAYLOAD_TOO_LARGE antes de llegar a guards o services; JSON malformado devuelve 400 sin reflejarlo.
+Este límite se aplica a JSON; archivos multipart tendrán sus límites al implementar imágenes.
+
+La IP proviene de req.ip. Express conserva trust proxy desactivado; no se confía en X-Forwarded-For
+enviado directamente. Throttler normaliza IPv4 y agrupa IPv6 por /64. Usuarios detrás de una misma
+IP comparten cuota. El almacenamiento está en memoria por proceso y se reinicia al arrancar;
+no es un límite distribuido. Antes de varias réplicas se necesitará un storage compartido, y
+ante un proxy habrá que declarar sus direcciones confiables según la topología del despliegue.
+No habilitar trust proxy indiscriminadamente para resolver una IP desconocida.
+
+CORS expone Retry-After y X-RateLimit-Limit/Remaining/Reset al frontend autorizado. Swagger
+documenta 429 en auth. La limitación de solicitudes complementa DTO, CORS, CSRF, Helmet y los
+guards; no concede acceso ni reemplaza los filtros de propiedad.
+
+Seis pruebas adicionales verifican cuotas reales, orden de guards, no invocación del servicio
+al superar el límite, recuperación después del bloqueo, query/X-Forwarded-For manipulados,
+salud, CORS, JSON grande y OpenAPI. Sustituyen AuthService para contar llamadas sin crear usuarios;
+usan el guard y storage reales. Las pruebas de regresión auth desactivan solo el limiter dentro
+de su módulo de prueba para aislar las reglas de sesión; la aplicación nunca lo desactiva por NODE_ENV.
+`test:security` ejecuta dieciséis pruebas en total. No se han añadido variables de entorno ni migraciones.
+
+Referencias oficiales: [autorización en NestJS 11](https://docs.nestjs.com/v11/security/authorization)
+y [rate limiting](https://docs.nestjs.com/v11/security/rate-limiting).

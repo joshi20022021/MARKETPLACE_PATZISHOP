@@ -17,7 +17,11 @@ import {
   ApiOkResponse,
   ApiCreatedResponse,
   ApiTags,
+  ApiTooManyRequestsResponse,
 } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
+import { ApiErrorResponse } from '../common/api-error.dto';
+import { AUTH_RATE_LIMITS, RATE_LIMIT_WINDOW_MS } from '../security/rate-limit.policy';
 import type { Request, Response } from 'express';
 import { PublicUser } from '../users/public-user';
 import { AUTH_COOKIE_PATH, CSRF_HEADER_DOC, REFRESH_COOKIE } from './auth.constants';
@@ -30,6 +34,10 @@ import { RegisterDto } from './dto/register.dto';
 import { Public } from './public.decorator';
 
 @ApiTags('Autenticación')
+@ApiTooManyRequestsResponse({
+  type: ApiErrorResponse,
+  description: 'Límite por IP alcanzado; respetar Retry-After.',
+})
 @UseGuards(AuthOriginGuard)
 @Controller('auth')
 export class AuthController {
@@ -63,6 +71,7 @@ export class AuthController {
   }
 
   @Post('register')
+  @Throttle({ default: { limit: AUTH_RATE_LIMITS.register, ttl: RATE_LIMIT_WINDOW_MS } })
   @Public()
   @ApiHeader(CSRF_HEADER_DOC)
   @ApiCreatedResponse({ type: AuthResponse })
@@ -71,6 +80,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @Throttle({ default: { limit: AUTH_RATE_LIMITS.login, ttl: RATE_LIMIT_WINDOW_MS } })
   @Public()
   @HttpCode(200)
   @ApiHeader(CSRF_HEADER_DOC)
@@ -80,6 +90,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @Throttle({ default: { limit: AUTH_RATE_LIMITS.refresh, ttl: RATE_LIMIT_WINDOW_MS } })
   @Public()
   @HttpCode(200)
   @ApiHeader(CSRF_HEADER_DOC)
@@ -96,6 +107,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @Throttle({ default: { limit: AUTH_RATE_LIMITS.logout, ttl: RATE_LIMIT_WINDOW_MS } })
   @Public()
   @HttpCode(204)
   @ApiHeader(CSRF_HEADER_DOC)

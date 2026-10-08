@@ -14,6 +14,7 @@ import { AuthService } from '../src/auth/auth.service';
 import { REFRESH_COOKIE } from '../src/auth/auth.constants';
 import { configureApp } from '../src/config/configure-app';
 import { PrismaService } from '../src/database/prisma.service';
+import { ApiThrottleGuard } from '../src/security/api-throttle.guard';
 
 let app: INestApplication;
 let prisma: PrismaService;
@@ -43,7 +44,11 @@ async function register(role?: 'SELLER') {
 }
 
 before(async () => {
-  const module = await Test.createTestingModule({ imports: [AppModule] }).compile();
+  // Auth regression tests isolate session rules; the real limiter is covered by test:security.
+  const module = await Test.createTestingModule({ imports: [AppModule] })
+    .overrideProvider(ApiThrottleGuard)
+    .useValue({ canActivate: () => true })
+    .compile();
   app = module.createNestApplication({ logger: false });
   prisma = app.get(PrismaService);
   configureApp(app);
