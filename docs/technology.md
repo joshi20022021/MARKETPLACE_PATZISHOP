@@ -33,7 +33,8 @@ passport-jwt 4.0.1, bcrypt 6.0.0 y cookie-parser 1.4.7, con sus tipos TypeScript
 Se verificaron peerDependencies compatibles con NestJS 11 y bcrypt con Node 22.
 La fase 6 añade @nestjs/throttler 6.7.1, compatible con NestJS 11 y reflect-metadata 0.2.
 La política utiliza guards y metadata de NestJS 11, conservando Passport para JWT.
-No hay endpoints comerciales ni librerías de frontend todavía.
+La fase 7 añade endpoints de negocios usando las dependencias existentes, sin cambiar el lockfile.
+No hay librerías de frontend todavía.
 `npm ci` reproduce las dependencias del lockfile; `npm install` se usa al cambiar manifiestos.
 Se eligió ESLint 10 al comprobar que npm marca ESLint 9 como fuera de soporte.
 ESLint 10 admite Node 22.13+ y typescript-eslint 8.57.0 declara compatibilidad con ESLint 10.

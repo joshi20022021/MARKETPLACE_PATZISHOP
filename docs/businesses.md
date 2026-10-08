@@ -73,6 +73,14 @@ de prueba se eliminan por sus identidades al terminar; no se modifica el seed ni
 Siete pruebas adicionales cubren consultas públicas, visibilidad, proyección de datos,
 paginación, búsqueda literal, parámetros inválidos, cambios de slug/estado y OpenAPI.
 `test:businesses` ejecuta quince pruebas en total.
+También se verificó el proceso compilado en production: registro SELLER, creación, lectura y edición,
+ocultación de PENDING, lista y detalle de una fixture ACTIVE, proyección pública y Swagger oculto.
+La cuenta y tienda temporales se eliminaron y el proceso se detuvo al terminar.
+
+Para probar manualmente, ejecuta `npm run dev:backend` y abre
+`http://127.0.0.1:3000/api/docs`. Registra una cuenta SELLER con el encabezado CSRF indicado
+en [auth.md](auth.md), copia el accessToken a Authorize y usa POST/GET/PATCH de Mi tienda.
+La tienda creada permanecerá PENDING y no aparecerá en la consulta pública.
 
 ## Consulta pública
 

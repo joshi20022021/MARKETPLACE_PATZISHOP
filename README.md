@@ -3,9 +3,10 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 6 — RBAC y seguridad.** La API ofrece autenticación, rutas protegidas por
-defecto, permisos exactos por rol, filtros de propiedad y límites de solicitudes. PostgreSQL,
-Prisma, salud, validación y Swagger están disponibles. El CRUD comercial y las pantallas siguen pendientes.
+**Estado actual: FASE 7 — Negocios.** La API permite al vendedor crear, consultar y editar su
+única tienda, y ofrece lista pública paginada y detalle de tiendas activas. Conserva autenticación,
+permisos por rol, filtros de propiedad y límites de solicitudes. Las tiendas nacen en PENDING;
+aprobación administrativa, productos y pantallas siguen pendientes.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -30,6 +31,7 @@ El [modelo entidad-relación](docs/data-model.md) explica las decisiones y la
 La [guía del backend](docs/backend.md) documenta el arranque, entorno y endpoints disponibles.
 La [guía de autenticación](docs/auth.md) explica sesiones, cookies y cómo probar los cinco endpoints.
 La [guía de seguridad](docs/security.md) documenta RBAC, propiedad, cuotas y su integración en futuros módulos.
+La [guía de negocios](docs/businesses.md) explica los cinco endpoints, validaciones y visibilidad pública.
 
 ```text
 PROYECTO_VENTAS/
@@ -37,7 +39,7 @@ PROYECTO_VENTAS/
 │   ├── src/              # Componentes, páginas, estado, servicios y rutas
 │   ├── .env.example
 │   └── package.json
-├── backend/              # API NestJS, salud y autenticación
+├── backend/              # API NestJS, autenticación, seguridad y negocios
 │   ├── src/              # Módulos por dominio
 │   ├── prisma/           # Esquema, migraciones y seed de categorías
 │   ├── test/             # Integración real con PostgreSQL
@@ -83,6 +85,7 @@ npm run build:backend
 npm run test:api
 npm run test:auth
 npm run test:security
+npm run test:businesses
 npm run check
 ```
 
@@ -90,9 +93,10 @@ npm run check
 Debe finalizar con código 0 y el mensaje `FASE 1 OK`, sin errores de lint ni formato.
 `typecheck` comprueba el código TypeScript del backend y `test:database` verifica restricciones
 en PostgreSQL. `test:api` comprueba la base HTTP de NestJS y la configuración del entorno.
-`test:auth` comprueba las sesiones con PostgreSQL real. No se validan flujos comerciales todavía.
+`test:auth` comprueba las sesiones con PostgreSQL real.
 `test:security` comprueba roles, aislamiento entre vendedores/clientes, escrituras acotadas,
 rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican en la aplicación.
+`test:businesses` verifica creación, edición, aislamiento y consulta pública de tiendas con PostgreSQL real.
 
 Para iniciar la API con recompilación automática:
 
@@ -151,7 +155,7 @@ Los detalles de conexión, variables, persistencia y solución de problemas est�
 Para revisar la migración aplicada, ejecuta `npm run prisma:status`.
 El seed actual incluye ocho categorías y es repetible; los usuarios, tiendas, productos y pedidos
 de demostración se agregarán cuando existan sus reglas de negocio. No hay credenciales de prueba.
-La API usa `/api/v1`; los recursos de negocio se incorporarán en sus fases.
+La API usa `/api/v1`; negocios está disponible y los demás recursos se incorporarán en sus fases.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **Negocios (fase 7)**.
+El proyecto avanzará por etapas verificables; la siguiente es **Categorías (fase 8)**.

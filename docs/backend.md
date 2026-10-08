@@ -1,9 +1,10 @@
-# API NestJS — fases 4 a 6
+# API NestJS — fases 4 a 7
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
 sesiones; SecurityModule exporta filtros de propiedad. Consulta [autenticación](auth.md) y
-[seguridad](security.md). Los módulos comerciales siguen reservados.
+[seguridad](security.md). BusinessesModule implementa gestión y consulta de tiendas;
+los demás módulos comerciales siguen reservados. Contratos en [negocios](businesses.md).
 
 ## Archivos y responsabilidades
 
@@ -14,6 +15,7 @@ sesiones; SecurityModule exporta filtros de propiedad. Consulta [autenticación]
 - `src/database/`: PrismaService inyectable y control de conexión/desconexión.
 - `src/auth/` y `src/users/`: registro, credenciales, JWT, sesiones y perfil público.
 - `src/security/`: filtros de propiedad, política de cuotas y guard Throttler global.
+- `src/businesses/`: DTOs, gestión de tienda propia y consulta pública paginada de tiendas activas.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.
 - `nest-cli.json`, `tsconfig.build.json` y `tsconfig.test.json`: compilación y pruebas con metadata.
@@ -94,6 +96,11 @@ Swagger se abre en `http://127.0.0.1:3000/api/docs`. La ruta raíz `/` no es un 
 Registro, login, refresh, logout y perfil protegido están bajo `/api/v1/auth`; los contratos y
 los encabezados necesarios están documentados en [auth.md](auth.md) y Swagger.
 
+Negocios añade POST, GET y PATCH `/api/v1/seller/business` con Bearer y rol SELLER,
+GET `/api/v1/businesses` paginado y GET `/api/v1/businesses/:slug` públicos.
+Las respuestas públicas solo incluyen tiendas ACTIVE de vendedores activos; las nuevas tiendas
+permanecen PENDING. Consulta [businesses.md](businesses.md) para entradas, errores y límites.
+
 ## Errores y validación
 
 ```json
@@ -129,6 +136,7 @@ npm run build:backend
 npm run test:api
 npm run test:auth
 npm run test:security
+npm run test:businesses
 npm run test:database
 npm run check
 ```
@@ -143,7 +151,9 @@ Los resultados compilados quedan en `.test-dist`, excluido de Git.
 Las trece pruebas de autenticación verifican flujos reales y concurrencia; se detallan en auth.md.
 Las diez pruebas de integridad SQL de la fase 3 se mantienen. Dieciséis pruebas de seguridad
 comprueban RBAC, aislamiento y límites; los controllers de prueba no se importan en producción.
-Las operaciones comerciales se comprobarán al implementar sus fases.
+Quince pruebas de negocios comprueban creación, actualización parcial, conflictos concurrentes,
+aislamiento entre vendedores, consulta pública, paginación, búsqueda literal y OpenAPI.
+Las cinco suites suman 68 pruebas; las demás operaciones comerciales se comprobarán en sus fases.
 También se comprobó el proceso compilado escuchando en 3000, Swagger oculto por defecto en
 producción y salida con código 1 sin revelar secretos al fallar la conexión de arranque.
 Los procesos usados para estas comprobaciones se detuvieron al terminar.

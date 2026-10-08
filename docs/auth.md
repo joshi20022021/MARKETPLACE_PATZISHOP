@@ -4,7 +4,8 @@ La API permite registro CUSTOMER o SELLER, login, perfil autenticado, renovació
 El registro público rechaza ADMIN. AuthModule contiene los flujos HTTP y sesiones;
 UsersModule consulta las credenciales y solo publica id, nombre, correo y rol.
 La fase 6 incorpora guards globales de JWT/roles y filtros de propiedad para futuros módulos;
-consulta [seguridad](security.md). El CRUD comercial sigue reservado para sus fases.
+consulta [seguridad](security.md). La fase 7 implementa [negocios](businesses.md) con JWT y rol
+SELLER; los demás flujos comerciales siguen reservados para sus fases.
 
 ## Preparación
 

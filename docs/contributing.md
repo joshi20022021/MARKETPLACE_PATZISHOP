@@ -48,6 +48,8 @@ con `npm run test:database`. Para autenticación ejecutar también `npm run test
 requiere PostgreSQL, migraciones aplicadas y `npm run auth:env`. Las fases funcionales
 agregarán pruebas de sus reglas críticas. Ejecutar `npm run test:security` ante cambios de guards,
 roles, consultas acotadas por propiedad, cuotas o parsing HTTP; las pruebas de aislamiento usan PostgreSQL.
+Para cambios en tiendas ejecutar `npm run test:businesses`: usa PostgreSQL real y elimina solo
+sus propias fixtures. Los contratos y límites del módulo están en [businesses.md](businesses.md).
 
 El propietario autorizó publicar el proyecto y guardar los avances mediante commits frecuentes.
 Para una unidad de trabajo, seleccionar explícitamente sus archivos y revisar el contenido preparado:

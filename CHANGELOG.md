@@ -15,6 +15,11 @@ al cierre de una fase completa.
 - Consulta pública de tiendas ACTIVE con propietario SELLER activo, lista paginada y detalle por slug.
 - Proyección pública sin datos del propietario, búsqueda literal y snapshot coherente de total/resultados.
 - Siete pruebas públicas adicionales: quince pruebas de negocios correctas y regresión de seguridad correcta.
+- Regresión completa: 68 pruebas correctas (15 negocios, 16 seguridad, 14 API, 13 auth y 10 SQL).
+- Typecheck, build, validación Prisma y estado de migraciones correctos; npm audit sin vulnerabilidades reportadas.
+- README, arquitectura, guías técnicas y roadmap actualizados al alcance real de la fase 7.
+- Build HTTP en production comprobado: registro SELLER, creación/lectura/edición, visibilidad pública y Swagger oculto.
+- Cuenta y tienda temporales eliminadas, proceso detenido y npm run check correcto antes de publicar.
 - FASE 7 completada; aprobación administrativa y página visual reservadas para las fases 17 y 11.
 
 ## 2026-10-08 — RBAC y controles de propiedad

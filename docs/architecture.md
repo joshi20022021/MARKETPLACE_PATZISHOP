@@ -113,8 +113,11 @@ La fase 5 añade AuthModule y UsersModule: registro, login, JWT/Passport, refres
 logout y perfil autenticado. Sus contratos y decisiones se detallan en [auth.md](auth.md).
 La fase 6 añade guards globales de JWT y roles, excepciones públicas explícitas, filtros Prisma
 de propiedad, límites de solicitudes y de tamaño JSON. El rol y la sesión se consultan en BD.
-Los módulos comerciales consumirán estos controles al implementarse; sus pruebas actuales usan
-controllers exclusivos de test. No hay CRUD comercial ni interfaces de marketplace todavía.
+La fase 7 añade BusinessesModule: creación, consulta y edición de la tienda propia con filtros
+de propietario dentro de las consultas, además de lista pública paginada y detalle por slug.
+La consulta pública exige tienda ACTIVE y propietario SELLER activo; usa una proyección explícita.
+Los demás módulos comerciales y las interfaces de marketplace siguen pendientes.
+Consulta [negocios](businesses.md) para contratos, visibilidad y pruebas reales del módulo.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

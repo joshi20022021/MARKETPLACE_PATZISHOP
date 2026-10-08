@@ -1,7 +1,8 @@
 # Seguridad y autorización — fase 6
 
 La API protege por defecto las rutas de controllers NestJS. `@Public()` es una excepción explícita:
-salud, registro, login, refresh y logout admiten invitados. El perfil sigue exigiendo Bearer JWT.
+salud, registro, login, refresh, logout y consulta pública de tiendas admiten invitados.
+El perfil y la gestión de la tienda propia siguen exigiendo Bearer JWT.
 Swagger es middleware independiente de los guards; permanece desactivado por defecto en production.
 
 ## Roles
@@ -62,9 +63,12 @@ const result = await prisma.product.updateMany({
 // count=0 indica que no existe dentro de ese ámbito; responder 404.
 ```
 
-Los módulos de negocio deberán importar SecurityModule y aplicar estos filtros en sus operaciones.
-Esta fase añade y comprueba la infraestructura de permisos; no publica CRUD comercial ni reglas
-de aprobación de tiendas, transiciones de pedidos o inventario. Corresponden a sus fases.
+Los módulos de negocio deben importar SecurityModule y aplicar estos filtros en sus operaciones.
+BusinessesModule los consume desde la fase 7: ownerId viene de la identidad autenticada,
+la actualización conserva el ámbito en la misma consulta y el DTO rechaza campos privilegiados.
+La consulta pública filtra ACTIVE y propietario SELLER activo sin publicar ownerId ni estado.
+Las reglas de aprobación de tiendas, transiciones de pedidos e inventario corresponden a sus fases.
+Consulta [negocios](businesses.md) para las quince pruebas reales de estos endpoints.
 
 ## Pruebas
 
