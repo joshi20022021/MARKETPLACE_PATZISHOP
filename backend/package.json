@@ -15,7 +15,8 @@
     "db:seed": "prisma db seed",
     "typecheck": "tsc --noEmit",
     "test:database": "tsx --test --test-concurrency=1 test/database.integration.test.ts",
-    "test:auth": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/auth.e2e.test.js"
+    "test:auth": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/auth.e2e.test.js",
+    "test:security": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/roles.e2e.test.js .test-dist/test/resource-scope.e2e.test.js"
   },
   "description": "API REST modular NestJS para PatziShop",
   "dependencies": {
@@ -26,6 +27,7 @@
     "@nestjs/passport": "11.0.5",
     "@nestjs/platform-express": "11.2.7",
     "@nestjs/swagger": "11.4.7",
+    "@nestjs/throttler": "6.7.1",
     "@prisma/adapter-pg": "7.10.0",
     "@prisma/client": "7.10.0",
     "bcrypt": "6.0.0",

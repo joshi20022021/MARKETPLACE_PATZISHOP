@@ -8,6 +8,7 @@ import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { configureApp } from '../src/config/configure-app';
 import { PrismaService } from '../src/database/prisma.service';
+import { Public } from '../src/auth/public.decorator';
 
 class ProbeDto {
   @IsString()
@@ -17,6 +18,7 @@ class ProbeDto {
 
 /** Only mounted by this test module; never exposed by AppModule. */
 @Controller('_test')
+@Public()
 class ProbeController {
   @Post('validation')
   validate(@Body() dto: ProbeDto): ProbeDto {

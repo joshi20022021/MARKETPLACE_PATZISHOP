@@ -27,7 +27,7 @@ import { CurrentUser } from './current-user.decorator';
 import { AuthResponse } from './dto/auth-response.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { Public } from './public.decorator';
 
 @ApiTags('Autenticación')
 @UseGuards(AuthOriginGuard)
@@ -63,6 +63,7 @@ export class AuthController {
   }
 
   @Post('register')
+  @Public()
   @ApiHeader(CSRF_HEADER_DOC)
   @ApiCreatedResponse({ type: AuthResponse })
   async register(@Body() dto: RegisterDto, @Res({ passthrough: true }) response: Response) {
@@ -70,6 +71,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @Public()
   @HttpCode(200)
   @ApiHeader(CSRF_HEADER_DOC)
   @ApiOkResponse({ type: AuthResponse })
@@ -78,6 +80,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @Public()
   @HttpCode(200)
   @ApiHeader(CSRF_HEADER_DOC)
   @ApiCookieAuth()
@@ -93,6 +96,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @Public()
   @HttpCode(204)
   @ApiHeader(CSRF_HEADER_DOC)
   @ApiCookieAuth()
@@ -102,7 +106,6 @@ export class AuthController {
   }
 
   @Get('me')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: PublicUser })
   me(@CurrentUser() user: PublicUser): PublicUser {

@@ -37,7 +37,8 @@
     "format:check": "prettier --check .",
     "check": "npm run verify:setup && npm run lint && npm run format:check",
     "auth:env": "node scripts/init-auth-env.mjs",
-    "test:auth": "npm run test:auth --workspace backend"
+    "test:auth": "npm run test:auth --workspace backend",
+    "test:security": "npm run test:security --workspace backend"
   },
   "overrides": {
     "@nestjs/swagger": {

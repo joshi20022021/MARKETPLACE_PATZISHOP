@@ -4,6 +4,15 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-08 — RBAC y controles de propiedad
+
+- JwtAuthGuard global: rutas protegidas por defecto y excepciones Public explícitas.
+- RolesGuard global y Roles con permisos exactos por método/controller, sin privilegios implícitos de ADMIN.
+- SecurityModule con filtros Prisma de propiedad para tiendas, productos, subpedidos, pedidos y direcciones.
+- Diez pruebas de seguridad con PostgreSQL real: matriz de roles, aislamiento, datos manipulados y escrituras acotadas.
+- Guía de integración para futuros módulos en docs/security.md; no se añaden endpoints comerciales.
+- Fase 6 en curso: resta añadir y comprobar los límites de solicitudes.
+
 ## 2026-10-07 — Autenticación JWT y sesiones renovables
 
 ### Implementación

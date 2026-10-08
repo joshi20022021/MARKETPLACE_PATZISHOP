@@ -8,8 +8,10 @@ import {
 import { ApiErrorResponse } from '../common/api-error.dto';
 import { HealthResponse, ReadyResponse } from './health.dto';
 import { HealthService } from './health.service';
+import { Public } from '../auth/public.decorator';
 
 @ApiTags('Salud')
+@Public()
 @Controller('health')
 export class HealthController {
   constructor(private readonly health: HealthService) {}
