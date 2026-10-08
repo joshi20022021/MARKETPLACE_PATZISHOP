@@ -4,6 +4,16 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-08 — Gestión de negocios
+
+- BusinessesModule con creación, consulta y edición de la única tienda del vendedor.
+- Identidad y propiedad desde JWT, estado PENDING fijo y rechazo de campos privilegiados.
+- DTOs con edición parcial, validación de slug/contacto y URL de logo/banner anulables.
+- Restricciones únicas de propietario y slug con conflictos 409 seguros incluso bajo concurrencia.
+- Ocho pruebas con PostgreSQL real correctas; regresión de API/seguridad, typecheck y build correctos.
+- Contratos y decisiones en docs/businesses.md; no se cambian dependencias, entorno ni migraciones.
+- Fase 7 en curso: resta la consulta pública de negocios activos.
+
 ## 2026-10-08 — RBAC y controles de propiedad
 
 - JwtAuthGuard global: rutas protegidas por defecto y excepciones Public explícitas.

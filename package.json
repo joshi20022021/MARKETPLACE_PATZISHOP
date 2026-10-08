@@ -13,6 +13,7 @@
   },
   "packageManager": "npm@10.9.3",
   "scripts": {
+    "test:businesses": "npm run test:businesses --workspace backend",
     "build:backend": "npm run build --workspace backend",
     "start:backend": "npm run start --workspace backend",
     "dev:backend": "npm run start:dev --workspace backend",

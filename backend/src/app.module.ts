@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { SecurityModule } from './security/security.module';
 import { ApiThrottleGuard } from './security/api-throttle.guard';
 import { API_RATE_LIMIT, RATE_LIMIT_WINDOW_MS } from './security/rate-limit.policy';
+import { BusinessesModule } from './businesses/businesses.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { API_RATE_LIMIT, RATE_LIMIT_WINDOW_MS } from './security/rate-limit.poli
     HealthModule,
     AuthModule,
     SecurityModule,
+    BusinessesModule,
   ],
   providers: [
     ApiThrottleGuard,
