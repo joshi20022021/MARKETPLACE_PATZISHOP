@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test:businesses": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/seller-business.e2e.test.js",
+    "test:businesses": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/seller-business.e2e.test.js .test-dist/test/public-businesses.e2e.test.js",
     "build": "nest build",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",

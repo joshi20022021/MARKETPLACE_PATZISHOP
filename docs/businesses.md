@@ -67,7 +67,48 @@ npm run auth:env
 npm run test:businesses
 ```
 
-Ocho pruebas HTTP con PostgreSQL real cubren creación, lectura, edición, errores de datos,
+Ocho pruebas del vendedor con PostgreSQL real cubren creación, lectura, edición, errores de datos,
 roles, identidad, campos privilegiados, conflictos y solicitudes concurrentes. Las cuentas y tiendas
 de prueba se eliminan por sus identidades al terminar; no se modifica el seed ni cuentas reales.
-Las consultas públicas se incorporan en la siguiente unidad de esta fase.
+Siete pruebas adicionales cubren consultas públicas, visibilidad, proyección de datos,
+paginación, búsqueda literal, parámetros inválidos, cambios de slug/estado y OpenAPI.
+`test:businesses` ejecuta quince pruebas en total.
+
+## Consulta pública
+
+| Método | Ruta                     | Resultado                                     |
+| ------ | ------------------------ | --------------------------------------------- |
+| GET    | /api/v1/businesses       | Lista paginada de negocios visibles           |
+| GET    | /api/v1/businesses/:slug | Datos de una tienda visible por slug canónico |
+
+Son rutas Public que admiten invitados y mantienen la cuota de 120 solicitudes por IP/handler
+en 60 segundos. Una tienda es visible si tiene estado ACTIVE y su propietario está activo y
+conserva el rol SELLER. PENDING, SUSPENDED, REJECTED o propietario no elegible quedan ocultos.
+Un slug inexistente y uno no publicado reciben el mismo 404 RESOURCE_NOT_FOUND.
+El detalle espera el slug exacto en minúsculas; no modifica ni redirige slugs escritos de otra manera.
+
+La lista admite page (1–10000, por defecto 1), limit (1–50, por defecto 12) y search (hasta
+120 caracteres recortados). Rechaza valores no enteros, arreglos y parámetros adicionales como
+status u ownerId. Search filtra por nombre o descripción sin distinguir mayúsculas; %, _ y
+barra inversa se buscan literalmente, sin expandir patrones SQL. El orden es createdAt descendente
+con id descendente para desempatar. Paginación offset; no se carga todo el directorio en memoria.
+
+```json
+{
+  "success": true,
+  "data": [],
+  "meta": { "page": 1, "limit": 12, "total": 0, "totalPages": 0 }
+}
+```
+
+Conteo y datos se leen en una transacción RepeatableRead para compartir el mismo snapshot.
+Una página posterior a la última devuelve data vacío y conserva total/totalPages. Entre distintas
+peticiones, nuevas tiendas o cambios de visibilidad pueden mover los resultados del directorio.
+La proyección pública contiene id, name, slug, description, logo, banner, email, phone y address:
+son los datos comerciales de contacto. No incluye ownerId, información del usuario ni moderación.
+El detalle devuelve esa proyección directamente. Todavía no incluye catálogo de productos.
+
+El seed sigue incluyendo solo ocho categorías. Una tienda recién registrada queda PENDING y no
+aparece públicamente. Las pruebas preparan sus propias tiendas ACTIVE directamente en BD para
+comprobar visibilidad; la API de aprobación se implementará en la fase 17. No se publica un atajo
+para activar tiendas ni credenciales de demostración. La página visual corresponde a la fase 11.

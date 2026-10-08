@@ -12,7 +12,10 @@ al cierre de una fase completa.
 - Restricciones únicas de propietario y slug con conflictos 409 seguros incluso bajo concurrencia.
 - Ocho pruebas con PostgreSQL real correctas; regresión de API/seguridad, typecheck y build correctos.
 - Contratos y decisiones en docs/businesses.md; no se cambian dependencias, entorno ni migraciones.
-- Fase 7 en curso: resta la consulta pública de negocios activos.
+- Consulta pública de tiendas ACTIVE con propietario SELLER activo, lista paginada y detalle por slug.
+- Proyección pública sin datos del propietario, búsqueda literal y snapshot coherente de total/resultados.
+- Siete pruebas públicas adicionales: quince pruebas de negocios correctas y regresión de seguridad correcta.
+- FASE 7 completada; aprobación administrativa y página visual reservadas para las fases 17 y 11.
 
 ## 2026-10-08 — RBAC y controles de propiedad
 

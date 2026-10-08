@@ -106,7 +106,7 @@ test('AppModule de producción no monta rutas de prueba ni CRUD de fases posteri
   configureApp(app);
   await app.init();
   try {
-    for (const path of ['_security/admin', '_default', 'businesses', 'products'])
+    for (const path of ['_security/admin', '_default', 'products'])
       await request(app.getHttpServer()).get(`/api/v1/${path}`).expect(404);
     const swagger = await request(app.getHttpServer()).get('/api/docs-json').expect(200);
     assert(
