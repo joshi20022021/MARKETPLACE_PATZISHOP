@@ -3,7 +3,8 @@
 La API permite registro CUSTOMER o SELLER, login, perfil autenticado, renovación y logout.
 El registro público rechaza ADMIN. AuthModule contiene los flujos HTTP y sesiones;
 UsersModule consulta las credenciales y solo publica id, nombre, correo y rol.
-No hay reglas RBAC de negocio todavía: se implementarán en la fase 6.
+La fase 6 incorpora guards globales de JWT/roles y filtros de propiedad para futuros módulos;
+consulta [seguridad](security.md). El CRUD comercial sigue reservado para sus fases.
 
 ## Preparación
 
@@ -129,8 +130,11 @@ También se verificó npm ci seguido de generación Prisma, typecheck, build y a
 compilado en production emitió cookie Secure, protegió el perfil, revocó acceso al cerrar sesión
 y mantuvo Swagger oculto. La cuenta temporal y el proceso de comprobación se eliminaron al terminar.
 
-Rate limiting y permisos de negocio corresponden a la fase 6. Recuperación de contraseña,
-verificación de correo, OAuth y un panel para administrar sesiones quedan fuera de esta etapa.
+La fase 6 añade rate limiting: registro 5/minuto, login 10/minuto y refresh/logout 30/minuto por
+IP y handler. Un 429 TOO_MANY_REQUESTS requiere respetar Retry-After. El tamaño JSON máximo es
+32 KiB; un exceso devuelve 413. Estos controles se aplican también a endpoints públicos.
+Recuperación de contraseña, verificación de correo, OAuth y un panel para administrar sesiones
+quedan fuera de esta etapa.
 
 Referencias: [Passport en NestJS](https://docs.nestjs.com/recipes/passport),
 [límite de bcrypt](https://github.com/kelektiv/node.bcrypt.js#security-issues-and-concerns),

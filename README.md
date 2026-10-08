@@ -3,9 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 5 — autenticación JWT y refresh tokens.** La API ofrece registro, login,
-perfil protegido, renovación con detección de reutilización y logout. PostgreSQL, Prisma, salud,
-validación y Swagger están disponibles. Los permisos de negocio y las pantallas siguen pendientes.
+**Estado actual: FASE 6 — RBAC y seguridad.** La API ofrece autenticación, rutas protegidas por
+defecto, permisos exactos por rol, filtros de propiedad y límites de solicitudes. PostgreSQL,
+Prisma, salud, validación y Swagger están disponibles. El CRUD comercial y las pantallas siguen pendientes.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -29,6 +29,7 @@ El [modelo entidad-relación](docs/data-model.md) explica las decisiones y la
 [guía de Prisma](docs/prisma.md) describe migraciones, seed y pruebas.
 La [guía del backend](docs/backend.md) documenta el arranque, entorno y endpoints disponibles.
 La [guía de autenticación](docs/auth.md) explica sesiones, cookies y cómo probar los cinco endpoints.
+La [guía de seguridad](docs/security.md) documenta RBAC, propiedad, cuotas y su integración en futuros módulos.
 
 ```text
 PROYECTO_VENTAS/
@@ -81,6 +82,7 @@ npm run test:database
 npm run build:backend
 npm run test:api
 npm run test:auth
+npm run test:security
 npm run check
 ```
 
@@ -89,6 +91,8 @@ Debe finalizar con código 0 y el mensaje `FASE 1 OK`, sin errores de lint ni fo
 `typecheck` comprueba el código TypeScript del backend y `test:database` verifica restricciones
 en PostgreSQL. `test:api` comprueba la base HTTP de NestJS y la configuración del entorno.
 `test:auth` comprueba las sesiones con PostgreSQL real. No se validan flujos comerciales todavía.
+`test:security` comprueba roles, aislamiento entre vendedores/clientes, escrituras acotadas,
+rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican en la aplicación.
 
 Para iniciar la API con recompilación automática:
 
@@ -150,4 +154,4 @@ de demostración se agregarán cuando existan sus reglas de negocio. No hay cred
 La API usa `/api/v1`; los recursos de negocio se incorporarán en sus fases.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **RBAC y seguridad**.
+El proyecto avanzará por etapas verificables; la siguiente es **Negocios (fase 7)**.

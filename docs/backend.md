@@ -1,8 +1,9 @@
-# API NestJS — fases 4 y 5
+# API NestJS — fases 4 a 6
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
-configuración, persistencia, salud y autenticación. AuthModule y UsersModule implementan las
-sesiones; consulta [autenticación](auth.md). Los módulos comerciales siguen reservados.
+configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
+sesiones; SecurityModule exporta filtros de propiedad. Consulta [autenticación](auth.md) y
+[seguridad](security.md). Los módulos comerciales siguen reservados.
 
 ## Archivos y responsabilidades
 
@@ -12,6 +13,7 @@ sesiones; consulta [autenticación](auth.md). Los módulos comerciales siguen re
 - `src/config/configure-app.ts`: prefijo, CORS, Helmet, cookies, no-store, ValidationPipe y Swagger.
 - `src/database/`: PrismaService inyectable y control de conexión/desconexión.
 - `src/auth/` y `src/users/`: registro, credenciales, JWT, sesiones y perfil público.
+- `src/security/`: filtros de propiedad, política de cuotas y guard Throttler global.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.
 - `nest-cli.json`, `tsconfig.build.json` y `tsconfig.test.json`: compilación y pruebas con metadata.
@@ -113,8 +115,11 @@ y omite datos privados de los errores. Cada endpoint futuro necesita DTO con sus
 Helmet añade encabezados de seguridad. CORS declara únicamente el origen configurado y permite
 credenciales para la autenticación con cookies. Un origen distinto no recibe autorización para leer
 desde el navegador; CORS no sustituye guards, permisos o protección CSRF.
-Rate limiting y RBAC se implementarán en la fase 6. Los POST auth ya verifican encabezado
-y origen, y el guard JWT verifica usuario y sesión activos en PostgreSQL.
+Las rutas NestJS están protegidas por defecto; Public declara excepciones, Roles establece permisos
+exactos. Throttler se ejecuta antes de JWT/roles y limita las llamadas por IP/handler, con límites
+más estrictos en auth. Los POST auth verifican encabezado y origen; JWT verifica usuario y sesión
+activos en PostgreSQL. Los filtros de propiedad deben permanecer en las consultas de negocio.
+JSON tiene un máximo de 32 KiB. Políticas y límites del storage en [security.md](security.md).
 
 ## Pruebas
 
@@ -123,6 +128,7 @@ npm run typecheck
 npm run build:backend
 npm run test:api
 npm run test:auth
+npm run test:security
 npm run test:database
 npm run check
 ```
@@ -135,8 +141,9 @@ para probar metadata y DI. Los controllers de prueba nunca se importan en la apl
 Los resultados compilados quedan en `.test-dist`, excluido de Git.
 
 Las trece pruebas de autenticación verifican flujos reales y concurrencia; se detallan en auth.md.
-Las diez pruebas de integridad SQL de la fase 3 se mantienen. La autorización por rol y
-las operaciones comerciales se comprobarán al implementar sus fases.
+Las diez pruebas de integridad SQL de la fase 3 se mantienen. Dieciséis pruebas de seguridad
+comprueban RBAC, aislamiento y límites; los controllers de prueba no se importan en producción.
+Las operaciones comerciales se comprobarán al implementar sus fases.
 También se comprobó el proceso compilado escuchando en 3000, Swagger oculto por defecto en
 producción y salida con código 1 sin revelar secretos al fallar la conexión de arranque.
 Los procesos usados para estas comprobaciones se detuvieron al terminar.

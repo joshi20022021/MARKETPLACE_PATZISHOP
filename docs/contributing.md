@@ -46,7 +46,8 @@ git diff --check
 `npm run typecheck`, `npm run build:backend`, `npm run test:api` y las pruebas de datos pertinentes
 con `npm run test:database`. Para autenticación ejecutar también `npm run test:auth`;
 requiere PostgreSQL, migraciones aplicadas y `npm run auth:env`. Las fases funcionales
-agregarán pruebas de sus reglas críticas.
+agregarán pruebas de sus reglas críticas. Ejecutar `npm run test:security` ante cambios de guards,
+roles, consultas acotadas por propiedad, cuotas o parsing HTTP; las pruebas de aislamiento usan PostgreSQL.
 
 El propietario autorizó publicar el proyecto y guardar los avances mediante commits frecuentes.
 Para una unidad de trabajo, seleccionar explícitamente sus archivos y revisar el contenido preparado:

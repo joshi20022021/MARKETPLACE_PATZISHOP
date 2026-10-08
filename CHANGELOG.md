@@ -16,6 +16,9 @@ al cierre de una fase completa.
 - JSON limitado a 32 KiB con errores seguros; salud exenta y storage en memoria por proceso.
 - Seis pruebas adicionales de cuotas, bloqueo, IP falsificada, JSON, CORS y OpenAPI: dieciséis de seguridad.
 - Regresión completa correcta: catorce pruebas API/entorno, trece auth y diez SQL, más build y typecheck.
+- npm ci reproducido, cliente regenerado y dieciséis pruebas de seguridad correctas tras reinstalar.
+- Build HTTP en production: 401, 429/Retry-After, 413, salud disponible, Swagger oculto y probes ausentes.
+- Fixtures eliminadas; npm run check correcto y npm audit sin vulnerabilidades reportadas.
 - FASE 6 completada; siguiente etapa: negocios. Sin migraciones nuevas ni CRUD de fases posteriores.
 
 ## 2026-10-07 — Autenticación JWT y sesiones renovables

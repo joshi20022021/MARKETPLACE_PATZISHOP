@@ -37,6 +37,7 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–5 completadas. La fase 5 añade registro, login, perfil protegido, rotación de refresh
-y logout, verificados con PostgreSQL real. La siguiente etapa es fase 6 (RBAC y seguridad);
-solo se iniciará por petición. Consulta [autenticación](auth.md) y [CHANGELOG](../CHANGELOG.md).
+Fases 1–6 completadas. La fase 6 añade guards globales de JWT/roles, filtros de propiedad,
+límites por IP y protección de tamaño JSON; roles y aislamiento verificados con PostgreSQL real.
+La siguiente etapa es fase 7 (negocios); solo se iniciará por petición.
+Consulta [autenticación](auth.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

@@ -111,6 +111,10 @@ La fase 4 añade AppModule, DatabaseModule y HealthModule; configuración valida
 ValidationPipe, CORS, Helmet y Swagger. La inyección de Prisma controla su ciclo de vida.
 La fase 5 añade AuthModule y UsersModule: registro, login, JWT/Passport, refresh rotativos,
 logout y perfil autenticado. Sus contratos y decisiones se detallan en [auth.md](auth.md).
-No hay permisos RBAC de negocio ni interfaces comerciales todavía.
+La fase 6 añade guards globales de JWT y roles, excepciones públicas explícitas, filtros Prisma
+de propiedad, límites de solicitudes y de tamaño JSON. El rol y la sesión se consultan en BD.
+Los módulos comerciales consumirán estos controles al implementarse; sus pruebas actuales usan
+controllers exclusivos de test. No hay CRUD comercial ni interfaces de marketplace todavía.
+Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.
