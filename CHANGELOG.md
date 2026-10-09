@@ -11,6 +11,11 @@ al cierre de una fase completa.
 - Movimientos de stock transaccionales con bloqueos de fila y conflictos de slug/SKU seguros.
 - Borrado restringido por referencias históricas y guía de contratos en docs/products.md.
 - Diez pruebas CRUD correctas con PostgreSQL real; regresión de API/seguridad, typecheck y build correctos.
+- ImageStorage desacoplado y almacenamiento local, carga JPEG/PNG/WebP con normalización Sharp 0.35.5.
+- Máximo 5 MiB/archivo, seis imágenes/producto, límite de píxeles y rechazo de contenido corrupto o animado.
+- Vista previa propia, media pública condicionada por producto/tienda/categoría/propietario y limpieza compensatoria.
+- Veintidós pruebas de productos correctas: diez CRUD y doce imágenes, con redimensionado/EXIF y animación reales.
+- Build, TypeScript estricto, lint y formato correctos con la integración de almacenamiento.
 
 ## 2026-10-08 — Categorías globales
 

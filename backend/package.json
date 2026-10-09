@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test:products": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/products.e2e.test.js",
+    "test:products": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/products.e2e.test.js .test-dist/test/product-images.e2e.test.js",
     "test:categories": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/admin-categories.e2e.test.js .test-dist/test/public-categories.e2e.test.js",
     "test:businesses": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/seller-business.e2e.test.js .test-dist/test/public-businesses.e2e.test.js",
     "build": "nest build",
@@ -43,7 +43,8 @@
     "passport-jwt": "4.0.1",
     "pg": "8.23.1",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.2"
+    "rxjs": "7.8.2",
+    "sharp": "0.35.5"
   },
   "devDependencies": {
     "@nestjs/cli": "11.0.24",
@@ -51,6 +52,7 @@
     "@types/bcrypt": "6.0.0",
     "@types/cookie-parser": "1.4.10",
     "@types/express": "5.0.6",
+    "@types/multer": "2.3.0",
     "@types/node": "22.18.0",
     "@types/passport-jwt": "4.0.1",
     "@types/pg": "8.23.1",

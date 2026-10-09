@@ -58,3 +58,45 @@ npm run test:products
 Las pruebas usan PostgreSQL real y eliminan únicamente sus fixtures. Comprueban CRUD, roles,
 propiedad, precios decimales, categorías, estados, stock concurrente, unicidad, paginación,
 borrado histórico y contratos OpenAPI.
+
+## Imágenes
+
+ImageStorage es la abstracción de persistencia (save/read/remove); LocalImageStorage guarda archivos
+en `backend/uploads/product-images` al ejecutar los scripts del workspace. No se publica ese directorio
+mediante un servidor estático. Los archivos están excluidos de Git y deben conservarse con la BD.
+Otro proveedor puede implementar la misma interfaz manteniendo las URL relativas de la API.
+
+| Método | Ruta                                      | Resultado                                              |
+| ------ | ----------------------------------------- | ------------------------------------------------------ |
+| POST   | /seller/products/:id/images               | 201, producto actualizado; multipart con un campo file |
+| DELETE | /seller/products/:id/images/:imageId      | 204, elimina imagen propia                             |
+| GET    | /seller/products/:id/images/:imageId/file | WebP; vista previa autenticada del vendedor            |
+| GET    | /media/products/:key                      | WebP público solo para producto y tienda elegibles     |
+
+Hasta seis imágenes por producto; un archivo por solicitud, máximo 5 MiB. Se rechazan campos
+multipart extra y archivos adicionales; exceso de bytes devuelve 413. Se verifica firma, decodificación
+real y coincidencia con MIME JPEG/PNG/WebP. SVG, GIF, PDF y otros formatos reciben 415; imágenes
+corruptas, animadas o de más de 16 millones de píxeles reciben 400 IMAGE_INVALID. No se aceptan
+URL remotas ni nombres de archivo del cliente como rutas.
+
+Sharp 0.35.5 orienta la imagen, limita su lado mayor a 2048 sin ampliar, elimina metadata y convierte
+a WebP (calidad 82). El servidor genera UUID.webp; la respuesta incluye imágenes con id/url/position.
+La primera es mainImage; al borrarla se promueve la siguiente, o queda null si no quedan imágenes.
+Las posiciones conservan el orden de incorporación y pueden tener huecos tras borrar. Las cargas,
+el borrado y los ajustes del mismo producto comparten bloqueos de fila: las cargas concurrentes
+no superan seis imágenes ni duplican posiciones. Un exceso devuelve 409 IMAGE_LIMIT_REACHED.
+
+Los borradores tienen vista previa privada. La ruta pública exige producto ACTIVE con stock positivo,
+categoría activa, tienda ACTIVE y propietario SELLER activo. Un recurso no elegible, desconocido o con
+archivo faltante devuelve 404. Las respuestas WebP son inline y no-store; las públicas permiten
+su uso como imagen desde otros orígenes. La visibilidad se comprueba en cada solicitud, sin invalidar
+bytes que alguien ya hubiera descargado. Los endpoints conservan las cuotas globales.
+
+Si falla la vinculación a BD, se elimina el archivo nuevo. Al borrar una imagen o un producto,
+primero se confirma la operación en BD y luego se limpian sus archivos. Un borrado rechazado por
+historial no elimina archivos. Filesystem y PostgreSQL no comparten transacción: un cierre abrupto
+o fallo de limpieza puede dejar archivos huérfanos; se registra la limpieza fallida sin exponer rutas
+y esos archivos no se sirven sin su fila en BD. No se implementa todavía una tarea de reconciliación.
+
+Referencias oficiales: [carga multipart en NestJS](https://docs.nestjs.com/techniques/file-upload)
+y [opciones de decodificación de Sharp](https://sharp.pixelplumbing.com/api-constructor/).

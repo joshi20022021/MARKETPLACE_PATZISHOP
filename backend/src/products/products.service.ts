@@ -8,6 +8,7 @@ import { PrismaService } from '../database/prisma.service';
 import { Prisma, ProductStatus } from '../generated/prisma/client';
 import { ResourceScopeService } from '../security/resource-scope.service';
 import type { PublicUser } from '../users/public-user';
+import { ImageStorage, discardImages } from '../media/image-storage';
 import { CreateProductDto, UpdateProductDto } from './dto/product-input.dto';
 import { ListProductsDto } from './dto/list-products.dto';
 import {
@@ -22,6 +23,7 @@ export class ProductsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly scopes: ResourceScopeService,
+    private readonly storage: ImageStorage,
   ) {}
 
   async create(user: PublicUser, dto: CreateProductDto): Promise<ProductResponse> {
@@ -181,14 +183,16 @@ export class ProductsService {
   async remove(user: PublicUser, id: string): Promise<void> {
     this.scopes.sellerProduct(user);
     try {
-      await this.prisma.$transaction(async (tx) => {
+      const urls = await this.prisma.$transaction(async (tx) => {
         const product = await this.lockOwn(tx, id, user);
         await this.editable(tx, product.businessId, user);
         await tx.inventoryMovement.deleteMany({
           where: { productId: id, businessId: product.businessId, sellerOrderId: null },
         });
         await tx.product.delete({ where: { id, AND: this.scopes.sellerProduct(user) } });
+        return product.images.map((image) => image.url);
       });
+      await discardImages(this.storage, urls);
     } catch (error) {
       this.writeError(error);
     }

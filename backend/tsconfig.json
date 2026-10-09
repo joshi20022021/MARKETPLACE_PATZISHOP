@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "Node16",
     "moduleResolution": "Node16",
-    "types": ["node"],
+    "types": ["node", "multer"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmit": true
