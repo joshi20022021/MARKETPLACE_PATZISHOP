@@ -4,6 +4,14 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-08 — Productos del vendedor
+
+- ProductsModule con CRUD propio, DTOs estrictos, precio decimal textual y lista paginada con filtros.
+- Estados coherentes con stock, categoría activa y aprobación de la tienda; suspensión bloquea escrituras.
+- Movimientos de stock transaccionales con bloqueos de fila y conflictos de slug/SKU seguros.
+- Borrado restringido por referencias históricas y guía de contratos en docs/products.md.
+- Diez pruebas CRUD correctas con PostgreSQL real; regresión de API/seguridad, typecheck y build correctos.
+
 ## 2026-10-08 — Categorías globales
 
 - CategoriesModule con creación, lista, detalle y edición administrativa limitada a ADMIN.
