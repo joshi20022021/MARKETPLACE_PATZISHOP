@@ -12,6 +12,10 @@ al cierre de una fase completa.
 - Guía inicial en docs/categories.md y pruebas reales de permisos, validación y persistencia.
 - Nueve pruebas administrativas correctas; regresión de catorce pruebas API y dieciséis de seguridad correcta.
 - Typecheck y build correctos, usando el esquema y las dependencias existentes.
+- Consulta pública de categorías activas, paginación y búsqueda literal con proyección explícita.
+- Seed que crea slugs base faltantes y conserva todos los datos administrados de categorías existentes.
+- Diecisiete pruebas de categorías correctas, incluidas consulta pública, OpenAPI y seed repetible.
+- Typecheck, build y npm run check correctos tras integrar las consultas públicas.
 
 ## 2026-10-08 — Gestión de negocios
 

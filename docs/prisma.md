@@ -2,7 +2,7 @@
 
 La fase 3 incorpora Prisma ORM 7.10.0, Client y adaptador PostgreSQL en la misma versión.
 El esquema se explica en [modelo de datos](data-model.md). La fase 4 integra el cliente en NestJS
-mediante PrismaService; las reglas comerciales y de autenticación todavía no están implementadas.
+mediante PrismaService; autenticación, seguridad, negocios y categorías se añaden en las fases 5–8.
 
 ## Archivos
 
@@ -12,6 +12,7 @@ mediante PrismaService; las reglas comerciales y de autenticación todavía no e
 - `backend/src/config/database.ts`: cliente con adaptador PostgreSQL para herramientas CLI.
 - `backend/src/database/`: módulo Prisma inyectable de la API, añadido en la fase 4.
 - `backend/prisma/seed.ts`: ocho categorías iniciales, sin usuarios ni contraseñas.
+- `backend/prisma/categories.ts`: datos base y upsert que preserva ediciones administrativas.
 - `backend/test/`: pruebas de restricciones reales sobre PostgreSQL.
 - `backend/src/generated/prisma/`: cliente generado localmente, excluido de Git.
 
@@ -65,8 +66,10 @@ válidos, emails normalizados y marcas temporales coherentes. Revisarlas al gene
 
 ## Seed y pruebas
 
-El seed hace upsert por slug de las ocho categorías y actualiza sus nombres; no reactiva categorías
-desactivadas ni elimina registros. Se ejecuta manualmente y se puede repetir sin duplicados.
+El seed hace upsert por slug de las ocho categorías y crea solo las faltantes; desde la fase 8 conserva
+todos los datos existentes, incluidos nombres editados y desactivaciones. No elimina registros.
+Se ejecuta manualmente y se puede repetir sin duplicar un mismo slug. Si se renombra un slug base,
+el siguiente seed recrea ese slug como otro registro; detalles en [categorías](categories.md).
 El seed completo con usuarios, tiendas, productos y pedidos se ampliará junto a los módulos
 que implementen sus reglas. Actualmente no hay usuarios de acceso de demostración.
 

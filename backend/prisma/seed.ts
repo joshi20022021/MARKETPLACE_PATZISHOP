@@ -1,29 +1,13 @@
 import { createDatabaseClient } from '../src/config/database';
-
-const categories = [
-  { name: 'Tecnología', slug: 'tecnologia' },
-  { name: 'Ropa', slug: 'ropa' },
-  { name: 'Calzado', slug: 'calzado' },
-  { name: 'Hogar', slug: 'hogar' },
-  { name: 'Accesorios', slug: 'accesorios' },
-  { name: 'Belleza', slug: 'belleza' },
-  { name: 'Alimentos', slug: 'alimentos' },
-  { name: 'Deportes', slug: 'deportes' },
-];
+import { seedCategories } from './categories';
 
 async function main(): Promise<void> {
   const prisma = createDatabaseClient();
   try {
-    await prisma.$transaction(
-      categories.map((category) =>
-        prisma.category.upsert({
-          where: { slug: category.slug },
-          create: category,
-          update: { name: category.name },
-        }),
-      ),
+    await seedCategories(prisma);
+    process.stdout.write(
+      'Seed OK: ocho slugs base asegurados, sin sobrescribir categorías existentes ni crear credenciales.\n',
     );
-    process.stdout.write('Seed OK: ocho categorías globales, sin duplicados ni credenciales.\n');
   } finally {
     await prisma.$disconnect();
   }

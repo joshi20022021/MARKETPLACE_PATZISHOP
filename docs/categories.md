@@ -45,3 +45,34 @@ npm run test:categories
 Las pruebas usan PostgreSQL real y eliminan únicamente sus categorías, productos y usuarios temporales.
 Cubren roles/sesiones actuales, validación, lectura, edición, activación, unicidad concurrente,
 paginación administrativa y conservación de referencias al desactivar.
+`test:categories` ejecuta diecisiete pruebas: nueve administrativas y ocho de consulta pública,
+OpenAPI y preservación de datos al repetir el seed.
+
+## Consulta pública
+
+GET `/api/v1/categories` y GET `/api/v1/categories/:slug` admiten invitados. Solo consultan
+categorías isActive=true y devuelven id, name, slug y description. Una categoría inactiva y un
+slug inexistente reciben el mismo 404 RESOURCE_NOT_FOUND. El detalle usa el slug canónico exacto.
+La lista admite page, limit y search con los mismos límites y orden que la lista administrativa;
+rechaza isActive, parentId y parámetros adicionales. Los límites globales de 120 solicitudes por
+IP/handler en 60 segundos también se aplican a estas rutas y a la administración.
+
+```json
+{
+  "success": true,
+  "data": [],
+  "meta": { "page": 1, "limit": 20, "total": 0, "totalPages": 0 }
+}
+```
+
+La desactivación o reactivación administrativa se refleja en la siguiente consulta pública;
+no borra ni modifica productos. Las reglas de publicación de productos se implementarán en la fase 9.
+Cambiar slug cambia la URL de detalle, sin conservar alias.
+
+## Seed
+
+`npm run db:seed` asegura los ocho slugs base mediante upsert, creando solo los que faltan.
+Si un slug ya existe, conserva todos sus datos, incluida la desactivación y las ediciones administrativas.
+Si se renombra el slug de una categoría base, repetir el seed crea el slug base faltante como otro registro;
+para mantenerla oculta, conservar su slug y desactivarla. No se agregan cuentas ADMIN ni contraseñas.
+Las pruebas del seed usan slugs temporales; no alteran las ocho categorías reales.

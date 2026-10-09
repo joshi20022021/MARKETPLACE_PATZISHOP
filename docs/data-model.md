@@ -105,7 +105,8 @@ Las transiciones y la restauración única se implementarán en la fase de órde
 
 ## Seed inicial
 
-El seed de esta etapa crea o actualiza las ocho categorías globales del MVP sin borrar datos.
+El seed asegura las ocho categorías globales del MVP por slug sin borrar datos. Desde la fase 8
+crea solo las faltantes y conserva los cambios administrativos de registros existentes.
 No crea credenciales ni pedidos ficticios antes de implementar reglas de autenticación y órdenes.
 El seed completo de administrador, vendedores, tiendas, productos, clientes y pedidos se ampliará
 cuando esos servicios existan. El seed no debe ejecutarse automáticamente al aplicar migraciones.
