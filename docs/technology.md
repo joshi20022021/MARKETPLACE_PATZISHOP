@@ -35,6 +35,9 @@ La fase 6 añade @nestjs/throttler 6.7.1, compatible con NestJS 11 y reflect-met
 La política utiliza guards y metadata de NestJS 11, conservando Passport para JWT.
 La fase 7 añade endpoints de negocios usando las dependencias existentes, sin cambiar el lockfile.
 La fase 8 añade categorías y ajusta el seed, también sin dependencias, entorno ni migraciones nuevas.
+La fase 9 añade Sharp 0.35.5 (Node >=20.9, compatible con Node 22.18) y @types/multer 2.3.0;
+Multer ya forma parte de Nest Platform Express. Sharp decodifica y normaliza JPEG/PNG/WebP.
+El lockfile fija también los paquetes nativos opcionales por plataforma; no se cambia Prisma ni NestJS.
 No hay librerías de frontend todavía.
 `npm ci` reproduce las dependencias del lockfile; `npm install` se usa al cambiar manifiestos.
 Se eligió ESLint 10 al comprobar que npm marca ESLint 9 como fuera de soporte.

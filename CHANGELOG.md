@@ -16,6 +16,11 @@ al cierre de una fase completa.
 - Vista previa propia, media pública condicionada por producto/tienda/categoría/propietario y limpieza compensatoria.
 - Veintidós pruebas de productos correctas: diez CRUD y doce imágenes, con redimensionado/EXIF y animación reales.
 - Build, TypeScript estricto, lint y formato correctos con la integración de almacenamiento.
+- npm ci reproducido, cliente Prisma regenerado y regresión completa correcta: 107 pruebas.
+- Cobertura: 22 productos/imágenes, 17 categorías, 15 negocios, 16 seguridad, 14 API, 13 auth y 10 SQL.
+- Build HTTP en production: CRUD, propiedad, precio decimal, multipart real, WebP privado/público, stock y limpieza correctos.
+- Fixtures y archivos temporales eliminados y proceso detenido; Prisma válido, migraciones al día y npm audit sin vulnerabilidades.
+- README, guías y roadmap actualizados; FASE 9 completada. Siguiente etapa: Frontend React.
 
 ## 2026-10-08 — Categorías globales
 

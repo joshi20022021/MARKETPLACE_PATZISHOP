@@ -2,7 +2,7 @@
 
 La fase 3 incorpora Prisma ORM 7.10.0, Client y adaptador PostgreSQL en la misma versión.
 El esquema se explica en [modelo de datos](data-model.md). La fase 4 integra el cliente en NestJS
-mediante PrismaService; autenticación, seguridad, negocios y categorías se añaden en las fases 5–8.
+mediante PrismaService; autenticación, seguridad, negocios, categorías y productos se añaden en las fases 5–9.
 
 ## Archivos
 
@@ -81,7 +81,7 @@ deshaga una transacción: los números públicos de pedido pueden tener huecos.
 Cubren compras con dos tiendas, snapshots y precisión decimal, claves compuestas de aislamiento,
 stock/precios negativos, cantidades de carrito, totales manipulados, SKU por tienda, protección
 de productos históricos y consistencia de movimientos. Estas pruebas SQL no verifican flujos HTTP;
-JWT, guards, negocios y categorías tienen suites propias. Checkout, concurrencia de confirmación
+JWT, guards, negocios, categorías y productos tienen suites propias. Checkout, concurrencia de confirmación
 y transiciones de pedidos siguen pendientes.
 
 ## Dependencias transitivas de la CLI

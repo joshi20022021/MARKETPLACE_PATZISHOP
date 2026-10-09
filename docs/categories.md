@@ -69,7 +69,8 @@ IP/handler en 60 segundos también se aplican a estas rutas y a la administraci�
 ```
 
 La desactivación o reactivación administrativa se refleja en la siguiente consulta pública;
-no borra ni modifica productos. Las reglas de publicación de productos se implementarán en la fase 9.
+no borra ni modifica productos. Desde la fase 9, crear o activar productos exige categoría activa;
+las imágenes públicas también comprueban ese estado. Contratos en [productos](products.md).
 Cambiar slug cambia la URL de detalle, sin conservar alias.
 
 ## Seed

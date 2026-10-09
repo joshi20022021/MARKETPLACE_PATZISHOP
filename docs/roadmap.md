@@ -37,8 +37,9 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–8 completadas. La fase 8 añade gestión ADMIN de categorías globales, activación reversible,
-consulta pública paginada de categorías activas y seed que conserva cambios administrativos.
-Roles, concurrencia, paginación y visibilidad se verifican con PostgreSQL real.
-La siguiente etapa es fase 9 (CRUD de productos); solo se iniciará por petición.
-Consulta [categorías](categories.md), [negocios](businesses.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).
+Fases 1–9 completadas. La fase 9 añade CRUD propio de productos, paginación, precios decimales,
+estados/stock coherentes, movimientos transaccionales y carga validada de múltiples imágenes.
+Propiedad, concurrencia, borrado histórico y visibilidad de media se verifican con PostgreSQL real.
+La siguiente etapa es fase 10 (Frontend React); solo se iniciará por petición.
+El catálogo público de productos corresponde a la fase 11; no hay formularios ni dashboard todavía.
+Consulta [productos](products.md), [categorías](categories.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

@@ -60,7 +60,9 @@ export function configureApp(app: INestApplication): void {
   if (config.getOrThrow<boolean>('SWAGGER_ENABLED')) {
     const builder = new DocumentBuilder()
       .setTitle('PatziShop API')
-      .setDescription('API del marketplace: salud y autenticación con JWT y sesiones rotativas.')
+      .setDescription(
+        'API del marketplace: autenticación, negocios, categorías y productos del vendedor con imágenes.',
+      )
       .addBearerAuth()
       .addCookieAuth(REFRESH_COOKIE)
       .setVersion('1.0')

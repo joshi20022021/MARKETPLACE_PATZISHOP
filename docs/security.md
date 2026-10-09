@@ -1,7 +1,7 @@
 # Seguridad y autorización — fase 6
 
 La API protege por defecto las rutas de controllers NestJS. `@Public()` es una excepción explícita:
-salud, registro, login, refresh, logout y consulta pública de tiendas/categorías admiten invitados.
+salud, registro, login, refresh, logout, consulta pública de tiendas/categorías y media elegible admiten invitados.
 El perfil y la gestión de la tienda propia siguen exigiendo Bearer JWT.
 Swagger es middleware independiente de los guards; permanece desactivado por defecto en production.
 
@@ -73,6 +73,12 @@ La fase 8 aplica Roles ADMIN a todos los endpoints administrativos de categoría
 no concede ADMIN y no se introduce una excepción para SELLER. La proyección pública excluye
 estado, jerarquía y fechas; consulta solo categorías activas y rechaza filtros de visibilidad.
 Las diecisiete pruebas de [categorías](categories.md) usan los guards globales y PostgreSQL real.
+La fase 9 consume sellerProduct en lecturas y escrituras, conservando el filtro de propietario.
+Los bloqueos de fila de producto serializan stock, imágenes y borrado; tienda y categoría se leen
+con FOR SHARE al validar escrituras para coordinar cambios concurrentes. Se deniega editar productos
+de tiendas SUSPENDED/REJECTED. La vista previa de imágenes exige identidad propia; la media pública
+comprueba producto activo, stock positivo, categoría activa, tienda ACTIVE y propietario SELLER activo.
+No hay middleware estático para uploads ni posibilidad de guardar rutas enviadas por el cliente.
 
 ## Pruebas
 
@@ -108,7 +114,9 @@ Los contadores de los handlers son independientes; variar IDs o query strings no
 Salud/readiness quedan exentos para comprobaciones operativas; Swagger y rutas sin handler no
 están cubiertos por el guard. Un JSON de más de 32 KiB se rechaza en middleware con 413
 PAYLOAD_TOO_LARGE antes de llegar a guards o services; JSON malformado devuelve 400 sin reflejarlo.
-Este límite se aplica a JSON; archivos multipart tendrán sus límites al implementar imágenes.
+Este límite se aplica a JSON. Desde la fase 9, la carga multipart de productos admite un archivo
+de hasta 5 MiB, sin campos adicionales y hasta seis imágenes por producto. Formato, píxeles,
+normalización, concurrencia y compensación se detallan en [productos](products.md).
 
 La IP proviene de req.ip. Express conserva trust proxy desactivado; no se confía en X-Forwarded-For
 enviado directamente. Throttler normaliza IPv4 y agrupa IPv6 por /64. Usuarios detrás de una misma

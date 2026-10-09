@@ -58,6 +58,36 @@ npm run test:products
 Las pruebas usan PostgreSQL real y eliminan únicamente sus fixtures. Comprueban CRUD, roles,
 propiedad, precios decimales, categorías, estados, stock concurrente, unicidad, paginación,
 borrado histórico y contratos OpenAPI.
+`test:products` ejecuta veintidós pruebas: diez CRUD y doce de imágenes. Estas últimas incluyen
+archivos reales, orientación/EXIF, WebP animado y cargas concurrentes con limpieza compensatoria.
+Se reprodujo npm ci, se regeneró Prisma y pasaron las 107 pruebas del proyecto. El build HTTP en
+production comprobó CRUD, propiedad, decimales, multipart real, vista previa y media WebP pública,
+transición por stock y eliminación de archivos. Sus cuentas, tienda, categoría, producto e imágenes
+temporales se eliminaron; el proceso se detuvo al terminar.
+
+## Prueba manual
+
+Ejecuta `npm run dev:backend` y abre `http://127.0.0.1:3000/api/docs`. Registra una cuenta SELLER,
+proporciona el accessToken a Authorize y crea su tienda con el flujo de [negocios](businesses.md).
+Obtén un categoryId activo desde GET `/api/v1/categories` y crea un borrador:
+
+```json
+{
+  "categoryId": "<UUID de categoría activa>",
+  "name": "Bolso artesanal",
+  "slug": "bolso-artesanal",
+  "description": "Bolso tejido en Patzicía",
+  "price": "125.50",
+  "sku": "BOLSO-001",
+  "stock": 5,
+  "status": "INACTIVE"
+}
+```
+
+Usa el id devuelto para GET/PATCH/DELETE y para POST images con un archivo JPEG/PNG/WebP.
+La vista previa privada se consulta con Bearer. Una tienda recién creada sigue PENDING y no puede
+activar productos; su aprobación administrativa corresponde a la fase 17. Las pruebas preparan
+sus propias tiendas ACTIVE, sin añadir un atajo de aprobación ni datos de demostración al seed.
 
 ## Imágenes
 

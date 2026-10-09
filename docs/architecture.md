@@ -122,6 +122,11 @@ La fase 8 añade CategoriesModule: administración global exclusiva de ADMIN y c
 paginada de categorías activas. Desactivar conserva referencias; el seed no sobrescribe ediciones.
 La API mantiene categorías planas y reserva parentId para subcategorías posteriores.
 Consulta [categorías](categories.md) para contratos y pruebas del módulo.
+La fase 9 añade ProductsModule: CRUD acotado al vendedor, inventario transaccional y carga de imágenes.
+ImageStorage desacopla la persistencia; LocalImageStorage usa archivos WebP con nombres generados.
+Los archivos se sirven por controllers que comprueban propietario o visibilidad comercial, sin
+exponer el directorio de uploads. Detalles de normalización y compensación en [productos](products.md).
+El catálogo público de productos y las interfaces siguen pendientes.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

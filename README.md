@@ -3,10 +3,10 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 8 — Categorías.** La API permite a ADMIN crear, consultar, editar y desactivar
-categorías globales; los invitados consultan categorías activas con paginación y detalle por slug.
-También ofrece gestión de tienda propia, tiendas públicas y autenticación con permisos y cuotas.
-Las tiendas nacen en PENDING; aprobación administrativa, productos y pantallas siguen pendientes.
+**Estado actual: FASE 9 — CRUD de productos.** El vendedor administra únicamente los productos de
+su tienda, con paginación, precios decimales, stock transaccional y múltiples imágenes validadas.
+La API también ofrece autenticación, negocios y categorías con permisos y cuotas. Las tiendas
+nacen en PENDING; aprobación administrativa, catálogo público de productos y pantallas siguen pendientes.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -33,6 +33,7 @@ La [guía de autenticación](docs/auth.md) explica sesiones, cookies y cómo pro
 La [guía de seguridad](docs/security.md) documenta RBAC, propiedad, cuotas y su integración en futuros módulos.
 La [guía de negocios](docs/businesses.md) explica los cinco endpoints, validaciones y visibilidad pública.
 La [guía de categorías](docs/categories.md) explica la gestión ADMIN, consulta pública y seed repetible.
+La [guía de productos](docs/products.md) explica CRUD propio, estados, inventario, imágenes y pruebas.
 
 ```text
 PROYECTO_VENTAS/
@@ -40,7 +41,7 @@ PROYECTO_VENTAS/
 │   ├── src/              # Componentes, páginas, estado, servicios y rutas
 │   ├── .env.example
 │   └── package.json
-├── backend/              # API NestJS, autenticación, seguridad, negocios y categorías
+├── backend/              # API NestJS, autenticación, negocios, categorías, productos y media
 │   ├── src/              # Módulos por dominio
 │   ├── prisma/           # Esquema, migraciones y seed de categorías
 │   ├── test/             # Integración real con PostgreSQL
@@ -88,6 +89,7 @@ npm run test:auth
 npm run test:security
 npm run test:businesses
 npm run test:categories
+npm run test:products
 npm run check
 ```
 
@@ -100,6 +102,7 @@ en PostgreSQL. `test:api` comprueba la base HTTP de NestJS y la configuración d
 rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican en la aplicación.
 `test:businesses` verifica creación, edición, aislamiento y consulta pública de tiendas con PostgreSQL real.
 `test:categories` verifica gestión ADMIN, activación, consulta pública y conservación de datos en el seed.
+`test:products` verifica CRUD propio, stock concurrente, borrado histórico y carga/visibilidad de imágenes reales.
 
 Para iniciar la API con recompilación automática:
 
@@ -158,7 +161,9 @@ Los detalles de conexión, variables, persistencia y solución de problemas est�
 Para revisar la migración aplicada, ejecuta `npm run prisma:status`.
 El seed asegura ocho slugs de categorías sin sobrescribir ediciones administrativas; los usuarios, tiendas, productos y pedidos
 de demostración se agregarán cuando existan sus reglas de negocio. No hay credenciales de prueba.
-La API usa `/api/v1`; negocios y categorías están disponibles y los demás recursos se incorporarán en sus fases.
+La API usa `/api/v1`; negocios, categorías y productos del vendedor están disponibles.
+Los archivos de productos se guardan en `backend/uploads/product-images`, fuera de Git;
+su conservación y copia deben acompañar a la BD. No hay cuentas de demostración ni tiendas aprobadas en el seed.
 Las capturas se añadirán cuando se implemente la interfaz.
 
-El proyecto avanzará por etapas verificables; la siguiente es **CRUD de productos (fase 9)**.
+El proyecto avanzará por etapas verificables; la siguiente es **Frontend React (fase 10)**.

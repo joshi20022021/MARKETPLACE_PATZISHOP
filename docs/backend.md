@@ -1,11 +1,12 @@
-# API NestJS — fases 4 a 8
+# API NestJS — fases 4 a 9
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
 sesiones; SecurityModule exporta filtros de propiedad. Consulta [autenticación](auth.md) y
 [seguridad](security.md). BusinessesModule implementa gestión y consulta de tiendas;
-CategoriesModule añade administración y consulta pública de categorías. Los demás módulos comerciales
-siguen reservados. Contratos en [negocios](businesses.md) y [categorías](categories.md).
+CategoriesModule añade administración y consulta pública de categorías; ProductsModule añade CRUD
+del vendedor e imágenes. Los demás módulos comerciales siguen reservados. Contratos en
+[negocios](businesses.md), [categorías](categories.md) y [productos](products.md).
 
 ## Archivos y responsabilidades
 
@@ -18,6 +19,8 @@ siguen reservados. Contratos en [negocios](businesses.md) y [categorías](catego
 - `src/security/`: filtros de propiedad, política de cuotas y guard Throttler global.
 - `src/businesses/`: DTOs, gestión de tienda propia y consulta pública paginada de tiendas activas.
 - `src/categories/`: DTOs, gestión ADMIN de categorías y consulta pública paginada de categorías activas.
+- `src/products/`: CRUD propio, stock transaccional, carga/vista previa de imágenes y media pública elegible.
+- `src/media/`: abstracción ImageStorage, archivos locales y limpieza compensatoria.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.
 - `nest-cli.json`, `tsconfig.build.json` y `tsconfig.test.json`: compilación y pruebas con metadata.
@@ -107,6 +110,12 @@ Categorías añade POST/GET `/api/v1/admin/categories` y GET/PATCH `/api/v1/admi
 con Bearer y rol ADMIN, además de GET `/api/v1/categories` y GET `/api/v1/categories/:slug` públicos.
 PATCH permite desactivar sin borrar referencias. Contratos y filtros en [categories.md](categories.md).
 
+Productos añade POST/GET `/api/v1/seller/products` y GET/PATCH/DELETE
+`/api/v1/seller/products/:id`, con Bearer y rol SELLER. Imágenes: POST `/:id/images`,
+DELETE `/:id/images/:imageId` y GET `/:id/images/:imageId/file` bajo la misma base.
+GET `/api/v1/media/products/:key` sirve WebP solo cuando producto/tienda/categoría/propietario
+son elegibles. No se expone `/api/v1/products` todavía. Detalles en [products.md](products.md).
+
 ## Errores y validación
 
 ```json
@@ -144,6 +153,7 @@ npm run test:auth
 npm run test:security
 npm run test:businesses
 npm run test:categories
+npm run test:products
 npm run test:database
 npm run check
 ```
@@ -162,7 +172,9 @@ Quince pruebas de negocios comprueban creación, actualización parcial, conflic
 aislamiento entre vendedores, consulta pública, paginación, búsqueda literal y OpenAPI.
 Diecisiete pruebas de categorías comprueban permisos ADMIN, activación, conflictos concurrentes,
 validación, listas paginadas, visibilidad pública, OpenAPI y seed que conserva cambios administrativos.
-Las seis suites suman 85 pruebas; las demás operaciones comerciales se comprobarán en sus fases.
+Veintidós pruebas de productos comprueban CRUD, aislamiento, stock concurrente, precios, categorías,
+borrado histórico, carga de imágenes, formato real, tamaño/cantidad, normalización, visibilidad y limpieza.
+Las siete suites suman 107 pruebas; las demás operaciones comerciales se comprobarán en sus fases.
 También se comprobó el proceso compilado escuchando en 3000, Swagger oculto por defecto en
 producción y salida con código 1 sin revelar secretos al fallar la conexión de arranque.
 Los procesos usados para estas comprobaciones se detuvieron al terminar.
