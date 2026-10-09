@@ -1,0 +1,12 @@
+import { Module } from '@nestjs/common';
+import { DatabaseModule } from '../database/database.module';
+import { SecurityModule } from '../security/security.module';
+import { AdminCategoriesController } from './admin-categories.controller';
+import { CategoriesService } from './categories.service';
+
+@Module({
+  imports: [DatabaseModule, SecurityModule],
+  controllers: [AdminCategoriesController],
+  providers: [CategoriesService],
+})
+export class CategoriesModule {}

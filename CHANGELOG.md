@@ -4,6 +4,15 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-08 — Categorías globales
+
+- CategoriesModule con creación, lista, detalle y edición administrativa limitada a ADMIN.
+- Categorías planas, DTOs estrictos, activación reversible y conflictos de slug seguros bajo concurrencia.
+- Desactivación que conserva referencias; no se publica eliminación ni gestión de subcategorías.
+- Guía inicial en docs/categories.md y pruebas reales de permisos, validación y persistencia.
+- Nueve pruebas administrativas correctas; regresión de catorce pruebas API y dieciséis de seguridad correcta.
+- Typecheck y build correctos, usando el esquema y las dependencias existentes.
+
 ## 2026-10-08 — Gestión de negocios
 
 - BusinessesModule con creación, consulta y edición de la única tienda del vendedor.
