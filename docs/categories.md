@@ -47,6 +47,9 @@ Cubren roles/sesiones actuales, validación, lectura, edición, activación, uni
 paginación administrativa y conservación de referencias al desactivar.
 `test:categories` ejecuta diecisiete pruebas: nueve administrativas y ocho de consulta pública,
 OpenAPI y preservación de datos al repetir el seed.
+También se comprobó el build HTTP en production: consulta pública, rechazo de invitados y CUSTOMER
+en administración, creación/lectura/desactivación por ADMIN, listas filtradas y Swagger oculto.
+La cuenta y categoría temporales se eliminaron, y el proceso se detuvo al terminar.
 
 ## Consulta pública
 
@@ -76,3 +79,24 @@ Si un slug ya existe, conserva todos sus datos, incluida la desactivación y las
 Si se renombra el slug de una categoría base, repetir el seed crea el slug base faltante como otro registro;
 para mantenerla oculta, conservar su slug y desactivarla. No se agregan cuentas ADMIN ni contraseñas.
 Las pruebas del seed usan slugs temporales; no alteran las ocho categorías reales.
+
+## Prueba manual
+
+Ejecuta `npm run db:seed` y `npm run dev:backend`, y abre `http://127.0.0.1:3000/api/docs`.
+GET `/api/v1/categories` puede consultarse sin autenticación. Para las operaciones administrativas
+se necesita una cuenta ADMIN provisionada por un operador con acceso a la BD; no existe alta HTTP
+de administradores ni una cuenta de demostración en el seed. Inicia sesión según [auth.md](auth.md)
+y proporciona el accessToken a Authorize. Las pruebas automatizadas crean y eliminan sus propias
+identidades ADMIN para verificar el flujo sin dejar cuentas con privilegios.
+
+```json
+{
+  "name": "Artesanías",
+  "slug": "artesanias",
+  "description": "Productos artesanales",
+  "isActive": true
+}
+```
+
+Usa el id devuelto para PATCH con `{ "isActive": false }` y comprueba que el detalle público
+por slug responde 404 mientras el detalle administrativo sigue disponible.

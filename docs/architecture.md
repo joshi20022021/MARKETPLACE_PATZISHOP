@@ -118,6 +118,10 @@ de propietario dentro de las consultas, además de lista pública paginada y det
 La consulta pública exige tienda ACTIVE y propietario SELLER activo; usa una proyección explícita.
 Los demás módulos comerciales y las interfaces de marketplace siguen pendientes.
 Consulta [negocios](businesses.md) para contratos, visibilidad y pruebas reales del módulo.
+La fase 8 añade CategoriesModule: administración global exclusiva de ADMIN y consulta pública
+paginada de categorías activas. Desactivar conserva referencias; el seed no sobrescribe ediciones.
+La API mantiene categorías planas y reserva parentId para subcategorías posteriores.
+Consulta [categorías](categories.md) para contratos y pruebas del módulo.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

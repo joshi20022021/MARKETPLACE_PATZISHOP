@@ -80,8 +80,9 @@ deshaga una transacción: los números públicos de pedido pueden tener huecos.
 
 Cubren compras con dos tiendas, snapshots y precisión decimal, claves compuestas de aislamiento,
 stock/precios negativos, cantidades de carrito, totales manipulados, SKU por tienda, protección
-de productos históricos y consistencia de movimientos. No verifican aún JWT, guards,
-checkout, concurrencia de confirmación ni transiciones de estados: esos servicios no existen.
+de productos históricos y consistencia de movimientos. Estas pruebas SQL no verifican flujos HTTP;
+JWT, guards, negocios y categorías tienen suites propias. Checkout, concurrencia de confirmación
+y transiciones de pedidos siguen pendientes.
 
 ## Dependencias transitivas de la CLI
 

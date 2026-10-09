@@ -1,7 +1,7 @@
 # Seguridad y autorización — fase 6
 
 La API protege por defecto las rutas de controllers NestJS. `@Public()` es una excepción explícita:
-salud, registro, login, refresh, logout y consulta pública de tiendas admiten invitados.
+salud, registro, login, refresh, logout y consulta pública de tiendas/categorías admiten invitados.
 El perfil y la gestión de la tienda propia siguen exigiendo Bearer JWT.
 Swagger es middleware independiente de los guards; permanece desactivado por defecto en production.
 
@@ -69,6 +69,10 @@ la actualización conserva el ámbito en la misma consulta y el DTO rechaza camp
 La consulta pública filtra ACTIVE y propietario SELLER activo sin publicar ownerId ni estado.
 Las reglas de aprobación de tiendas, transiciones de pedidos e inventario corresponden a sus fases.
 Consulta [negocios](businesses.md) para las quince pruebas reales de estos endpoints.
+La fase 8 aplica Roles ADMIN a todos los endpoints administrativos de categorías. El registro
+no concede ADMIN y no se introduce una excepción para SELLER. La proyección pública excluye
+estado, jerarquía y fechas; consulta solo categorías activas y rechaza filtros de visibilidad.
+Las diecisiete pruebas de [categorías](categories.md) usan los guards globales y PostgreSQL real.
 
 ## Pruebas
 

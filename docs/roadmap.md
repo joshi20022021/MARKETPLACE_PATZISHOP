@@ -37,8 +37,8 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–7 completadas. La fase 7 permite crear y administrar la tienda propia del vendedor,
-con estado inicial PENDING, y consultar públicamente tiendas ACTIVE de vendedores activos.
-Roles, propiedad, concurrencia, paginación y visibilidad se verifican con PostgreSQL real.
-La siguiente etapa es fase 8 (categorías); solo se iniciará por petición.
-Consulta [negocios](businesses.md), [autenticación](auth.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).
+Fases 1–8 completadas. La fase 8 añade gestión ADMIN de categorías globales, activación reversible,
+consulta pública paginada de categorías activas y seed que conserva cambios administrativos.
+Roles, concurrencia, paginación y visibilidad se verifican con PostgreSQL real.
+La siguiente etapa es fase 9 (CRUD de productos); solo se iniciará por petición.
+Consulta [categorías](categories.md), [negocios](businesses.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

@@ -16,6 +16,11 @@ al cierre de una fase completa.
 - Seed que crea slugs base faltantes y conserva todos los datos administrados de categorías existentes.
 - Diecisiete pruebas de categorías correctas, incluidas consulta pública, OpenAPI y seed repetible.
 - Typecheck, build y npm run check correctos tras integrar las consultas públicas.
+- Regresión completa correcta: 85 pruebas (17 categorías, 15 negocios, 16 seguridad, 14 API, 13 auth y 10 SQL).
+- Prisma válido y migraciones al día; seed CLI repetido dos veces y npm audit sin vulnerabilidades reportadas.
+- Build HTTP en production: permisos ADMIN, creación/consulta/desactivación, listas filtradas y visibilidad pública correctos.
+- Fixtures eliminadas y proceso detenido; README, roadmap y guías actualizados al estado real.
+- FASE 8 completada; siguiente etapa: CRUD de productos. Subcategorías y pantallas siguen pendientes.
 
 ## 2026-10-08 — Gestión de negocios
 
