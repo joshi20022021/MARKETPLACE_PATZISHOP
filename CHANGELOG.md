@@ -4,6 +4,18 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-11 — Base React, sesión y formularios
+
+- Frontend con React 19, Vite 7, Router 7, Tailwind 4 y TypeScript estricto; scripts desde la raíz.
+- Portada responsive con identidad local, rutas 404, navegación y formularios accesibles.
+- Axios, TanStack Query, Zustand, React Hook Form y Zod conectan registro, login, cuenta y tienda propia.
+- Access token en memoria, renovación compartida, Web Locks entre pestañas y descarte de respuestas antiguas.
+- Cookie HttpOnly vía proxy, CSRF, invalidación de caché y logout confirmado por el servidor.
+- Vitest 4.1.11 corrige los avisos de seguridad de la línea 3; npm audit sin vulnerabilidades.
+- 23 pruebas frontend correctas: contratos, sesión, reintentos, rutas, registro y creación/edición de tienda.
+- Build con TypeScript estricto correcto; guía de uso y límites en docs/frontend.md.
+- La verificación real de navegador y el cierre documental de fase 10 continúan en la siguiente unidad.
+
 ## 2026-10-08 — Productos del vendedor
 
 - ProductsModule con CRUD propio, DTOs estrictos, precio decimal textual y lista paginada con filtros.

@@ -1,0 +1,80 @@
+# Frontend React
+
+La fase 10 incorpora portada responsive, registro de cliente/vendedor, login, cuenta y formulario
+de la tienda propia. El catálogo público, carrito y dashboards completos corresponden a etapas posteriores.
+
+## Desarrollo local
+
+Desde la raíz, instala con `npm ci` y sigue [la preparación del backend](backend.md), incluyendo
+PostgreSQL, variables privadas, generación de Prisma y migraciones. En terminales separadas:
+
+```powershell
+npm run dev:backend
+npm run dev:frontend
+```
+
+Abre **http://localhost:5173**. Vite exige ese puerto y redirige `/api` a `http://127.0.0.1:3000`.
+`VITE_API_URL` es `/api/v1` por defecto; no necesitas un `.env` de frontend para trabajar localmente.
+La plantilla permite configurar una URL HTTP(S) terminada en `/api/v1`, sin credenciales, query ni hash.
+Las variables `VITE_*` son públicas: nunca pongas secretos en ellas.
+
+El backend debe permitir exactamente `http://localhost:5173` en `CORS_ORIGIN`. Usar otro hostname
+o puerto requiere ajustar proxy/origen. La cookie HttpOnly de refresh viaja mediante el proxy;
+todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
+
+| Ruta                      | Acceso      | Comportamiento                             |
+| ------------------------- | ----------- | ------------------------------------------ |
+| `/`                       | Público     | Portada y enlaces de participación         |
+| `/registro?tipo=vendedor` | Público     | Selección inicial de vendedor; nunca ADMIN |
+| `/ingresar`               | Público     | Login, errores y retorno a cuenta/tienda   |
+| `/cuenta`                 | Autenticado | Datos actuales de `GET /auth/me`           |
+| `/cuenta/tienda`          | SELLER      | GET, POST o PATCH de `/seller/business`    |
+| Otras                     | Público     | Página 404                                 |
+
+La tienda nace PENDING. Solo un GET 404 se interpreta como ausencia de tienda; los fallos de red
+y permisos muestran un error con reintento. El formulario permite nombre, slug, descripción,
+contacto y enlaces opcionales de logo/portada. No envía ownerId ni estado. Los enlaces vacíos
+se convierten en null; el servidor conserva la autoridad sobre propiedad y aprobación.
+
+## Sesión y datos
+
+- Zustand conserva access token y usuario únicamente en memoria; no hay persistencia en storage.
+- Al abrir/recargar se intenta refresh una vez. StrictMode no duplica esta inicialización.
+- Axios comparte una promesa de renovación por pestaña y reintenta un 401 como máximo una vez.
+- Web Locks serializa refresh, login, registro y logout entre pestañas del mismo origen.
+  Es necesario un navegador moderno y contexto seguro (HTTPS o localhost).
+- BroadcastChannel comunica cambios de sesión y logout, sin publicar tokens ni contraseñas.
+- Cada cambio de identidad invalida la caché de TanStack Query. Las respuestas privadas de una
+  sesión anterior se descartan, incluso si llegan después del logout o de un nuevo login.
+- Un fallo de red durante refresh se distingue de una sesión anónima y permite reintentar.
+  Si logout falla, se informa y se conserva la cuenta hasta confirmar la respuesta del servidor.
+- Zod valida entradas y respuestas; React Hook Form muestra errores asociados a los campos,
+  limita dobles envíos y acepta contraseñas con el límite UTF-8 real de bcrypt (72 bytes).
+- No se reintentan automáticamente escrituras ni errores 429; la interfaz muestra Retry-After
+  cuando está disponible. La API mantiene sus propios límites, validación y RBAC.
+
+La coordinación se limita a un mismo origen de frontend. No uses simultáneamente varias
+aplicaciones/orígenes que compartan la cookie: no comparten Web Locks ni BroadcastChannel.
+La aplicación bloquea autenticación en navegadores sin Web Locks.
+
+## Comprobaciones y build
+
+```powershell
+npm run test:frontend
+npm run build:frontend
+npm run check
+npm audit
+```
+
+El build primero verifica TypeScript estricto y produce `frontend/dist` (ignorado por Git).
+`npm run preview:frontend` sirve el build en localhost:4173; para probar autenticación debes
+configurar el backend con ese origen y conservar el proxy. Vite es una herramienta de desarrollo,
+no el servidor definitivo de producción. El hosting futuro debe servir el SPA con fallback a
+index.html, HTTPS y `/api` hacia NestJS; despliegue y contenedores completos siguen pendientes.
+
+La interfaz usa tipografía del sistema, SVG propios y una paleta crema/verde/coral. Incluye
+etiquetas, mensajes de estado, foco de navegación, enlace para saltar al contenido y movimiento reducido.
+
+Referencias oficiales: [Vite](https://vite.dev/guide/),
+[React Router](https://reactrouter.com/start/declarative/installation),
+[Tailwind con Vite](https://tailwindcss.com/docs/installation/using-vite).
