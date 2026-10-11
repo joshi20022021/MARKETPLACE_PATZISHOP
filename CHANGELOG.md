@@ -14,9 +14,16 @@ al cierre de una fase completa.
 - Vitest 4.1.11 corrige los avisos de seguridad de la línea 3; npm audit sin vulnerabilidades.
 - 23 pruebas frontend correctas: contratos, sesión, reintentos, rutas, registro y creación/edición de tienda.
 - Build con TypeScript estricto correcto; guía de uso y límites en docs/frontend.md.
-- La verificación real de navegador y el cierre documental de fase 10 continúan en la siguiente unidad.
+- Guía inicial de ejecución y límites; el cierre documental se completa tras verificar el navegador.
 - Corrección de recuperación: un refresh 401 conduce a login al reintentar y un segundo 401
   tras renovar limpia la sesión sin bucles. 24 pruebas frontend correctas, incluida esta regresión.
+- Regresión del backend: 42 pruebas correctas (13 auth, 15 negocios y 14 API), sin cambios de esquema.
+- Brave/API/PostgreSQL: registro, tienda PENDING, edición, recarga, perfil, login y logout entre pestañas correctos.
+- Solo las fixtures propias se eliminaron. Portada revisada en escritorio y ancho móvil comprobado por DOM;
+  las capturas móviles fallaron por timeout de la herramienta y no se declaran verificadas visualmente.
+- README, arquitectura, tecnologías, contribución y roadmap alineados con las rutas implementadas.
+- Instalación reproducida con npm ci/npm 10.9.3; audit sin vulnerabilidades y build frontend correcto.
+- FASE 10 completada. Siguiente etapa: Marketplace público (fase 11), únicamente por petición.
 
 ## 2026-10-08 — Productos del vendedor
 

@@ -4,21 +4,21 @@ Se eligen líneas principales compatibles con Node.js 22.18 y TypeScript 5.9.
 No se utiliza `latest` en los manifiestos. Las dependencias de aplicación se instalarán en su fase,
 después de verificar engines y peerDependencies; las versiones exactas quedarán en manifiestos y lockfile.
 
-| Área            | Tecnología seleccionada                                    | Incorporación |
-| --------------- | ---------------------------------------------------------- | ------------- |
-| Runtime         | Node.js 22.18+, npm 10                                     | Fase 1        |
-| Lenguaje        | TypeScript 5.9.3                                           | Fase 1        |
-| Calidad         | ESLint 10, typescript-eslint 8, Prettier 3                 | Fase 1        |
-| Datos           | PostgreSQL 17, Prisma ORM 7                                | Fases 2–3     |
-| API             | NestJS 11, Express, REST, Swagger                          | Fase 4        |
-| Auth            | Passport, JWT, bcrypt                                      | Fase 5        |
-| Seguridad       | class-validator, class-transformer, Helmet, throttler      | Fases 4–6     |
-| UI              | React 19, Vite 7, React Router 7, Tailwind CSS 4           | Fase 10       |
-| Datos frontend  | Axios, TanStack Query 5                                    | Fase 10       |
-| Formularios     | React Hook Form 7, Zod 4                                   | Fase 10       |
-| Estado pequeño  | Zustand 5                                                  | Fase 10       |
-| Infraestructura | Docker Engine/Desktop, Docker Compose v2                   | Fases 2 y 20  |
-| Tests           | node:test/Nest Testing/Supertest; Vitest frontend previsto | Según módulos |
+| Área            | Tecnología seleccionada                               | Incorporación |
+| --------------- | ----------------------------------------------------- | ------------- |
+| Runtime         | Node.js 22.18+, npm 10                                | Fase 1        |
+| Lenguaje        | TypeScript 5.9.3                                      | Fase 1        |
+| Calidad         | ESLint 10, typescript-eslint 8, Prettier 3            | Fase 1        |
+| Datos           | PostgreSQL 17, Prisma ORM 7                           | Fases 2–3     |
+| API             | NestJS 11, Express, REST, Swagger                     | Fase 4        |
+| Auth            | Passport, JWT, bcrypt                                 | Fase 5        |
+| Seguridad       | class-validator, class-transformer, Helmet, throttler | Fases 4–6     |
+| UI              | React 19, Vite 7, React Router 7, Tailwind CSS 4      | Fase 10       |
+| Datos frontend  | Axios, TanStack Query 5                               | Fase 10       |
+| Formularios     | React Hook Form 7, Zod 4                              | Fase 10       |
+| Estado pequeño  | Zustand 5                                             | Fase 10       |
+| Infraestructura | Docker Engine/Desktop, Docker Compose v2              | Fases 2 y 20  |
+| Tests           | node:test/Nest Testing/Supertest; Vitest 4 frontend   | Según módulos |
 
 ## Configuración instalada
 
@@ -38,7 +38,11 @@ La fase 8 añade categorías y ajusta el seed, también sin dependencias, entorn
 La fase 9 añade Sharp 0.35.5 (Node >=20.9, compatible con Node 22.18) y @types/multer 2.3.0;
 Multer ya forma parte de Nest Platform Express. Sharp decodifica y normaliza JPEG/PNG/WebP.
 El lockfile fija también los paquetes nativos opcionales por plataforma; no se cambia Prisma ni NestJS.
-No hay librerías de frontend todavía.
+La fase 10 añade React/React DOM 19.3.0, Vite 7.3.7, Router 7.18.4, Tailwind y su plugin Vite 4.3.3,
+Axios 1.20.0, TanStack Query 5.104.1, Zustand 5.0.15, React Hook Form 7.90.0, resolvers 5.9.1 y Zod 4.6.6.
+El plugin React es 5.2.0. Vitest 4.1.11, Testing Library React 16.3.3, user-event 14.6.7 y jsdom 26.1.0
+prueban contratos, sesiones y formularios. La línea Vitest 3 se descartó por avisos de seguridad;
+se verificaron engines, peers, build, tests y audit con las versiones fijadas.
 `npm ci` reproduce las dependencias del lockfile; `npm install` se usa al cambiar manifiestos.
 Se eligió ESLint 10 al comprobar que npm marca ESLint 9 como fuera de soporte.
 ESLint 10 admite Node 22.13+ y typescript-eslint 8.57.0 declara compatibilidad con ESLint 10.
@@ -54,4 +58,4 @@ Las líneas elegidas son una base deliberada; no se migrará automáticamente a 
 principal. Prisma CLI, Client y adaptador utilizan la misma versión exacta.
 Su configuración y overrides de dependencias transitivas se documentan en [la guía de Prisma](prisma.md).
 Swagger utiliza js-yaml 5.4.3 mediante un override limitado, explicado en [la guía del backend](backend.md).
-Tailwind 4 utilizará su integración oficial con Vite en la fase 10.
+Tailwind 4 utiliza su integración oficial con Vite desde la fase 10.

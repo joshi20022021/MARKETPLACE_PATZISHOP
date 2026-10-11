@@ -84,8 +84,8 @@ limpieza programada. La revocación se confirma antes de devolver el error al cl
 Un bloqueo transaccional de PostgreSQL por familia serializa refresh y logout. Usar de nuevo
 un token revocado, vencido o de usuario inactivo revoca todos los refresh activos de su familia.
 Dos renovaciones simultáneas con la misma cookie producen una renovación y un rechazo que
-revoca la familia completa. El futuro frontend debe coordinar una única renovación en vuelo
-entre solicitudes y pestañas, y volver al login si recibe 401.
+revoca la familia completa. El frontend coordina una única renovación en vuelo
+entre solicitudes y pestañas, y vuelve al login cuando la renovación devuelve 401.
 
 Cookie patzishop_refresh: HttpOnly, SameSite=Strict, Path=/api/v1/auth, sin Domain y con
 vencimiento absoluto. Secure se activa en production, que requiere HTTPS. El borrado conserva
@@ -136,6 +136,12 @@ IP y handler. Un 429 TOO_MANY_REQUESTS requiere respetar Retry-After. El tamaño
 32 KiB; un exceso devuelve 413. Estos controles se aplican también a endpoints públicos.
 Recuperación de contraseña, verificación de correo, OAuth y un panel para administrar sesiones
 quedan fuera de esta etapa.
+
+Desde la fase 10, [el frontend React](frontend.md) conecta registro, login, perfil y logout con
+estos contratos. Conserva el access token en memoria y usa la cookie HttpOnly para recuperar
+la sesión. Web Locks serializa operaciones entre pestañas; BroadcastChannel propaga cambios sin
+enviar credenciales. Los reintentos descartan respuestas de sesiones anteriores y limpian la
+caché privada al cambiar identidad. La API continúa validando rol, propiedad y familia en BD.
 
 Referencias: [Passport en NestJS](https://docs.nestjs.com/recipes/passport),
 [límite de bcrypt](https://github.com/kelektiv/node.bcrypt.js#security-issues-and-concerns),

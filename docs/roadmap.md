@@ -37,9 +37,11 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–9 completadas. La fase 9 añade CRUD propio de productos, paginación, precios decimales,
-estados/stock coherentes, movimientos transaccionales y carga validada de múltiples imágenes.
-Propiedad, concurrencia, borrado histórico y visibilidad de media se verifican con PostgreSQL real.
-La siguiente etapa es fase 10 (Frontend React); solo se iniciará por petición.
-El catálogo público de productos corresponde a la fase 11; no hay formularios ni dashboard todavía.
+Fases 1–10 completadas. La fase 10 añade React, diseño responsive, rutas públicas/protegidas,
+registro, login, cuenta y formulario de tienda propia conectados a la API. La sesión conserva
+el token en memoria, renueva con cookie HttpOnly y coordina operaciones entre pestañas.
+Build, contratos, formularios y flujos reales se comprueban antes de publicar.
+La siguiente etapa es fase 11 (Marketplace público); solo se iniciará por petición.
+Catálogo, filtros, tienda pública y detalle de producto siguen pendientes, al igual que dashboards completos.
+Consulta [frontend](frontend.md) para ejecución, pruebas y límites de sesión.
 Consulta [productos](products.md), [categorías](categories.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

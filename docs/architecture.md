@@ -84,7 +84,7 @@ con el esquema Prisma y las restricciones SQL.
   revocación y protección mediante encabezado personalizado y origen.
 - El cierre de sesión revoca la familia renovable. El guard JWT consulta usuario y familia activos
   en PostgreSQL en cada petición: logout, reutilización e inactivación deniegan el siguiente acceso.
-  La rotación conserva el vencimiento absoluto; el frontend deberá coordinar una renovación
+  La rotación conserva el vencimiento absoluto; el frontend coordina una renovación
   en vuelo para evitar que peticiones simultáneas provoquen detección de reutilización.
 - Validación DTO, CORS explícito, Helmet, límites de solicitudes y errores sin detalles internos.
 - Se planifica pago contra entrega y simulado; no se almacenan números de tarjetas.
@@ -103,7 +103,7 @@ de carga, error, vacío y confirmación. Las rutas protegidas de React complemen
 
 ## Estado de implementación
 
-Frontend conserva su estructura inicial. Backend tiene Prisma, API NestJS, herramientas de datos
+Frontend implementa React, rutas y formularios conectados. Backend tiene Prisma, API NestJS, herramientas de datos
 y pruebas de integración; su tsconfig extiende `tsconfig.base.json`.
 La fase 2 añade un contenedor PostgreSQL 17, volumen persistente, healthcheck y comprobación SQL.
 La fase 3 añade el esquema Prisma, migración inicial con restricciones SQL y seed de categorías.
@@ -126,7 +126,12 @@ La fase 9 añade ProductsModule: CRUD acotado al vendedor, inventario transaccio
 ImageStorage desacopla la persistencia; LocalImageStorage usa archivos WebP con nombres generados.
 Los archivos se sirven por controllers que comprueban propietario o visibilidad comercial, sin
 exponer el directorio de uploads. Detalles de normalización y compensación en [productos](products.md).
-El catálogo público de productos y las interfaces siguen pendientes.
+La fase 10 añade una SPA con portada, autenticación, cuenta y edición de tienda propia.
+Los contratos Zod, Axios y Zustand residen en services; TanStack Query conserva datos remotos.
+El token se guarda en memoria, refresh usa la cookie HttpOnly y Web Locks coordina pestañas.
+Los guards de React mejoran navegación; NestJS mantiene los controles efectivos de acceso.
+Detalles de proxy, rutas y pruebas en [frontend](frontend.md).
+El catálogo público de productos, carrito, checkout y dashboards completos siguen pendientes.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

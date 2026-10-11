@@ -42,7 +42,7 @@ git status --short
 git diff --check
 ```
 
-`check` verifica configuración, lint y formato. Para cambios en backend, ejecutar también
+`check` verifica configuración, TypeScript del frontend, lint y formato. Para cambios en backend, ejecutar también
 `npm run typecheck`, `npm run build:backend`, `npm run test:api` y las pruebas de datos pertinentes
 con `npm run test:database`. Para autenticación ejecutar también `npm run test:auth`;
 requiere PostgreSQL, migraciones aplicadas y `npm run auth:env`. Las fases funcionales
@@ -54,6 +54,9 @@ Para cambios de categorías o seed ejecutar `npm run test:categories`; verifica 
 visibilidad pública y conservación de ediciones con PostgreSQL real. Contratos en [categories.md](categories.md).
 Para cambios de productos, stock o imágenes ejecutar `npm run test:products`; las fixtures incluyen
 archivos locales y se limpian sin borrar uploads ajenos. Contratos en [products.md](products.md).
+Para cambios en frontend ejecutar `npm run test:frontend` y `npm run build:frontend`, además de
+comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar solo fixtures propias
+en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.
 
 El propietario autorizó publicar el proyecto y guardar los avances mediante commits frecuentes.
 Para una unidad de trabajo, seleccionar explícitamente sus archivos y revisar el contenido preparado:

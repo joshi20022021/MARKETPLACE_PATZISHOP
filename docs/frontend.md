@@ -56,6 +56,9 @@ se convierten en null; el servidor conserva la autoridad sobre propiedad y aprob
 La coordinación se limita a un mismo origen de frontend. No uses simultáneamente varias
 aplicaciones/orígenes que compartan la cookie: no comparten Web Locks ni BroadcastChannel.
 La aplicación bloquea autenticación en navegadores sin Web Locks.
+Para una API con URL absoluta, frontend y API deben pertenecer al mismo sitio compatible con
+SameSite=Strict. Un frontend en localhost y una API directa en 127.0.0.1 no cumplen esa condición;
+usa el proxy predeterminado. No se relaja la cookie para permitir sitios externos.
 
 ## Comprobaciones y build
 
@@ -75,6 +78,23 @@ index.html, HTTPS y `/api` hacia NestJS; despliegue y contenedores completos sig
 La interfaz usa tipografía del sistema, SVG propios y una paleta crema/verde/coral. Incluye
 etiquetas, mensajes de estado, foco de navegación, enlace para saltar al contenido y movimiento reducido.
 
+## Verificación de fase 10
+
+24 pruebas Vitest cubren límites de registro/tienda, renovación simultánea, reintentos 401,
+sesión vencida, descarte de respuestas antiguas, limpieza de caché, rutas por rol y formularios
+con adaptadores Axios. La regresión de backend ejecutó 42 pruebas: 13 de auth, 15 de negocios y 14 de API.
+
+En Brave con la API y PostgreSQL reales se comprobó registro de SELLER, creación PENDING,
+edición, persistencia al recargar, recuperación por cookie, perfil, login y propagación de
+login/logout entre dos pestañas. Se eliminaron únicamente la cuenta y tienda ficticias creadas
+para esa comprobación. Los procesos HTTP de prueba se detienen al terminar.
+
+La portada se inspeccionó visualmente en escritorio. Para el viewport móvil se comprobó el DOM
+y ausencia de desbordamiento horizontal; las capturas posteriores fallaron por timeout de la
+herramienta del navegador, por lo que no se presentan como revisión visual móvil completada.
+No se guardaron credenciales ni capturas de cuentas en el repositorio.
+
 Referencias oficiales: [Vite](https://vite.dev/guide/),
 [React Router](https://reactrouter.com/start/declarative/installation),
-[Tailwind con Vite](https://tailwindcss.com/docs/installation/using-vite).
+[Tailwind con Vite](https://tailwindcss.com/docs/installation/using-vite) y
+[proxy de preview](https://vite.dev/config/preview-options#preview-proxy).

@@ -3,10 +3,11 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 9 — CRUD de productos.** El vendedor administra únicamente los productos de
-su tienda, con paginación, precios decimales, stock transaccional y múltiples imágenes validadas.
-La API también ofrece autenticación, negocios y categorías con permisos y cuotas. Las tiendas
-nacen en PENDING; aprobación administrativa, catálogo público de productos y pantallas siguen pendientes.
+**Estado actual: FASE 10 — Frontend React.** Portada responsive, registro de cliente/vendedor,
+login, sesión renovable, cuenta y formulario de tienda propia conectados a la API.
+El backend ofrece productos con inventario e imágenes, negocios y categorías con permisos y cuotas.
+Las tiendas nacen en PENDING; aprobación administrativa, catálogo público de productos y dashboards
+completos siguen pendientes.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -34,10 +35,11 @@ La [guía de seguridad](docs/security.md) documenta RBAC, propiedad, cuotas y su
 La [guía de negocios](docs/businesses.md) explica los cinco endpoints, validaciones y visibilidad pública.
 La [guía de categorías](docs/categories.md) explica la gestión ADMIN, consulta pública y seed repetible.
 La [guía de productos](docs/products.md) explica CRUD propio, estados, inventario, imágenes y pruebas.
+La [guía del frontend](docs/frontend.md) explica rutas, formularios, sesión y proxy local.
 
 ```text
 PROYECTO_VENTAS/
-├── frontend/             # Workspace reservado para React (fase 10)
+├── frontend/             # SPA React: portada, autenticación, cuenta y tienda propia
 │   ├── src/              # Componentes, páginas, estado, servicios y rutas
 │   ├── .env.example
 │   └── package.json
@@ -90,10 +92,12 @@ npm run test:security
 npm run test:businesses
 npm run test:categories
 npm run test:products
+npm run test:frontend
+npm run build:frontend
 npm run check
 ```
 
-`check` verifica los workspaces, la estructura, la configuración estricta, ESLint y el formato.
+`check` verifica los workspaces, la estructura, TypeScript del frontend, ESLint y el formato.
 Debe finalizar con código 0 y el mensaje `FASE 1 OK`, sin errores de lint ni formato.
 `typecheck` comprueba el código TypeScript del backend y `test:database` verifica restricciones
 en PostgreSQL. `test:api` comprueba la base HTTP de NestJS y la configuración del entorno.
@@ -103,6 +107,8 @@ rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican e
 `test:businesses` verifica creación, edición, aislamiento y consulta pública de tiendas con PostgreSQL real.
 `test:categories` verifica gestión ADMIN, activación, consulta pública y conservación de datos en el seed.
 `test:products` verifica CRUD propio, stock concurrente, borrado histórico y carga/visibilidad de imágenes reales.
+`test:frontend` verifica contratos, renovación, rutas, formularios y conexión simulada a la API.
+`build:frontend` verifica TypeScript estricto y genera el SPA en `frontend/dist`.
 
 Para iniciar la API con recompilación automática:
 
@@ -113,6 +119,17 @@ npm run dev:backend
 Salud: `http://127.0.0.1:3000/api/v1/health`. Conexión PostgreSQL:
 `http://127.0.0.1:3000/api/v1/health/ready`. Swagger: `http://127.0.0.1:3000/api/docs`.
 Detén el servidor con Ctrl+C. Para ejecutar el build, utiliza `npm run start:backend`.
+
+Con la API iniciada, abre otra terminal y ejecuta:
+
+```powershell
+npm run dev:frontend
+```
+
+Abre **http://localhost:5173**. El proxy conecta `/api` con NestJS en 127.0.0.1:3000.
+Puedes registrar una cuenta de vendedor y crear su tienda; el estado inicial es «En revisión».
+No se incluyen credenciales de administrador ni cuentas de demostración. Consulta la
+[guía del frontend](docs/frontend.md) para configurar otros orígenes y probar el build.
 
 Para dar formato tras editar archivos:
 
@@ -127,7 +144,7 @@ El `.env` raíz configura Docker; `npm run db:env` lo genera con contraseña ale
 `npm run db:backend-env` crea la conexión Prisma en `backend/.env` desde los datos locales,
 sin mostrar secretos ni sobrescribir un entorno existente. NestJS valida su entorno antes de iniciar.
 `npm run auth:env` genera el secreto JWT faltante sin mostrarlo ni cambiar un secreto existente.
-Frontend se configurará en la fase 10.
+Frontend usa `VITE_API_URL=/api/v1` por defecto; su `.env` es opcional en desarrollo local.
 Los secretos están vacíos deliberadamente y deben generarse localmente. Nunca versionar `.env`.
 Toda variable `VITE_*` se expone al navegador y debe contener exclusivamente configuración pública.
 
@@ -164,6 +181,7 @@ de demostración se agregarán cuando existan sus reglas de negocio. No hay cred
 La API usa `/api/v1`; negocios, categorías y productos del vendedor están disponibles.
 Los archivos de productos se guardan en `backend/uploads/product-images`, fuera de Git;
 su conservación y copia deben acompañar a la BD. No hay cuentas de demostración ni tiendas aprobadas en el seed.
-Las capturas se añadirán cuando se implemente la interfaz.
+Las capturas de documentación se consolidarán en la fase 21; las comprobaciones actuales de
+navegador y sus límites se registran en [docs/frontend.md](docs/frontend.md).
 
-El proyecto avanzará por etapas verificables; la siguiente es **Frontend React (fase 10)**.
+El proyecto avanzará por etapas verificables; la siguiente es **Marketplace público (fase 11)**.
