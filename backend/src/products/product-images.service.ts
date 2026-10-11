@@ -11,6 +11,7 @@ import { ResourceScopeService } from '../security/resource-scope.service';
 import type { PublicUser } from '../users/public-user';
 import { PRODUCT_SELECT, ProductResponse, productResponse } from './dto/product-response.dto';
 import { ProductsService } from './products.service';
+import { PUBLIC_PRODUCT_SCOPE } from './public-product-scope';
 
 export const MAX_PRODUCT_IMAGES = 6;
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
@@ -100,12 +101,7 @@ export class ProductImagesService {
       await this.prisma.productImage.findFirst({
         where: {
           url,
-          product: {
-            status: 'ACTIVE',
-            stock: { gt: 0 },
-            category: { isActive: true },
-            business: { status: 'ACTIVE', owner: { isActive: true, role: 'SELLER' } },
-          },
+          product: PUBLIC_PRODUCT_SCOPE,
         },
         select: { id: true },
       }),

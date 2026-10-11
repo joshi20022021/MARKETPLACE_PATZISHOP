@@ -4,6 +4,14 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-11 — Catálogo público
+
+- GET público de productos y detalle por slug con proyección comercial explícita y precios decimales.
+- Filtros por búsqueda, categoría, tienda y rango de precios; orden estable y páginas acotadas.
+- Catálogo y media comparten publicación: producto disponible, categoría activa y tienda/propietario válidos.
+- Ocho pruebas nuevas correctas con PostgreSQL real; TypeScript y build backend correctos.
+- Contratos documentados en docs/marketplace.md; las pantallas y su verificación continúan en esta fase.
+
 ## 2026-10-11 — Base React, sesión y formularios
 
 - Frontend con React 19, Vite 7, Router 7, Tailwind 4 y TypeScript estricto; scripts desde la raíz.

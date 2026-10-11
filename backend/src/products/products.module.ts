@@ -6,9 +6,16 @@ import { SellerProductsController } from './seller-products.controller';
 import { ImageStorageModule } from '../media/image-storage.module';
 import { ProductImagesController, ProductMediaController } from './product-images.controller';
 import { ProductImagesService } from './product-images.service';
+import { PublicProductsController } from './public-products.controller';
+import { PublicProductsService } from './public-products.service';
 @Module({
   imports: [DatabaseModule, SecurityModule, ImageStorageModule],
-  controllers: [SellerProductsController, ProductImagesController, ProductMediaController],
-  providers: [ProductsService, ProductImagesService],
+  controllers: [
+    SellerProductsController,
+    ProductImagesController,
+    ProductMediaController,
+    PublicProductsController,
+  ],
+  providers: [ProductsService, ProductImagesService, PublicProductsService],
 })
 export class ProductsModule {}
