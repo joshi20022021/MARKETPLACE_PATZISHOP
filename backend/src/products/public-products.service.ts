@@ -52,16 +52,17 @@ export class PublicProductsService {
         ? [{ createdAt: 'desc' }, { id: 'desc' }]
         : [{ price: query.sort === 'price-asc' ? 'asc' : 'desc' }, { id: 'asc' }];
     const [total, products] = await this.prisma.$transaction(
-      [
-        this.prisma.product.count({ where }),
-        this.prisma.product.findMany({
+      async (tx) => {
+        const total = await tx.product.count({ where });
+        const products = await tx.product.findMany({
           where,
           select: PUBLIC_PRODUCT_SELECT,
           orderBy,
           skip: (query.page - 1) * query.limit,
           take: query.limit,
-        }),
-      ],
+        });
+        return [total, products] as const;
+      },
       { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead },
     );
     return {

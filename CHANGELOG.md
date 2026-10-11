@@ -11,6 +11,9 @@ al cierre de una fase completa.
 - Catálogo y media comparten publicación: producto disponible, categoría activa y tienda/propietario válidos.
 - Ocho pruebas nuevas correctas con PostgreSQL real; TypeScript y build backend correctos.
 - Contratos documentados en docs/marketplace.md; las pantallas y su verificación continúan en esta fase.
+- Conteo y lectura del catálogo se ejecutan secuencialmente dentro de RepeatableRead.
+- La regresión de seguridad reconoce el nuevo GET público y conserva el rechazo de filtros privilegiados.
+- Regresión correcta: 16 pruebas de seguridad, 14 de API y 10 de restricciones SQL; build backend correcto.
 
 ## 2026-10-11 — Base React, sesión y formularios
 
