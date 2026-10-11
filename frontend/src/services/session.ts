@@ -141,7 +141,11 @@ api.interceptors.response.use(
   async (error: unknown) => {
     if (!axios.isAxiosError(error) || !error.config || error.response?.status !== 401) throw error;
     const config = error.config as AuthConfig;
-    if (config.retried || config.sessionEpoch !== useSession.getState().epoch) throw error;
+    if (config.sessionEpoch !== useSession.getState().epoch) throw error;
+    if (config.retried) {
+      clearSession();
+      throw error;
+    }
     config.retried = true;
     if (config.headers.get('Authorization') === `Bearer ${useSession.getState().token}`)
       await refreshSession();

@@ -15,6 +15,8 @@ al cierre de una fase completa.
 - 23 pruebas frontend correctas: contratos, sesión, reintentos, rutas, registro y creación/edición de tienda.
 - Build con TypeScript estricto correcto; guía de uso y límites en docs/frontend.md.
 - La verificación real de navegador y el cierre documental de fase 10 continúan en la siguiente unidad.
+- Corrección de recuperación: un refresh 401 conduce a login al reintentar y un segundo 401
+  tras renovar limpia la sesión sin bucles. 24 pruebas frontend correctas, incluida esta regresión.
 
 ## 2026-10-08 — Productos del vendedor
 

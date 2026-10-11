@@ -18,7 +18,10 @@ export function SessionGate({ seller = false }: { seller?: boolean }) {
           className="button"
           onClick={() => {
             useSession.setState({ status: 'loading' });
-            void refreshSession().catch(() => useSession.setState({ status: 'unavailable' }));
+            void refreshSession().catch(() => {
+              if (useSession.getState().status === 'loading')
+                useSession.setState({ status: 'unavailable' });
+            });
           }}
         >
           Reintentar

@@ -175,3 +175,20 @@ it('una caída de API no se confunde con una tienda nueva', async () => {
   expect(await screen.findByRole('alert')).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Crear mi tienda' })).toBeNull();
 });
+
+it('un reintento de sesión vencida conduce al login en lugar de mostrar fallo de red', async () => {
+  useSession.setState({ status: 'unavailable' });
+  authTransport.defaults.adapter = async (config) => {
+    throw new AxiosError(
+      'Expired',
+      'ERR_BAD_REQUEST',
+      config,
+      undefined,
+      response(config, {}, 401),
+    );
+  };
+  open('/cuenta');
+  await userEvent.click(screen.getByRole('button', { name: 'Reintentar' }));
+  expect(await screen.findByRole('heading', { name: 'Ingresa a PatziShop' })).toBeTruthy();
+  expect(useSession.getState().status).toBe('guest');
+});

@@ -85,6 +85,7 @@ describe('Sesiones y renovación', () => {
     await expect(api.get('/auth/me')).rejects.toBeInstanceOf(AxiosError);
     expect(adapter).toHaveBeenCalledTimes(2);
     expect(refresh).toHaveBeenCalledTimes(1);
+    expect(useSession.getState().status).toBe('guest');
   });
   it('limpia la cuenta y la caché cuando la cookie deja de ser válida', async () => {
     queryClient.setQueryData(['private'], user);
