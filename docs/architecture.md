@@ -116,7 +116,7 @@ de propiedad, límites de solicitudes y de tamaño JSON. El rol y la sesión se 
 La fase 7 añade BusinessesModule: creación, consulta y edición de la tienda propia con filtros
 de propietario dentro de las consultas, además de lista pública paginada y detalle por slug.
 La consulta pública exige tienda ACTIVE y propietario SELLER activo; usa una proyección explícita.
-Los demás módulos comerciales y las interfaces de marketplace siguen pendientes.
+Carrito, checkout, órdenes y dashboards completos siguen pendientes.
 Consulta [negocios](businesses.md) para contratos, visibilidad y pruebas reales del módulo.
 La fase 8 añade CategoriesModule: administración global exclusiva de ADMIN y consulta pública
 paginada de categorías activas. Desactivar conserva referencias; el seed no sobrescribe ediciones.
@@ -131,7 +131,11 @@ Los contratos Zod, Axios y Zustand residen en services; TanStack Query conserva 
 El token se guarda en memoria, refresh usa la cookie HttpOnly y Web Locks coordina pestañas.
 Los guards de React mejoran navegación; NestJS mantiene los controles efectivos de acceso.
 Detalles de proxy, rutas y pruebas en [frontend](frontend.md).
-El catálogo público de productos, carrito, checkout y dashboards completos siguen pendientes.
+La fase 11 añade consultas públicas de productos con proyección explícita y un filtro compartido
+con la media pública. Conteo y datos se leen secuencialmente dentro de RepeatableRead.
+React incorpora catálogo, filtros por URL, directorio, tienda pública y galería de producto.
+Axios público funciona sin token ni renovación de sesión; las páginas se cargan bajo demanda.
+Detalles en [marketplace](marketplace.md). Carrito, checkout y dashboards completos siguen pendientes.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

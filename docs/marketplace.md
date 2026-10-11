@@ -70,4 +70,7 @@ npm run check
 
 La prueba de marketplace usa PostgreSQL real y elimina solo sus propias fixtures. Comprueba
 publicación, proyección, filtros, precisión, orden, páginas, validación, cambio de slug y OpenAPI.
+La fase verificó 70 pruebas backend (8 marketplace, 22 productos, 16 seguridad, 14 API y 10 SQL)
+y 36 frontend. Builds y check correctos; npm audit sin vulnerabilidades.
+La revisión de navegador y sus límites de captura se detallan en [frontend](frontend.md).
 Preparación y arranque: [frontend](frontend.md), [backend](backend.md) y [base de datos](database.md).

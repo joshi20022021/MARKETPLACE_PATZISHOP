@@ -3,11 +3,12 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 10 — Frontend React.** Portada responsive, registro de cliente/vendedor,
-login, sesión renovable, cuenta y formulario de tienda propia conectados a la API.
-El backend ofrece productos con inventario e imágenes, negocios y categorías con permisos y cuotas.
-Las tiendas nacen en PENDING; aprobación administrativa, catálogo público de productos y dashboards
-completos siguen pendientes.
+**Estado actual: FASE 11 — Marketplace público.** Catálogo con búsqueda, categorías, precios,
+orden y paginación; directorio de tiendas, tienda pública y detalle con galería conectados a la API.
+También incluye registro, login, sesión renovable, cuenta y formulario de tienda propia.
+Solo se muestran productos disponibles de tiendas ACTIVE y vendedores activos.
+Las tiendas nacen en PENDING; aprobación administrativa, carrito, checkout y dashboards completos
+siguen pendientes.
 Las características siguientes son el alcance planificado.
 
 ## Alcance del MVP
@@ -36,10 +37,11 @@ La [guía de negocios](docs/businesses.md) explica los cinco endpoints, validaci
 La [guía de categorías](docs/categories.md) explica la gestión ADMIN, consulta pública y seed repetible.
 La [guía de productos](docs/products.md) explica CRUD propio, estados, inventario, imágenes y pruebas.
 La [guía del frontend](docs/frontend.md) explica rutas, formularios, sesión y proxy local.
+La [guía del marketplace](docs/marketplace.md) explica catálogo público, filtros y visibilidad.
 
 ```text
 PROYECTO_VENTAS/
-├── frontend/             # SPA React: portada, autenticación, cuenta y tienda propia
+├── frontend/             # SPA React: marketplace, autenticación, cuenta y tienda propia
 │   ├── src/              # Componentes, páginas, estado, servicios y rutas
 │   ├── .env.example
 │   └── package.json
@@ -92,6 +94,7 @@ npm run test:security
 npm run test:businesses
 npm run test:categories
 npm run test:products
+npm run test:marketplace
 npm run test:frontend
 npm run build:frontend
 npm run check
@@ -107,6 +110,7 @@ rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican e
 `test:businesses` verifica creación, edición, aislamiento y consulta pública de tiendas con PostgreSQL real.
 `test:categories` verifica gestión ADMIN, activación, consulta pública y conservación de datos en el seed.
 `test:products` verifica CRUD propio, stock concurrente, borrado histórico y carga/visibilidad de imágenes reales.
+`test:marketplace` verifica catálogo público, filtros, proyección comercial, páginas y visibilidad con PostgreSQL.
 `test:frontend` verifica contratos, renovación, rutas, formularios y conexión simulada a la API.
 `build:frontend` verifica TypeScript estricto y genera el SPA en `frontend/dist`.
 
@@ -127,6 +131,7 @@ npm run dev:frontend
 ```
 
 Abre **http://localhost:5173**. El proxy conecta `/api` con NestJS en 127.0.0.1:3000.
+El catálogo está en `/catalogo` y el directorio en `/tiendas`; muestran estados vacíos si no hay publicaciones elegibles.
 Puedes registrar una cuenta de vendedor y crear su tienda; el estado inicial es «En revisión».
 No se incluyen credenciales de administrador ni cuentas de demostración. Consulta la
 [guía del frontend](docs/frontend.md) para configurar otros orígenes y probar el build.

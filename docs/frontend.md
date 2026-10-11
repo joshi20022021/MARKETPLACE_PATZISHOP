@@ -1,7 +1,8 @@
 # Frontend React
 
 La fase 10 incorpora portada responsive, registro de cliente/vendedor, login, cuenta y formulario
-de la tienda propia. El catálogo público, carrito y dashboards completos corresponden a etapas posteriores.
+de la tienda propia. La fase 11 añade catálogo público, filtros, tiendas y galería de producto.
+Carrito y dashboards completos corresponden a etapas posteriores.
 
 ## Desarrollo local
 
@@ -25,6 +26,10 @@ todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 | Ruta                      | Acceso      | Comportamiento                             |
 | ------------------------- | ----------- | ------------------------------------------ |
 | `/`                       | Público     | Portada y enlaces de participación         |
+| `/catalogo`               | Público     | Productos, filtros y páginas en la URL     |
+| `/tiendas`                | Público     | Directorio con búsqueda y páginas          |
+| `/tiendas/:slug`          | Público     | Contacto y catálogo del negocio            |
+| `/productos/:slug`        | Público     | Detalle, precio y galería                  |
 | `/registro?tipo=vendedor` | Público     | Selección inicial de vendedor; nunca ADMIN |
 | `/ingresar`               | Público     | Login, errores y retorno a cuenta/tienda   |
 | `/cuenta`                 | Autenticado | Datos actuales de `GET /auth/me`           |
@@ -98,3 +103,22 @@ Referencias oficiales: [Vite](https://vite.dev/guide/),
 [React Router](https://reactrouter.com/start/declarative/installation),
 [Tailwind con Vite](https://tailwindcss.com/docs/installation/using-vite) y
 [proxy de preview](https://vite.dev/config/preview-options#preview-proxy).
+
+## Verificación de fase 11
+
+36 pruebas frontend correctas, incluidas 12 nuevas de contratos públicos, categorías paginadas,
+transporte sin Bearer/refresh, filtros, galería, tienda, directorio y recuperación de errores.
+Vitest ejecuta archivos secuencialmente para evitar múltiples entornos jsdom simultáneos.
+Las rutas de marketplace, cuenta y tienda propia se cargan bajo demanda con Suspense.
+Build y TypeScript estricto correctos; el paquete inicial queda por debajo del aviso de 500 kB de Vite.
+
+Con Brave, NestJS y PostgreSQL se comprobaron filtros combinados, orden, segunda página,
+navegación atrás, detalle, selección de imágenes reales, contacto y catálogo de tienda,
+y búsqueda del directorio. Se usaron 14 productos, una tienda y una categoría temporales propios,
+eliminados al terminar junto con su cuenta e imágenes; el seed permanece sin cambios.
+
+Catálogo y detalle se revisaron visualmente en escritorio; el detalle también en móvil.
+El DOM de catálogo y tienda no mostró desbordamiento horizontal en anchos móviles
+(356 y 434 píxeles CSS respectivamente). Las capturas de catálogo y tienda móviles agotaron
+el tiempo de la herramienta; no se declaran revisadas visualmente. El viewport se restauró.
+Contratos, rutas y límites en [marketplace](marketplace.md).

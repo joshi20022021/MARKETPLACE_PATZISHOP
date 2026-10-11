@@ -10,7 +10,7 @@ al cierre de una fase completa.
 - Filtros por búsqueda, categoría, tienda y rango de precios; orden estable y páginas acotadas.
 - Catálogo y media comparten publicación: producto disponible, categoría activa y tienda/propietario válidos.
 - Ocho pruebas nuevas correctas con PostgreSQL real; TypeScript y build backend correctos.
-- Contratos documentados en docs/marketplace.md; las pantallas y su verificación continúan en esta fase.
+- Contratos, rutas y límites documentados en docs/marketplace.md.
 - Conteo y lectura del catálogo se ejecutan secuencialmente dentro de RepeatableRead.
 - La regresión de seguridad reconoce el nuevo GET público y conserva el rechazo de filtros privilegiados.
 - Regresión correcta: 16 pruebas de seguridad, 14 de API y 10 de restricciones SQL; build backend correcto.
@@ -22,6 +22,8 @@ al cierre de una fase completa.
 - Catálogo/detalle revisados visualmente en escritorio; detalle también en móvil. Catálogo/tienda móvil
   sin desbordamiento por DOM; sus capturas agotaron el tiempo de la herramienta y no se declaran revisadas visualmente.
 - Fixtures propias retiradas: cuenta, tienda, categoría, 14 productos y dos imágenes. Seed y dependencias sin cambios.
+- Cierre de fase: 70 pruebas backend y 36 frontend correctas; builds, check y audit sin vulnerabilidades.
+- README, roadmap y guías alineados con FASE 11 completada. Siguiente etapa: Carrito (fase 12), por petición.
 
 ## 2026-10-11 — Base React, sesión y formularios
 

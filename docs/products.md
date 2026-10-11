@@ -48,7 +48,8 @@ nombre o SKU sin distinguir mayúsculas, %, _ y barra inversa literales), catego
 Orden createdAt descendente e id descendente; total y página comparten snapshot RepeatableRead.
 Respuesta `{ success: true, data: [...], meta: { page, limit, total, totalPages } }`.
 Todos los filtros conservan el ámbito de propietario en SQL. Sin tienda, la lista está vacía;
-crear exige una tienda y devuelve 404 si falta. No se publica catálogo `/products` en esta fase.
+crear exige una tienda y devuelve 404 si falta. La fase 11 incorpora el catálogo público
+`/products` y el detalle por slug; contratos y visibilidad en [marketplace](marketplace.md).
 
 ```powershell
 npm run db:up

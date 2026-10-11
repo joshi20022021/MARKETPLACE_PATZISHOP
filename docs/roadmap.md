@@ -37,11 +37,11 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–10 completadas. La fase 10 añade React, diseño responsive, rutas públicas/protegidas,
-registro, login, cuenta y formulario de tienda propia conectados a la API. La sesión conserva
-el token en memoria, renueva con cookie HttpOnly y coordina operaciones entre pestañas.
-Build, contratos, formularios y flujos reales se comprueban antes de publicar.
-La siguiente etapa es fase 11 (Marketplace público); solo se iniciará por petición.
-Catálogo, filtros, tienda pública y detalle de producto siguen pendientes, al igual que dashboards completos.
+Fases 1–11 completadas. React ofrece sesión, formularios y marketplace público conectado a NestJS.
+La fase 11 añade catálogo con filtros y paginación en la URL, directorio, tienda pública y detalle con galería.
+El backend limita las consultas a productos disponibles de categorías, tiendas y vendedores activos.
+La siguiente etapa es fase 12 (Carrito); solo se iniciará por petición.
+Checkout, órdenes y dashboards completos siguen pendientes.
 Consulta [frontend](frontend.md) para ejecución, pruebas y límites de sesión.
+Consulta [marketplace](marketplace.md) para rutas, filtros y comprobaciones de fase 11.
 Consulta [productos](products.md), [categorías](categories.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

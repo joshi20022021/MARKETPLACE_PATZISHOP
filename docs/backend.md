@@ -1,12 +1,13 @@
-# API NestJS — fases 4 a 9
+# API NestJS — fases 4 a 11
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
 sesiones; SecurityModule exporta filtros de propiedad. Consulta [autenticación](auth.md) y
 [seguridad](security.md). BusinessesModule implementa gestión y consulta de tiendas;
 CategoriesModule añade administración y consulta pública de categorías; ProductsModule añade CRUD
-del vendedor e imágenes. Los demás módulos comerciales siguen reservados. Contratos en
+del vendedor, imágenes y catálogo público con filtros. Los demás módulos comerciales siguen reservados. Contratos en
 [negocios](businesses.md), [categorías](categories.md) y [productos](products.md).
+La consulta pública de productos está documentada en [marketplace](marketplace.md).
 
 ## Archivos y responsabilidades
 
@@ -20,6 +21,7 @@ del vendedor e imágenes. Los demás módulos comerciales siguen reservados. Con
 - `src/businesses/`: DTOs, gestión de tienda propia y consulta pública paginada de tiendas activas.
 - `src/categories/`: DTOs, gestión ADMIN de categorías y consulta pública paginada de categorías activas.
 - `src/products/`: CRUD propio, stock transaccional, carga/vista previa de imágenes y media pública elegible.
+- `src/products/public-*`: lista y detalle públicos con filtros y proyección comercial explícita.
 - `src/media/`: abstracción ImageStorage, archivos locales y limpieza compensatoria.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.

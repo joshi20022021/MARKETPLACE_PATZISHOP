@@ -114,9 +114,11 @@ Una página posterior a la última devuelve data vacío y conserva total/totalPa
 peticiones, nuevas tiendas o cambios de visibilidad pueden mover los resultados del directorio.
 La proyección pública contiene id, name, slug, description, logo, banner, email, phone y address:
 son los datos comerciales de contacto. No incluye ownerId, información del usuario ni moderación.
-El detalle devuelve esa proyección directamente. Todavía no incluye catálogo de productos.
+El detalle devuelve esa proyección directamente. El frontend combina esta respuesta con
+`GET /products?businessSlug=...` para mostrar el catálogo propio del negocio.
 
 El seed sigue incluyendo solo ocho categorías. Una tienda recién registrada queda PENDING y no
 aparece públicamente. Las pruebas preparan sus propias tiendas ACTIVE directamente en BD para
 comprobar visibilidad; la API de aprobación se implementará en la fase 17. No se publica un atajo
-para activar tiendas ni credenciales de demostración. La página visual corresponde a la fase 11.
+para activar tiendas ni credenciales de demostración. La página visual está implementada en
+la fase 11; consulta [marketplace](marketplace.md).
