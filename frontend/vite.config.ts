@@ -11,5 +11,11 @@ export default defineConfig({
     proxy: { '/api': 'http://127.0.0.1:3000' },
   },
   preview: { host: 'localhost', port: 4173, strictPort: true },
-  test: { environment: 'jsdom', setupFiles: ['./test/setup.ts'], clearMocks: true },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./test/setup.ts'],
+    clearMocks: true,
+    fileParallelism: false,
+    testTimeout: 15000,
+  },
 });

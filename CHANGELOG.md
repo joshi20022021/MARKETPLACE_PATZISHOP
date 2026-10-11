@@ -14,6 +14,14 @@ al cierre de una fase completa.
 - Conteo y lectura del catálogo se ejecutan secuencialmente dentro de RepeatableRead.
 - La regresión de seguridad reconoce el nuevo GET público y conserva el rechazo de filtros privilegiados.
 - Regresión correcta: 16 pruebas de seguridad, 14 de API y 10 de restricciones SQL; build backend correcto.
+- Catálogo React con búsqueda, categorías, precios, orden y paginación reproducibles en la URL.
+- Directorio y tienda pública con contacto; detalle de producto con galería, precios GTQ y estados de error/vacío.
+- Transporte público sin Bearer ni renovación de sesión; respuestas Zod, cancelación y placeholders seguros.
+- Doce pruebas frontend nuevas; 36 correctas en total. Rutas cargadas bajo demanda y build correcto.
+- Brave/API/SQL: filtros, páginas, navegación, galería, tienda y búsqueda de negocios comprobados.
+- Catálogo/detalle revisados visualmente en escritorio; detalle también en móvil. Catálogo/tienda móvil
+  sin desbordamiento por DOM; sus capturas agotaron el tiempo de la herramienta y no se declaran revisadas visualmente.
+- Fixtures propias retiradas: cuenta, tienda, categoría, 14 productos y dos imágenes. Seed y dependencias sin cambios.
 
 ## 2026-10-11 — Base React, sesión y formularios
 

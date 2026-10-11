@@ -10,8 +10,8 @@ describe('rutas iniciales', () => {
       </MemoryRouter>,
     );
     expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('Hecho cerca.');
-    expect(screen.getByRole('link', { name: /Sé parte de PatziShop/u }).getAttribute('href')).toBe(
-      '/registro',
+    expect(screen.getByRole('link', { name: /Explorar productos/u }).getAttribute('href')).toBe(
+      '/catalogo',
     );
   });
   it('una dirección desconocida ofrece un regreso al inicio', () => {

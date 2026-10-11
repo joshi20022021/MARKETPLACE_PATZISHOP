@@ -9,8 +9,10 @@ export function RouteNotice() {
       '/registro': 'Crear cuenta',
       '/cuenta': 'Mi cuenta',
       '/cuenta/tienda': 'Mi tienda',
+      '/catalogo': 'Catálogo',
+      '/tiendas': 'Tiendas locales',
     };
-    document.title = `${titles[pathname] ?? 'Página no encontrada'} · PatziShop`;
+    document.title = `${titles[pathname] ?? (pathname.startsWith('/productos/') ? 'Producto local' : pathname.startsWith('/tiendas/') ? 'Tienda local' : 'Página no encontrada')} · PatziShop`;
     document.getElementById('contenido')?.focus({ preventScroll: true });
     window.scrollTo?.(0, 0);
   }, [pathname]);

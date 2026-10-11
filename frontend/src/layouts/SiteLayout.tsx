@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Brand } from '../components/Brand';
 import { RouteNotice } from '../components/RouteNotice';
@@ -21,6 +21,12 @@ export function SiteLayout() {
       <header className="site-header wrap">
         <Brand />
         <nav aria-label="Navegación principal">
+          <Link className="nav-link" to="/catalogo">
+            Catálogo
+          </Link>
+          <Link className="nav-link" to="/tiendas">
+            Tiendas
+          </Link>
           {session.user ? (
             <>
               {session.user.role === 'SELLER' && (
@@ -68,7 +74,15 @@ export function SiteLayout() {
         </p>
       )}
       <main id="contenido" tabIndex={-1}>
-        <Outlet />
+        <Suspense
+          fallback={
+            <p className="wrap page-state" role="status">
+              Cargando página…
+            </p>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       <footer className="site-footer wrap">
         <Brand />

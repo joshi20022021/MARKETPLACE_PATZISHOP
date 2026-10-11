@@ -18,8 +18,8 @@ export function HomePage() {
             negocios que le dan vida a Patzicía.
           </p>
           <div className="hero-actions">
-            <Link className="button" to="/registro">
-              Sé parte de PatziShop <span aria-hidden="true">↗</span>
+            <Link className="button" to="/catalogo">
+              Explorar productos <span aria-hidden="true">↗</span>
             </Link>
             <Link className="text-link" to="/registro?tipo=vendedor">
               Da el siguiente paso con tu negocio <span aria-hidden="true">→</span>
