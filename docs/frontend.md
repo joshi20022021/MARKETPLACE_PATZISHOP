@@ -2,7 +2,8 @@
 
 La fase 10 incorpora portada responsive, registro de cliente/vendedor, login, cuenta y formulario
 de la tienda propia. La fase 11 añade catálogo público, filtros, tiendas y galería de producto.
-Carrito y dashboards completos corresponden a etapas posteriores.
+La fase 12 incorpora carrito persistente de cliente, selector de cantidad y agregado desde producto.
+Checkout y dashboards completos corresponden a etapas posteriores.
 
 ## Desarrollo local
 
@@ -30,6 +31,7 @@ todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 | `/tiendas`                | Público     | Directorio con búsqueda y páginas          |
 | `/tiendas/:slug`          | Público     | Contacto y catálogo del negocio            |
 | `/productos/:slug`        | Público     | Detalle, precio y galería                  |
+| `/carrito`                | CUSTOMER    | Cantidades, grupos y totales del servidor  |
 | `/registro?tipo=vendedor` | Público     | Selección inicial de vendedor; nunca ADMIN |
 | `/ingresar`               | Público     | Login, errores y retorno a cuenta/tienda   |
 | `/cuenta`                 | Autenticado | Datos actuales de `GET /auth/me`           |
@@ -122,3 +124,23 @@ El DOM de catálogo y tienda no mostró desbordamiento horizontal en anchos móv
 (356 y 434 píxeles CSS respectivamente). Las capturas de catálogo y tienda móviles agotaron
 el tiempo de la herramienta; no se declaran revisadas visualmente. El viewport se restauró.
 Contratos, rutas y límites en [marketplace](marketplace.md).
+
+## Verificación de fase 12
+
+49 pruebas frontend correctas, incluidas 13 nuevas del carrito: contratos y cantidades,
+acceso por sesión/rol, retorno desde login, dos tiendas, PATCH absoluto, eliminación,
+líneas retiradas, stock reducido, agregado, conflictos, red y descarte tras logout.
+API y build frontend correctos; paquete inicial de 488.37 kB sin el aviso de 500 kB.
+La regresión backend verificó 82 pruebas: 12 carrito, 22 productos, 8 marketplace,
+16 seguridad, 14 API y 10 restricciones SQL.
+
+Brave con NestJS/PostgreSQL comprobó login desde el detalle y retorno, agregado de dos tiendas,
+subtotales, edición, recarga por cookie, stock reducido, corrección, rechazo de exceso,
+despublicación sin datos privados, eliminación, carrito vacío y logout.
+El carrito se revisó visualmente en escritorio y móvil; DOM sin desbordamiento a 434 píxeles CSS.
+Una captura de página completa agotó el tiempo de la herramienta; las capturas de viewport
+sí permitieron revisar la interfaz. Se restauró el viewport al terminar.
+
+Se eliminaron solo las fixtures propias (un cliente, dos vendedores, dos tiendas, categoría y productos),
+incluidos carrito y sesiones por cascada. Los procesos HTTP temporales se detuvieron; no se
+guardaron credenciales en Git. Contratos y límites en [carrito](cart.md).

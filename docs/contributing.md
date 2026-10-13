@@ -56,6 +56,8 @@ Para cambios de productos, stock o imágenes ejecutar `npm run test:products`; l
 archivos locales y se limpian sin borrar uploads ajenos. Contratos en [products.md](products.md).
 Para cambios del catálogo público ejecutar también `npm run test:marketplace`; comprueba
 filtros y visibilidad comercial con PostgreSQL. Contratos en [marketplace.md](marketplace.md).
+Para cambios de carrito ejecutar `npm run test:cart`; valida propiedad, stock, cantidades,
+totales y concurrencia. Contratos en [cart.md](cart.md).
 Para cambios en frontend ejecutar `npm run test:frontend` y `npm run build:frontend`, además de
 comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar solo fixtures propias
 en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.

@@ -10,13 +10,16 @@ al cierre de una fase completa.
 - Persistencia con tablas existentes, grupos por tienda y totales Decimal sin reservar inventario.
 - Bloqueo por cliente, validación de stock y límites; líneas retiradas conservan eliminación sin datos privados.
 - Doce pruebas API correctas con PostgreSQL real, incluidas propiedad, concurrencia, moderación y OpenAPI.
-- Contratos y alcance en docs/cart.md; la interfaz y su comprobación se completan en esta fase.
+- Contratos y alcance documentados en docs/cart.md.
 - Página /carrito con edición, eliminación, grupos por tienda, totales y estados explícitos.
 - Detalle permite agregar cantidades; login vuelve al producto o carrito con destinos internos acotados.
 - Caché por identidad/epoch, mutaciones serializadas y mensajes para stock, límites y escrituras inciertas.
 - Trece pruebas frontend nuevas correctas; 49 en total, build y check correctos.
 - Navegador/API/SQL: dos tiendas, edición, recarga, stock reducido, corrección, rechazo real y eliminación verificados.
 - Carrito revisado visualmente en escritorio y móvil, sin desbordamiento horizontal en 434 píxeles CSS.
+- Regresión correcta: 82 pruebas backend y 49 frontend; builds, TypeScript estricto y check correctos.
+- Fixtures propias retiradas y procesos HTTP detenidos. Seed, esquema y dependencias sin cambios.
+- README y guías actualizados: FASE 12 completada. Próxima etapa: Checkout (fase 13), por petición.
 
 ## 2026-10-11 — Catálogo público
 

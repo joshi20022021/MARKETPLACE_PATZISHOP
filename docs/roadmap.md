@@ -37,11 +37,12 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–11 completadas. React ofrece sesión, formularios y marketplace público conectado a NestJS.
-La fase 11 añade catálogo con filtros y paginación en la URL, directorio, tienda pública y detalle con galería.
-El backend limita las consultas a productos disponibles de categorías, tiendas y vendedores activos.
-La siguiente etapa es fase 12 (Carrito); solo se iniciará por petición.
+Fases 1–12 completadas. React ofrece sesión, formularios y marketplace público conectado a NestJS.
+La fase 12 añade carrito persistente CUSTOMER, cantidades, grupos por tienda y totales Decimal,
+con validación de propiedad/stock, concurrencia y recuperación ante cambios de disponibilidad.
+La siguiente etapa es fase 13 (Checkout); solo se iniciará por petición.
 Checkout, órdenes y dashboards completos siguen pendientes.
 Consulta [frontend](frontend.md) para ejecución, pruebas y límites de sesión.
 Consulta [marketplace](marketplace.md) para rutas, filtros y comprobaciones de fase 11.
+Consulta [carrito](cart.md) para contratos y comprobaciones de fase 12.
 Consulta [productos](products.md), [categorías](categories.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

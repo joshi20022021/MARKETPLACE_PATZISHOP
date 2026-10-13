@@ -77,3 +77,7 @@ npm run check
 Las pruebas usan fixtures propias y PostgreSQL real para cantidades, decimales, grupos,
 propiedad, roles, disponibilidad, concurrencia, límites y contratos OpenAPI. Preparación y
 arranque en [frontend](frontend.md) y [backend](backend.md).
+
+Fase verificada: 82 pruebas backend y 49 frontend correctas; builds, TypeScript estricto y check correctos.
+Brave/API/SQL comprobó agregado, dos tiendas, cantidades, persistencia, conflictos y eliminación.
+Revisión de escritorio/móvil y limpieza de fixtures detalladas en [frontend](frontend.md).

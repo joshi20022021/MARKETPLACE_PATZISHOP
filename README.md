@@ -3,11 +3,12 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 11 — Marketplace público.** Catálogo con búsqueda, categorías, precios,
+**Estado actual: FASE 12 — Carrito.** Carrito persistente para clientes, cantidades validadas,
+productos de varias tiendas y totales calculados en el servidor. Catálogo con búsqueda, categorías, precios,
 orden y paginación; directorio de tiendas, tienda pública y detalle con galería conectados a la API.
 También incluye registro, login, sesión renovable, cuenta y formulario de tienda propia.
 Solo se muestran productos disponibles de tiendas ACTIVE y vendedores activos.
-Las tiendas nacen en PENDING; aprobación administrativa, carrito, checkout y dashboards completos
+Las tiendas nacen en PENDING; aprobación administrativa, checkout y dashboards completos
 siguen pendientes.
 Las características siguientes son el alcance planificado.
 
@@ -38,6 +39,7 @@ La [guía de categorías](docs/categories.md) explica la gestión ADMIN, consult
 La [guía de productos](docs/products.md) explica CRUD propio, estados, inventario, imágenes y pruebas.
 La [guía del frontend](docs/frontend.md) explica rutas, formularios, sesión y proxy local.
 La [guía del marketplace](docs/marketplace.md) explica catálogo público, filtros y visibilidad.
+La [guía del carrito](docs/cart.md) explica cantidades, totales, disponibilidad y concurrencia.
 
 ```text
 PROYECTO_VENTAS/
@@ -95,6 +97,7 @@ npm run test:businesses
 npm run test:categories
 npm run test:products
 npm run test:marketplace
+npm run test:cart
 npm run test:frontend
 npm run build:frontend
 npm run check
@@ -111,6 +114,7 @@ rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican e
 `test:categories` verifica gestión ADMIN, activación, consulta pública y conservación de datos en el seed.
 `test:products` verifica CRUD propio, stock concurrente, borrado histórico y carga/visibilidad de imágenes reales.
 `test:marketplace` verifica catálogo público, filtros, proyección comercial, páginas y visibilidad con PostgreSQL.
+`test:cart` verifica propiedad, roles, cantidades, totales por tienda, disponibilidad y agregados concurrentes.
 `test:frontend` verifica contratos, renovación, rutas, formularios y conexión simulada a la API.
 `build:frontend` verifica TypeScript estricto y genera el SPA en `frontend/dist`.
 
@@ -132,6 +136,8 @@ npm run dev:frontend
 
 Abre **http://localhost:5173**. El proxy conecta `/api` con NestJS en 127.0.0.1:3000.
 El catálogo está en `/catalogo` y el directorio en `/tiendas`; muestran estados vacíos si no hay publicaciones elegibles.
+Los clientes autenticados pueden agregar productos y administrar su carrito en `/carrito`.
+El carrito no reserva stock; checkout y pedidos corresponden a las próximas etapas.
 Puedes registrar una cuenta de vendedor y crear su tienda; el estado inicial es «En revisión».
 No se incluyen credenciales de administrador ni cuentas de demostración. Consulta la
 [guía del frontend](docs/frontend.md) para configurar otros orígenes y probar el build.

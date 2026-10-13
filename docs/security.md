@@ -3,6 +3,8 @@
 La API protege por defecto las rutas de controllers NestJS. `@Public()` es una excepción explícita:
 salud, registro, login, refresh, logout, consulta pública de tiendas/categorías/productos y media elegible admiten invitados.
 El perfil y la gestión de la tienda propia siguen exigiendo Bearer JWT.
+El carrito exige CUSTOMER y consulta/modifica únicamente líneas vinculadas al usuario del JWT;
+ADMIN y SELLER no heredan esos permisos. Las líneas ajenas devuelven el mismo 404 que las inexistentes.
 Swagger es middleware independiente de los guards; permanece desactivado por defecto en production.
 
 ## Roles

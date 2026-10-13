@@ -116,7 +116,7 @@ de propiedad, límites de solicitudes y de tamaño JSON. El rol y la sesión se 
 La fase 7 añade BusinessesModule: creación, consulta y edición de la tienda propia con filtros
 de propietario dentro de las consultas, además de lista pública paginada y detalle por slug.
 La consulta pública exige tienda ACTIVE y propietario SELLER activo; usa una proyección explícita.
-Carrito, checkout, órdenes y dashboards completos siguen pendientes.
+Checkout, órdenes y dashboards completos siguen pendientes.
 Consulta [negocios](businesses.md) para contratos, visibilidad y pruebas reales del módulo.
 La fase 8 añade CategoriesModule: administración global exclusiva de ADMIN y consulta pública
 paginada de categorías activas. Desactivar conserva referencias; el seed no sobrescribe ediciones.
@@ -135,7 +135,12 @@ La fase 11 añade consultas públicas de productos con proyección explícita y 
 con la media pública. Conteo y datos se leen secuencialmente dentro de RepeatableRead.
 React incorpora catálogo, filtros por URL, directorio, tienda pública y galería de producto.
 Axios público funciona sin token ni renovación de sesión; las páginas se cargan bajo demanda.
-Detalles en [marketplace](marketplace.md). Carrito, checkout y dashboards completos siguen pendientes.
+Detalles en [marketplace](marketplace.md).
+La fase 12 añade CartsModule para CUSTOMER, persistencia propia y totales decimales por negocio.
+Un bloqueo transaccional por cliente serializa las escrituras; no se reserva inventario.
+El frontend usa Axios privado, caché por identidad y mutaciones del carrito serializadas.
+Precios y disponibilidad se recalculan; líneas inválidas se conservan para corregir/eliminar sin filtrar datos privados.
+Detalles en [carrito](cart.md). Checkout y dashboards completos siguen pendientes.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

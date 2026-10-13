@@ -1,7 +1,7 @@
 # Marketplace público
 
 La fase 11 añade consulta pública de productos, catálogo, filtros, directorio de tiendas,
-página de tienda y detalle con galería. Carrito y checkout se implementarán en fases 12 y 13.
+página de tienda y detalle con galería. La fase 12 incorpora [carrito](cart.md); checkout corresponde a la fase 13.
 
 ## API de productos
 
@@ -49,8 +49,9 @@ se leen por páginas de 50, incluyendo las que no caben en la primera página.
 
 Errores 404, red, carga, resultados vacíos y páginas vacías tienen estados explícitos. Una imagen
 ausente o fallida usa un placeholder SVG; no se inventan productos, precios, métricas ni tiendas.
-La galería permite seleccionar imágenes con botones accesibles. No se muestra un botón de compra
-antes de que exista el carrito. Los contactos de tienda son los publicados por el vendedor.
+La galería permite seleccionar imágenes con botones accesibles. CUSTOMER puede agregar
+cantidades al carrito; invitados pueden ingresar y volver al producto. Los contactos de tienda
+son los publicados por el vendedor.
 
 El servidor verifica visibilidad en cada lectura. Un navegador que ya abrió una página no recibe
 actualizaciones en tiempo real; nuevas consultas/navegaciones comprueban el estado vigente.
