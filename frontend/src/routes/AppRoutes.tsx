@@ -24,6 +24,9 @@ const PublicShopPage = lazy(() =>
 const ProductPage = lazy(() =>
   import('../pages/ProductPage').then((module) => ({ default: module.ProductPage })),
 );
+const CartPage = lazy(() =>
+  import('../pages/CartPage').then((module) => ({ default: module.CartPage })),
+);
 export function AppRoutes() {
   return (
     <Routes>
@@ -36,6 +39,7 @@ export function AppRoutes() {
         <Route path="ingresar" element={<LoginPage />} />
         <Route path="registro" element={<RegisterPage />} />
         <Route element={<SessionGate />}>
+          <Route path="carrito" element={<CartPage />} />
           <Route path="cuenta" element={<AccountPage />} />
           <Route element={<SessionGate seller />}>
             <Route path="cuenta/tienda" element={<ShopPage />} />

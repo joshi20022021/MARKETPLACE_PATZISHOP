@@ -19,7 +19,12 @@ export function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
   const from: unknown = (location.state as { from?: unknown } | null)?.from;
-  const destination = from === '/cuenta/tienda' ? from : '/cuenta';
+  const destination =
+    typeof from === 'string' &&
+    (['/cuenta/tienda', '/carrito'].includes(from) ||
+      /^\/productos\/[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(from))
+      ? from
+      : '/cuenta';
   if (session.status === 'authenticated') return <Navigate to={destination} replace />;
   return (
     <section className="auth-page wrap">

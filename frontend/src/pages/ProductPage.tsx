@@ -10,6 +10,7 @@ import {
 } from '../services/marketplace';
 import { PublicImage } from '../components/PublicImage';
 import { RemoteError } from '../components/RemoteState';
+import { AddToCart } from '../components/AddToCart';
 export function ProductPage() {
   const { slug = '' } = useParams();
   const product = useQuery({
@@ -82,6 +83,7 @@ function ProductDetail({ product }: { product: PublicProduct }) {
           <h1>{product.name}</h1>
           <p className="detail-price">{money(product.price)}</p>
           <span className="available-badge">Disponible</span>
+          <AddToCart productId={product.id} />
           <h2>Sobre este producto</h2>
           <p className="preserve-text">{product.description}</p>
           <div className="seller-note">
