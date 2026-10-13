@@ -100,14 +100,15 @@ test('usuario desactivado o sesión revocada recibe 401 antes de evaluar rol', a
   await get('_security/admin', context.tokens.admin).expect(401);
 });
 
-test('AppModule publica catálogo de fase 11 sin montar rutas de prueba ni compra de fases posteriores', async () => {
+test('AppModule publica catálogo y protege carrito sin montar rutas de prueba ni pedidos', async () => {
   const compiled = await Test.createTestingModule({ imports: [AppModule] }).compile();
   const app = compiled.createNestApplication({ logger: false });
   configureApp(app);
   await app.init();
   try {
-    for (const path of ['_security/admin', '_default', 'cart', 'orders'])
+    for (const path of ['_security/admin', '_default', 'orders'])
       await request(app.getHttpServer()).get(`/api/v1/${path}`).expect(404);
+    await request(app.getHttpServer()).get('/api/v1/cart').expect(401);
     await request(app.getHttpServer()).get('/api/v1/products').expect(200);
     await request(app.getHttpServer()).get('/api/v1/products?status=INACTIVE').expect(400);
     const swagger = await request(app.getHttpServer()).get('/api/docs-json').expect(200);

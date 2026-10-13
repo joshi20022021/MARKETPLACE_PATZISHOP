@@ -12,6 +12,7 @@ import { API_RATE_LIMIT, RATE_LIMIT_WINDOW_MS } from './security/rate-limit.poli
 import { BusinessesModule } from './businesses/businesses.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { CartsModule } from './carts/carts.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProductsModule } from './products/products.module';
     BusinessesModule,
     CategoriesModule,
     ProductsModule,
+    CartsModule,
   ],
   providers: [
     ApiThrottleGuard,

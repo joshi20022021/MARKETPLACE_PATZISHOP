@@ -4,6 +4,14 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-13 — Carrito
+
+- CartsModule protegido para CUSTOMER: consulta, agregado incremental, cantidad absoluta y eliminación propia.
+- Persistencia con tablas existentes, grupos por tienda y totales Decimal sin reservar inventario.
+- Bloqueo por cliente, validación de stock y límites; líneas retiradas conservan eliminación sin datos privados.
+- Doce pruebas API correctas con PostgreSQL real, incluidas propiedad, concurrencia, moderación y OpenAPI.
+- Contratos y alcance en docs/cart.md; la interfaz y su comprobación se completan en esta fase.
+
 ## 2026-10-11 — Catálogo público
 
 - GET público de productos y detalle por slug con proyección comercial explícita y precios decimales.
