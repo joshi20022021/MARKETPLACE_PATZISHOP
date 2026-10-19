@@ -11,6 +11,13 @@ al cierre de una fase completa.
 - Relectura del carrito propio, precios Decimal y bloqueo de vacío/disponibilidad inválida.
 - Once pruebas nuevas correctas con PostgreSQL real; regresión de carrito, seguridad, API y SQL correcta.
 - Contratos y límites documentados en docs/checkout.md; la revisión de interfaz continúa en esta fase.
+- Ruta /checkout CUSTOMER conectada al carrito, formulario de entrega y opciones de pago del servidor.
+- Resumen efímero por tienda; editar campos o cambiar el carrito retira la revisión anterior.
+- Dirección fuera de caché/storage/URL; cancelación al salir y descarte de respuestas tras cambios de identidad.
+- Catorce pruebas frontend nuevas correctas; 63 en total, build y check correctos.
+- Brave/API/SQL: login con retorno, validación, ambos métodos, cambio de precio/stock, recuperación y descarte de dirección comprobados.
+- Escritorio revisado visualmente; móvil sin desbordamiento por DOM a 434 píxeles CSS.
+  Sus capturas agotaron el tiempo de la herramienta y no se declaran revisadas visualmente; viewport restaurado.
 
 ## 2026-10-13 — Carrito
 

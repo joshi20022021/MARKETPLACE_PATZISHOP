@@ -12,6 +12,7 @@ export function RouteNotice() {
       '/catalogo': 'Catálogo',
       '/tiendas': 'Tiendas locales',
       '/carrito': 'Mi carrito',
+      '/checkout': 'Preparar entrega',
     };
     document.title = `${titles[pathname] ?? (pathname.startsWith('/productos/') ? 'Producto local' : pathname.startsWith('/tiendas/') ? 'Tienda local' : 'Página no encontrada')} · PatziShop`;
     document.getElementById('contenido')?.focus({ preventScroll: true });

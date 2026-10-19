@@ -144,6 +144,11 @@ function CustomerCart() {
             <Link className="text-link" to="/catalogo">
               Descubrir más productos ↗
             </Link>
+            {!value.hasIssues && !change.isPending && !cart.isFetching && (
+              <Link className="button button-full checkout-link" to="/checkout">
+                Preparar entrega ↗
+              </Link>
+            )}
           </aside>
         </div>
       )}
