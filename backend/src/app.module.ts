@@ -13,6 +13,7 @@ import { BusinessesModule } from './businesses/businesses.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { CartsModule } from './carts/carts.module';
+import { CheckoutModule } from './checkout/checkout.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CartsModule } from './carts/carts.module';
     CategoriesModule,
     ProductsModule,
     CartsModule,
+    CheckoutModule,
   ],
   providers: [
     ApiThrottleGuard,

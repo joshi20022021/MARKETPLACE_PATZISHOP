@@ -4,6 +4,14 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-18 — Preparación de checkout
+
+- CheckoutModule CUSTOMER: opciones y revisión de entrega con DTOs anidados y respuestas no-store.
+- PaymentService desacopla contra entrega y simulación; ambos permanecen pendientes sin cobros ni tarjetas.
+- Relectura del carrito propio, precios Decimal y bloqueo de vacío/disponibilidad inválida.
+- Once pruebas nuevas correctas con PostgreSQL real; regresión de carrito, seguridad, API y SQL correcta.
+- Contratos y límites documentados en docs/checkout.md; la revisión de interfaz continúa en esta fase.
+
 ## 2026-10-13 — Carrito
 
 - CartsModule protegido para CUSTOMER: consulta, agregado incremental, cantidad absoluta y eliminación propia.

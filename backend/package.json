@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:checkout": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/checkout.e2e.test.js",
     "test:cart": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/cart.e2e.test.js",
     "test:marketplace": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/public-products.e2e.test.js",
     "test:products": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/products.e2e.test.js .test-dist/test/product-images.e2e.test.js",
