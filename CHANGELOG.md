@@ -11,7 +11,16 @@ al cierre de una fase completa.
 - Bloqueos estables de inventario, validación comercial actual, rollback y protección contra doble envío.
 - Consulta propia CUSTOMER y subpedidos SELLER sin importes/líneas ajenos; recuperación por intento.
 - Catorce pruebas nuevas correctas de pedidos con PostgreSQL real; regresión backend correcta.
-- Contratos y límites en docs/orders.md; integración y revisión del frontend continúan en esta fase.
+- Checkout permite confirmar; recibo e historial propios en /pedidos y /pedidos/:id.
+- UUID de intento en sessionStorage sin entrega/tokens; recuperación por GET tras resultados inciertos.
+- Doce pruebas frontend nuevas: 75 correctas en total, incluidos doble envío, recuperación y logout.
+- Brave/API/SQL verificaron dos compras ficticias, contra entrega y simulación, recarga e historial,
+  cuatro subpedidos, cuatro salidas exactas, stock agotado y carrito vacío.
+- Confirmación y recibo revisados visualmente en móvil sin desbordamiento a 434 píxeles CSS;
+  recibo revisado en escritorio. Capturas de historial móvil fallaron por timeout; viewport restaurado.
+- Cierre: 174 pruebas correctas (99 backend y 75 frontend), builds, TypeScript y check correctos.
+- Migración aplicada; seed y dependencias sin cambios. Fixtures propias y procesos temporales retirados.
+- README y guías actualizados; siguiente fase 15 (Dashboard vendedor), por petición.
 
 ## 2026-10-18 — Preparación de checkout
 

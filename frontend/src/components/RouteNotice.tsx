@@ -13,8 +13,9 @@ export function RouteNotice() {
       '/tiendas': 'Tiendas locales',
       '/carrito': 'Mi carrito',
       '/checkout': 'Preparar entrega',
+      '/pedidos': 'Mis pedidos',
     };
-    document.title = `${titles[pathname] ?? (pathname.startsWith('/productos/') ? 'Producto local' : pathname.startsWith('/tiendas/') ? 'Tienda local' : 'Página no encontrada')} · PatziShop`;
+    document.title = `${titles[pathname] ?? (pathname.startsWith('/pedidos/') ? 'Mi pedido' : pathname.startsWith('/productos/') ? 'Producto local' : pathname.startsWith('/tiendas/') ? 'Tienda local' : 'Página no encontrada')} · PatziShop`;
     document.getElementById('contenido')?.focus({ preventScroll: true });
     window.scrollTo?.(0, 0);
   }, [pathname]);

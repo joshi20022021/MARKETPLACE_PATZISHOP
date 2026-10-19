@@ -85,11 +85,12 @@ const options = {
   paymentMethods: methods,
   countryCode: 'GT',
   currency: 'GTQ',
-  canPlaceOrder: false,
+  canPlaceOrder: true,
 };
 const preview = {
   stage: 'REVIEW_ONLY',
-  canPlaceOrder: false,
+  canPlaceOrder: true,
+  reviewVersion: 'a'.repeat(64),
   delivery,
   cart,
   payment: {
@@ -170,7 +171,7 @@ it('contrato valida dirección y rechaza cobro, compra o totales inconsistentes 
     ).toBe(false);
   expect(checkoutPreviewSchema.safeParse(preview).success).toBe(true);
   for (const value of [
-    { ...preview, canPlaceOrder: true },
+    { ...preview, canPlaceOrder: false },
     { ...preview, payment: { ...preview.payment, status: 'PAID' } },
     { ...preview, payment: { ...preview.payment, amount: '0.01' } },
     { ...preview, cart: empty },
@@ -266,7 +267,7 @@ it('envía dirección y método sin importes, revisa ambos métodos y retira res
   const heading = await screen.findByRole('heading', { name: 'Revisión de entrega' });
   expect(document.activeElement).toBe(heading);
   expect(writes[0]).toEqual({ delivery, paymentMethod: 'CASH_ON_DELIVERY' });
-  expect(screen.queryByRole('button', { name: /confirmar|pagar ahora/i })).toBeNull();
+  expect(screen.getByRole('button', { name: /Confirmar pedido/ })).toBeTruthy();
   await userEvent.click(screen.getByRole('radio', { name: /Pago simulado/ }));
   expect(screen.queryByRole('heading', { name: 'Revisión de entrega' })).toBeNull();
   await userEvent.click(screen.getByRole('button', { name: 'Revisar entrega' }));

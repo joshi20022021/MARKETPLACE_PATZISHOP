@@ -34,6 +34,11 @@ export function SiteLayout() {
           )}
           {session.user ? (
             <>
+              {session.user.role === 'CUSTOMER' && (
+                <Link className="nav-link" to="/pedidos">
+                  Mis pedidos
+                </Link>
+              )}
               {session.user.role === 'SELLER' && (
                 <Link className="nav-link" to="/cuenta/tienda">
                   Mi tienda

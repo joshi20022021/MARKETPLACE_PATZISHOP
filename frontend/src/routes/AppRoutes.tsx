@@ -30,6 +30,12 @@ const CartPage = lazy(() =>
 const CheckoutPage = lazy(() =>
   import('../pages/CheckoutPage').then((module) => ({ default: module.CheckoutPage })),
 );
+const OrdersPage = lazy(() =>
+  import('../pages/OrdersPage').then((module) => ({ default: module.OrdersPage })),
+);
+const OrderPage = lazy(() =>
+  import('../pages/OrdersPage').then((module) => ({ default: module.OrderPage })),
+);
 export function AppRoutes() {
   return (
     <Routes>
@@ -44,6 +50,8 @@ export function AppRoutes() {
         <Route element={<SessionGate />}>
           <Route path="carrito" element={<CartPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="pedidos" element={<OrdersPage />} />
+          <Route path="pedidos/:id" element={<OrderPage />} />
           <Route path="cuenta" element={<AccountPage />} />
           <Route element={<SessionGate seller />}>
             <Route path="cuenta/tienda" element={<ShopPage />} />

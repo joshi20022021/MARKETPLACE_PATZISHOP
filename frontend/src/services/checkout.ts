@@ -48,12 +48,13 @@ export const checkoutOptionsSchema = z.object({
   paymentMethods: z.array(paymentOptionSchema).min(1),
   countryCode: z.literal('GT'),
   currency: z.literal('GTQ'),
-  canPlaceOrder: z.literal(false),
+  canPlaceOrder: z.literal(true),
 });
 export const checkoutPreviewSchema = z
   .object({
     stage: z.literal('REVIEW_ONLY'),
-    canPlaceOrder: z.literal(false),
+    canPlaceOrder: z.literal(true),
+    reviewVersion: z.string().regex(/^[a-f0-9]{64}$/u),
     delivery: deliverySchema,
     cart: cartSchema,
     payment: paymentOptionSchema.extend({

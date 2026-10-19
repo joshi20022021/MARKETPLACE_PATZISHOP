@@ -2,7 +2,18 @@ import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import type { CheckoutPreview } from '../services/checkout';
 import { money } from '../services/marketplace';
-export function CheckoutReview({ value }: { value: CheckoutPreview }) {
+import { ConfirmOrder } from './ConfirmOrder';
+export function CheckoutReview({
+  value,
+  onLock,
+  onUncertain,
+  onRejected,
+}: {
+  value: CheckoutPreview;
+  onLock: (locked: boolean) => void;
+  onUncertain: (key: string) => void;
+  onRejected: (message: string) => void;
+}) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     heading.current?.focus();
@@ -67,12 +78,19 @@ export function CheckoutReview({ value }: { value: CheckoutPreview }) {
         </div>
       </div>
       <p className="muted">
-        Esta revisión no reserva inventario ni confirma una compra. La confirmación de pedidos
-        estará disponible próximamente.
+        Esta revisión no reserva inventario. Confirma únicamente cuando los datos y productos sean
+        correctos.
       </p>
       <Link className="text-link" to="/carrito">
         Volver a mi carrito ↗
       </Link>
+      <ConfirmOrder
+        key={value.reviewVersion}
+        value={value}
+        onLock={onLock}
+        onUncertain={onUncertain}
+        onRejected={onRejected}
+      />
     </section>
   );
 }

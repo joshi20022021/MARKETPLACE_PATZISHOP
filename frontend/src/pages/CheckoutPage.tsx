@@ -17,6 +17,8 @@ import { money } from '../services/marketplace';
 import { statusOf } from '../services/errors';
 import { FormField } from '../components/FormField';
 import { CheckoutReview } from '../components/CheckoutReview';
+import { OrderRecovery } from '../components/OrderRecovery';
+import { pendingOrderKey } from '../services/orders';
 export function CheckoutPage() {
   const session = useSession();
   if (session.user?.role !== 'CUSTOMER')
@@ -29,9 +31,17 @@ export function CheckoutPage() {
         </Link>
       </section>
     );
-  return <CheckoutForm key={`${session.user.id}:${session.epoch}`} />;
+  return <CustomerCheckout key={`${session.user.id}:${session.epoch}`} userId={session.user.id} />;
 }
-function CheckoutForm() {
+function CustomerCheckout({ userId }: { userId: string }) {
+  const [attempt, setAttempt] = useState(() => pendingOrderKey(userId));
+  return attempt ? (
+    <OrderRecovery attempt={attempt} onMissing={() => setAttempt(null)} />
+  ) : (
+    <CheckoutForm onUncertain={setAttempt} />
+  );
+}
+function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
   const session = useSession();
   const client = useQueryClient();
   const cart = useCart();
@@ -44,6 +54,7 @@ function CheckoutForm() {
   const revision = useRef(0);
   const [review, setReview] = useState<{ value: CheckoutPreview; signature: string } | null>(null);
   const [error, setError] = useState('');
+  const [confirming, setConfirming] = useState(false);
   useEffect(() => () => request.current?.abort(), []);
   const {
     register,
@@ -119,7 +130,8 @@ function CheckoutForm() {
         </div>
       </div>
       <p className="checkout-notice">
-        Por ahora puedes revisar tu entrega. Todavía no se confirma una compra ni se cobra dinero.
+        Revisa la entrega antes de confirmar. El importe mostrado corresponde a productos y no
+        incluye envío.
       </p>
       <div className="checkout-layout">
         <form
@@ -160,7 +172,7 @@ function CheckoutForm() {
             }
           })}
         >
-          <fieldset disabled={isSubmitting}>
+          <fieldset disabled={isSubmitting || confirming}>
             <legend>1. Datos de entrega</legend>
             <FormField
               label="Nombre de quien recibe"
@@ -232,7 +244,7 @@ function CheckoutForm() {
               )}
             </div>
           </fieldset>
-          <fieldset className="payment-options" disabled={isSubmitting}>
+          <fieldset className="payment-options" disabled={isSubmitting || confirming}>
             <legend>2. Forma de pago</legend>
             {options.data.paymentMethods.map((option) => (
               <label className="payment-option" key={option.method}>
@@ -250,12 +262,15 @@ function CheckoutForm() {
               {error}
             </p>
           )}
-          <button className="button button-full" disabled={isSubmitting || cart.isFetching}>
+          <button
+            className="button button-full"
+            disabled={isSubmitting || cart.isFetching || confirming}
+          >
             {isSubmitting ? 'Revisando…' : 'Revisar entrega'}
           </button>
           <p className="checkout-privacy">
-            Estos datos se usan para esta revisión. No se guardan en tu cuenta y se descartan al
-            salir de esta página.
+            Al confirmar se guardará una copia de la entrega en tu pedido. Si sales antes, los datos
+            del formulario se descartan.
           </p>
         </form>
         <aside className="cart-summary checkout-summary">
@@ -285,7 +300,17 @@ function CheckoutForm() {
           </Link>
         </aside>
       </div>
-      {summary && <CheckoutReview value={summary} />}
+      {summary && (
+        <CheckoutReview
+          value={summary}
+          onLock={setConfirming}
+          onUncertain={onUncertain}
+          onRejected={(message) => {
+            setReview(null);
+            setError(message);
+          }}
+        />
+      )}
     </section>
   );
 }

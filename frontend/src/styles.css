@@ -1621,3 +1621,33 @@ p {
     gap: 1rem;
   }
 }
+.confirm-order {
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid #d7ddcf;
+}
+.order-list {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.order-list-card {
+  border: 1px solid #d7ddcf;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #fffdf8;
+}
+.order-list-card h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+.order-page .checkout-review-grid {
+  margin-top: 2rem;
+}
+.order-page p {
+  line-height: 1.7;
+}
+.order-page .checkout-store ul {
+  list-style: none;
+  padding: 0;
+}
