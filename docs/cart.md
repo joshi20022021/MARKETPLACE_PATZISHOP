@@ -1,7 +1,8 @@
 # Carrito — fase 12
 
-Carrito persistente en PostgreSQL para CUSTOMER. No hay carrito anónimo, almacenamiento local,
-checkout, pago ni creación de pedidos en esta etapa. Las tablas Cart y CartItem ya existían;
+Carrito persistente en PostgreSQL para CUSTOMER. No hay carrito anónimo ni almacenamiento local.
+La preparación de checkout está implementada en fase 13; pagos y creación de pedidos siguen pendientes.
+Las tablas Cart y CartItem ya existían;
 no se añaden migraciones, dependencias ni cuentas al seed.
 
 ## API
@@ -44,7 +45,7 @@ Total y subtotal coinciden: no incluyen envío, descuentos ni cargos de pago.
   por la cascada ya existente. No se corrigen cantidades silenciosamente.
 
 El carrito no reserva inventario ni garantiza precios. Otro cliente puede guardar el mismo stock;
-el checkout futuro deberá validar de nuevo y la compra transaccional corresponde a la fase 14.
+la revisión de checkout valida de nuevo y la compra transaccional corresponde a la fase 14.
 Una página abierta no recibe cambios en tiempo real: actualizar, recargar o volver al foco consulta el estado.
 Los bloqueos del carrito no reemplazan la validación comercial ni los bloqueos de inventario de la compra.
 
@@ -52,6 +53,7 @@ Los bloqueos del carrito no reemplazan la validación comercial ni los bloqueos 
 
 `/carrito` exige sesión y muestra grupos por tienda, imágenes/placeholder, cantidad editable,
 subtotales y total disponible. Permite quitar líneas retiradas, actualizar y recuperar errores.
+Un carrito válido ofrece Preparar entrega hacia [checkout](checkout.md), sin confirmar compra.
 El detalle público añade selector de cantidad y botón Agregar para CUSTOMER. Invitados pueden
 ir a login y volver al producto; SELLER/ADMIN ven el límite de acceso. Login permite retornos
 internos explícitos, nunca destinos externos.

@@ -71,3 +71,7 @@ npm run check
 Once pruebas nuevas de API con PostgreSQL real cubren permisos, contratos, dos tiendas,
 normalización, importes actuales, moderación, límites, ausencia de efectos de compra y OpenAPI.
 Preparación: [frontend](frontend.md), [carrito](cart.md) y [backend](backend.md).
+
+Cierre verificado: 63 pruebas backend y 63 frontend correctas, builds, typecheck y check correctos.
+La revisión real de navegador y sus límites de captura móvil se detallan en [frontend](frontend.md).
+Solo se eliminaron las fixtures propias. La siguiente etapa es fase 14, por petición.

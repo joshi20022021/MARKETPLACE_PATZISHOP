@@ -1,7 +1,8 @@
 # Marketplace público
 
 La fase 11 añade consulta pública de productos, catálogo, filtros, directorio de tiendas,
-página de tienda y detalle con galería. La fase 12 incorpora [carrito](cart.md); checkout corresponde a la fase 13.
+página de tienda y detalle con galería. La fase 12 incorpora [carrito](cart.md) y la fase 13
+añade la [preparación de checkout](checkout.md); la compra corresponde a la fase 14.
 
 ## API de productos
 

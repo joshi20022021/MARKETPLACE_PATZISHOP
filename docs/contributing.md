@@ -58,6 +58,8 @@ Para cambios del catálogo público ejecutar también `npm run test:marketplace`
 filtros y visibilidad comercial con PostgreSQL. Contratos en [marketplace.md](marketplace.md).
 Para cambios de carrito ejecutar `npm run test:cart`; valida propiedad, stock, cantidades,
 totales y concurrencia. Contratos en [cart.md](cart.md).
+Para entrega, revisión o contratos de pago ejecutar `npm run test:checkout`, además de la regresión
+de carrito. No usar direcciones, tarjetas ni cuentas reales en fixtures. Contratos en [checkout.md](checkout.md).
 Para cambios en frontend ejecutar `npm run test:frontend` y `npm run build:frontend`, además de
 comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar solo fixtures propias
 en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.

@@ -3,7 +3,8 @@
 La fase 10 incorpora portada responsive, registro de cliente/vendedor, login, cuenta y formulario
 de la tienda propia. La fase 11 añade catálogo público, filtros, tiendas y galería de producto.
 La fase 12 incorpora carrito persistente de cliente, selector de cantidad y agregado desde producto.
-Checkout y dashboards completos corresponden a etapas posteriores.
+La fase 13 añade formulario de entrega, métodos de pago y revisión de checkout con la API.
+Confirmación de compra y dashboards completos corresponden a etapas posteriores.
 
 ## Desarrollo local
 
@@ -32,6 +33,7 @@ todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 | `/tiendas/:slug`          | Público     | Contacto y catálogo del negocio            |
 | `/productos/:slug`        | Público     | Detalle, precio y galería                  |
 | `/carrito`                | CUSTOMER    | Cantidades, grupos y totales del servidor  |
+| `/checkout`               | CUSTOMER    | Entrega, método de pago y revisión actual  |
 | `/registro?tipo=vendedor` | Público     | Selección inicial de vendedor; nunca ADMIN |
 | `/ingresar`               | Público     | Login, errores y retorno a cuenta/tienda   |
 | `/cuenta`                 | Autenticado | Datos actuales de `GET /auth/me`           |
@@ -144,3 +146,26 @@ sí permitieron revisar la interfaz. Se restauró el viewport al terminar.
 Se eliminaron solo las fixtures propias (un cliente, dos vendedores, dos tiendas, categoría y productos),
 incluidos carrito y sesiones por cascada. Los procesos HTTP temporales se detuvieron; no se
 guardaron credenciales en Git. Contratos y límites en [carrito](cart.md).
+
+## Verificación de fase 13
+
+63 pruebas frontend correctas, incluidas 14 nuevas de checkout: contratos, sesión/rol, retorno
+de login, vacío/incidencias, formulario, ambos métodos, importes recalculados, edición,
+conflictos, red, doble envío y descarte tras logout. El resumen recibe foco al mostrarse.
+La entrega permanece en estado local del formulario; no entra en caché, storage ni URL.
+La revisión se retira si cambian sus campos o el carrito, y la solicitud se cancela al salir.
+
+La regresión backend verificó 63 pruebas: 11 checkout, 12 carrito, 16 seguridad, 14 API y 10 SQL.
+Builds, TypeScript estricto y check correctos; paquete inicial frontend de 489.18 kB, sin aviso de 500 kB.
+
+Con Brave, API compilada y PostgreSQL se comprobaron login y retorno, validación requerida,
+contra entrega y simulación, retiro de revisión al editar, precio actualizado, stock reducido,
+recuperación desde carrito, dirección vacía al volver y logout. Solo se usaron datos ficticios propios.
+Escritorio inspeccionado visualmente; interacción y ancho móvil comprobados por DOM sin desbordamiento
+a 434 píxeles CSS. Las capturas móviles agotaron el tiempo de la herramienta: no se declara revisión
+visual móvil completada. El viewport se restauró.
+
+Las fixtures propias (cliente, dos vendedores, dos tiendas, categoría, productos y carrito) se eliminaron;
+no se generaron pedidos ni direcciones persistidas. Los procesos HTTP temporales se detuvieron.
+La confirmación de compra, el inventario transaccional y pagos ejecutados quedan fuera de esta etapa.
+Contratos y límites en [checkout](checkout.md).

@@ -10,7 +10,7 @@ al cierre de una fase completa.
 - PaymentService desacopla contra entrega y simulación; ambos permanecen pendientes sin cobros ni tarjetas.
 - Relectura del carrito propio, precios Decimal y bloqueo de vacío/disponibilidad inválida.
 - Once pruebas nuevas correctas con PostgreSQL real; regresión de carrito, seguridad, API y SQL correcta.
-- Contratos y límites documentados en docs/checkout.md; la revisión de interfaz continúa en esta fase.
+- Contratos y límites documentados en docs/checkout.md.
 - Ruta /checkout CUSTOMER conectada al carrito, formulario de entrega y opciones de pago del servidor.
 - Resumen efímero por tienda; editar campos o cambiar el carrito retira la revisión anterior.
 - Dirección fuera de caché/storage/URL; cancelación al salir y descarte de respuestas tras cambios de identidad.
@@ -18,6 +18,9 @@ al cierre de una fase completa.
 - Brave/API/SQL: login con retorno, validación, ambos métodos, cambio de precio/stock, recuperación y descarte de dirección comprobados.
 - Escritorio revisado visualmente; móvil sin desbordamiento por DOM a 434 píxeles CSS.
   Sus capturas agotaron el tiempo de la herramienta y no se declaran revisadas visualmente; viewport restaurado.
+- Cierre: 126 pruebas correctas (63 backend y 63 frontend), builds, TypeScript estricto y check correctos.
+- Fixtures propias y procesos temporales retirados. Esquema, seed y dependencias sin cambios.
+- README y guías alineados con FASE 13 completada. Siguiente etapa: Órdenes multi-vendedor (fase 14), por petición.
 
 ## 2026-10-13 — Carrito
 
