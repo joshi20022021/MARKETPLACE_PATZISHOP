@@ -87,3 +87,10 @@ npm run check
 
 Las pruebas usan PostgreSQL real y fixtures propias para snapshots, separación, precisión,
 idempotencia, concurrencia, rollback, visibilidad, aislamiento, límites y OpenAPI.
+
+Cierre de fase: 14 pruebas nuevas de pedidos y 12 de frontend; regresión total ejecutada de
+99 backend y 75 frontend, todas correctas. Builds, TypeScript estricto y check correctos.
+La migración se aplicó sin reset; no cambiaron seed ni dependencias.
+Brave/API/SQL comprobaron dos compras ficticias con ambos métodos, recarga del recibo, historial,
+salidas exactas, stock agotado y carrito vacío. Las fixtures propias se eliminaron al terminar.
+La revisión visual y los límites de capturas están en [frontend](frontend.md).

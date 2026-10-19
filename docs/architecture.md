@@ -38,9 +38,10 @@ Reseñas, promociones y notificaciones se agregarán posteriormente como módulo
 3. ADMIN aprueba o rechaza tiendas. SELLER administra exclusivamente su tienda.
 4. CUSTOMER explora un catálogo paginado y agrega cantidades válidas al carrito.
 5. Checkout recibe dirección y método de pago, y vuelve a leer productos y precios desde la BD.
-6. Una transacción crea Order, SellerOrder por tienda y los OrderItem correspondientes.
-7. Cada vendedor confirma su subpedido: se valida y descuenta inventario de forma atómica.
-8. El vendedor avanza estados permitidos; el cliente consulta la compra y todos sus subpedidos.
+6. La confirmación idempotente crea Order, SellerOrder CONFIRMED por tienda, líneas históricas,
+   historial inicial y movimientos OUT; descuenta stock y vacía el carrito en una única transacción.
+7. El cliente consulta su recibo e historial; cada vendedor consulta solo sus subpedidos.
+8. La gestión posterior de estados por vendedor corresponde a fase 16; dashboard, a fase 15.
 
 ## Entidades conceptuales
 
@@ -72,9 +73,9 @@ con el esquema Prisma y las restricciones SQL.
   depender de aritmética binaria de punto flotante. Se transportarán valores decimales explícitos.
 - OrderItem conserva nombre, SKU y precio unitario; Order conserva una copia de la dirección.
   Editar un producto o una dirección guardada no altera compras históricas.
-- PENDING no reserva existencias. CONFIRMED descuenta stock por subpedido con actualización
-  condicional y transacción; si falta inventario, no se confirma parcialmente ese subpedido.
-  Un carrito o pedido pendiente no garantiza disponibilidad hasta la confirmación.
+- Carrito y revisión no reservan existencias. Confirmar bloquea productos en orden estable,
+  revalida disponibilidad y descuenta stock de todos los subpedidos atómicamente.
+  Si falta inventario, toda la compra se revierte. La clave única por cliente evita duplicados.
 - Se permiten PENDING → CONFIRMED → PREPARING → SHIPPED → DELIVERED. La cancelación será
   posible desde PENDING, CONFIRMED o PREPARING según actor; no desde SHIPPED ni DELIVERED.
   Solo se restaura stock previamente descontado, una vez, en la misma transacción.
@@ -87,7 +88,8 @@ con el esquema Prisma y las restricciones SQL.
   La rotación conserva el vencimiento absoluto; el frontend coordina una renovación
   en vuelo para evitar que peticiones simultáneas provoquen detección de reutilización.
 - Validación DTO, CORS explícito, Helmet, límites de solicitudes y errores sin detalles internos.
-- Se planifica pago contra entrega y simulado; no se almacenan números de tarjetas.
+- Se implementa pago contra entrega pendiente y simulado pagado como prueba, sin cobros reales;
+  no se almacenan números de tarjetas.
   PaymentService permitirá proveedores futuros. ImageStorage permitirá almacenamiento local o remoto
   con validación de formato, tamaño y cantidad durante la implementación.
 
@@ -116,7 +118,7 @@ de propiedad, límites de solicitudes y de tamaño JSON. El rol y la sesión se 
 La fase 7 añade BusinessesModule: creación, consulta y edición de la tienda propia con filtros
 de propietario dentro de las consultas, además de lista pública paginada y detalle por slug.
 La consulta pública exige tienda ACTIVE y propietario SELLER activo; usa una proyección explícita.
-Confirmación de compra, órdenes y dashboards completos siguen pendientes.
+Los dashboards completos y la gestión posterior de estados siguen pendientes.
 Consulta [negocios](businesses.md) para contratos, visibilidad y pruebas reales del módulo.
 La fase 8 añade CategoriesModule: administración global exclusiva de ADMIN y consulta pública
 paginada de categorías activas. Desactivar conserva referencias; el seed no sobrescribe ediciones.
@@ -145,7 +147,12 @@ La fase 13 añade CheckoutModule para validar entrega y revisar el carrito con p
 PaymentService prepara contratos de contra entrega/simulación sin cobrar ni marcar PAID.
 La revisión no persiste dirección ni cambia inventario; los datos de entrega permanecen locales
 en React durante esa visita. Los resúmenes quedan invalidados al editar o cambiar el carrito.
-Detalles en [checkout](checkout.md). Confirmación, órdenes y dashboards completos siguen pendientes.
+Detalles en [checkout](checkout.md).
+La fase 14 añade OrdersModule, confirmación CUSTOMER y lectura propia CUSTOMER/SELLER.
+Se guardan snapshots de producto y entrega, historial inicial y salidas de inventario en una transacción.
+Una migración añade idempotencia; reviewVersion detecta cambios respecto a la revisión.
+React incorpora recibos, historial y recuperación de un intento incierto mediante GET, sin repetir la compra.
+Detalles en [pedidos](orders.md). Dashboards y transiciones posteriores siguen pendientes.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

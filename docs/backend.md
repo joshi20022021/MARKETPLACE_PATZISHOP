@@ -1,15 +1,16 @@
-# API NestJS — fases 4 a 13
+# API NestJS — fases 4 a 14
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
 sesiones; SecurityModule exporta filtros de propiedad. Consulta [autenticación](auth.md) y
 [seguridad](security.md). BusinessesModule implementa gestión y consulta de tiendas;
 CategoriesModule añade administración y consulta pública de categorías; ProductsModule añade CRUD
-del vendedor, imágenes y catálogo público con filtros. Los demás módulos comerciales siguen reservados. Contratos en
+del vendedor, imágenes y catálogo público con filtros. Pedidos confirma compras con inventario atómico. Contratos en
 [negocios](businesses.md), [categorías](categories.md) y [productos](products.md).
 La consulta pública de productos está documentada en [marketplace](marketplace.md).
 El carrito protegido CUSTOMER está documentado en [carrito](cart.md).
 Las opciones y revisión de entrega CUSTOMER están documentadas en [checkout](checkout.md).
+Confirmación, recibos CUSTOMER y subpedidos SELLER están documentados en [pedidos](orders.md).
 
 ## Archivos y responsabilidades
 
@@ -26,6 +27,7 @@ Las opciones y revisión de entrega CUSTOMER están documentadas en [checkout](c
 - `src/products/public-*`: lista y detalle públicos con filtros y proyección comercial explícita.
 - `src/carts/`: carrito propio, límites, cantidades, disponibilidad y totales por tienda.
 - `src/checkout/`: entrega, revisión sin escritura comercial y abstracción de métodos de pago.
+- `src/orders/`: confirmación idempotente, bloqueos, inventario, snapshots y consultas por propietario.
 - `src/media/`: abstracción ImageStorage, archivos locales y limpieza compensatoria.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.
@@ -120,7 +122,7 @@ Productos añade POST/GET `/api/v1/seller/products` y GET/PATCH/DELETE
 `/api/v1/seller/products/:id`, con Bearer y rol SELLER. Imágenes: POST `/:id/images`,
 DELETE `/:id/images/:imageId` y GET `/:id/images/:imageId/file` bajo la misma base.
 GET `/api/v1/media/products/:key` sirve WebP solo cuando producto/tienda/categoría/propietario
-son elegibles. No se expone `/api/v1/products` todavía. Detalles en [products.md](products.md).
+son elegibles. `/api/v1/products` y su detalle son públicos desde fase 11. Detalles en [products.md](products.md).
 
 ## Errores y validación
 
@@ -160,6 +162,10 @@ npm run test:security
 npm run test:businesses
 npm run test:categories
 npm run test:products
+npm run test:marketplace
+npm run test:cart
+npm run test:checkout
+npm run test:orders
 npm run test:database
 npm run check
 ```
@@ -180,7 +186,10 @@ Diecisiete pruebas de categorías comprueban permisos ADMIN, activación, confli
 validación, listas paginadas, visibilidad pública, OpenAPI y seed que conserva cambios administrativos.
 Veintidós pruebas de productos comprueban CRUD, aislamiento, stock concurrente, precios, categorías,
 borrado histórico, carga de imágenes, formato real, tamaño/cantidad, normalización, visibilidad y limpieza.
-Las siete suites suman 107 pruebas; las demás operaciones comerciales se comprobarán en sus fases.
+Las siete suites anteriores suman 107 pruebas. Catálogo, carrito, checkout y pedidos tienen suites
+propias añadidas en fases 11–14; la fase 14 ejecutó 99 pruebas backend pertinentes, incluidas
+14 nuevas de confirmación, idempotencia, concurrencia, rollback y consultas acotadas por propietario.
+Resultados y límites en [pedidos](orders.md).
 También se comprobó el proceso compilado escuchando en 3000, Swagger oculto por defecto en
 producción y salida con código 1 sin revelar secretos al fallar la conexión de arranque.
 Los procesos usados para estas comprobaciones se detuvieron al terminar.

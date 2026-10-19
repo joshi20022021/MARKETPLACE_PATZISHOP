@@ -1,7 +1,8 @@
 # Carrito — fase 12
 
 Carrito persistente en PostgreSQL para CUSTOMER. No hay carrito anónimo ni almacenamiento local.
-La preparación de checkout está implementada en fase 13; pagos y creación de pedidos siguen pendientes.
+La revisión está implementada en fase 13 y la confirmación con inventario en [fase 14](orders.md).
+Contra entrega y simulación son locales; no existen cobros externos.
 Las tablas Cart y CartItem ya existían;
 no se añaden migraciones, dependencias ni cuentas al seed.
 
@@ -45,7 +46,7 @@ Total y subtotal coinciden: no incluyen envío, descuentos ni cargos de pago.
   por la cascada ya existente. No se corrigen cantidades silenciosamente.
 
 El carrito no reserva inventario ni garantiza precios. Otro cliente puede guardar el mismo stock;
-la revisión de checkout valida de nuevo y la compra transaccional corresponde a la fase 14.
+la revisión de checkout valida de nuevo y [confirmar](orders.md) relee todo bajo bloqueos de inventario.
 Una página abierta no recibe cambios en tiempo real: actualizar, recargar o volver al foco consulta el estado.
 Los bloqueos del carrito no reemplazan la validación comercial ni los bloqueos de inventario de la compra.
 

@@ -7,6 +7,13 @@ El carrito exige CUSTOMER y consulta/modifica únicamente líneas vinculadas al 
 ADMIN y SELLER no heredan esos permisos. Las líneas ajenas devuelven el mismo 404 que las inexistentes.
 Checkout exige CUSTOMER, relee solo su carrito y rechaza importes, identidades o tarjetas enviados
 en el cuerpo. La revisión no persiste entrega ni registra su cuerpo; tampoco autoriza cobros o pedidos.
+Confirmar exige CUSTOMER, revisión vigente y clave de intento; relee disponibilidad bajo bloqueos,
+sin aceptar importes o estados del cliente. Los GET de pedidos filtran customerId; los de subpedidos
+filtran business.ownerId y excluyen totales/líneas ajenos. ADMIN no hereda permisos.
+La entrega se persiste solo al confirmar y se consulta por el cliente propio/vendedor implicado.
+React guarda únicamente el UUID del intento en sessionStorage; entrega y token no van a storage.
+Las respuestas son no-store; la caché privada se acota a identidad/epoch y se limpia al cambiar sesión.
+Pruebas de aislamiento, idempotencia y concurrencia: `npm run test:orders`, [contratos](orders.md).
 Swagger es middleware independiente de los guards; permanece desactivado por defecto en production.
 
 ## Roles

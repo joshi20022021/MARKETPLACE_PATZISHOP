@@ -64,6 +64,11 @@ La migración inicial incluye restricciones SQL que Prisma Schema no expresa: st
 no negativos, cantidades positivas, totales de línea consistentes, movimientos con signo y saldos
 válidos, emails normalizados y marcas temporales coherentes. Revisarlas al generar nuevas migraciones.
 
+La migración `20261018000100_order_idempotency` de fase 14 añade idempotencyKey UUID y
+requestHash SHA-256 opcionales a Order, unicidad por cliente/clave y CHECK de pareja/hash válido.
+Conserva filas existentes sin modificar importes ni snapshots. Las confirmaciones nuevas guardan
+ambos valores. Aplicar con `prisma:deploy` y regenerar el cliente; no requiere reset ni cambiar el seed.
+
 ## Seed y pruebas
 
 El seed hace upsert por slug de las ocho categorías y crea solo las faltantes; desde la fase 8 conserva
@@ -81,8 +86,9 @@ deshaga una transacción: los números públicos de pedido pueden tener huecos.
 Cubren compras con dos tiendas, snapshots y precisión decimal, claves compuestas de aislamiento,
 stock/precios negativos, cantidades de carrito, totales manipulados, SKU por tienda, protección
 de productos históricos y consistencia de movimientos. Estas pruebas SQL no verifican flujos HTTP;
-JWT, guards, negocios, categorías y productos tienen suites propias. Checkout, concurrencia de confirmación
-y transiciones de pedidos siguen pendientes.
+JWT, guards, negocios, categorías y productos tienen suites propias. Checkout tiene `test:checkout`;
+`test:orders` comprueba confirmación, idempotencia, concurrencia y rollback HTTP con PostgreSQL.
+Las transiciones posteriores siguen pendientes de fase 16.
 
 ## Dependencias transitivas de la CLI
 

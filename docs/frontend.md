@@ -4,7 +4,8 @@ La fase 10 incorpora portada responsive, registro de cliente/vendedor, login, cu
 de la tienda propia. La fase 11 añade catálogo público, filtros, tiendas y galería de producto.
 La fase 12 incorpora carrito persistente de cliente, selector de cantidad y agregado desde producto.
 La fase 13 añade formulario de entrega, métodos de pago y revisión de checkout con la API.
-Confirmación de compra y dashboards completos corresponden a etapas posteriores.
+La fase 14 añade confirmación, recuperación del intento, recibo e historial de compras propias.
+Los dashboards y la gestión de estados corresponden a etapas posteriores.
 
 ## Desarrollo local
 
@@ -33,7 +34,9 @@ todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 | `/tiendas/:slug`          | Público     | Contacto y catálogo del negocio            |
 | `/productos/:slug`        | Público     | Detalle, precio y galería                  |
 | `/carrito`                | CUSTOMER    | Cantidades, grupos y totales del servidor  |
-| `/checkout`               | CUSTOMER    | Entrega, método de pago y revisión actual  |
+| `/checkout`               | CUSTOMER    | Entrega, revisión y confirmación de pedido |
+| `/pedidos`                | CUSTOMER    | Historial propio paginado                  |
+| `/pedidos/:id`            | CUSTOMER    | Recibo, entrega y subpedidos propios       |
 | `/registro?tipo=vendedor` | Público     | Selección inicial de vendedor; nunca ADMIN |
 | `/ingresar`               | Público     | Login, errores y retorno a cuenta/tienda   |
 | `/cuenta`                 | Autenticado | Datos actuales de `GET /auth/me`           |
@@ -169,3 +172,27 @@ Las fixtures propias (cliente, dos vendedores, dos tiendas, categoría, producto
 no se generaron pedidos ni direcciones persistidas. Los procesos HTTP temporales se detuvieron.
 La confirmación de compra, el inventario transaccional y pagos ejecutados quedan fuera de esta etapa.
 Contratos y límites en [checkout](checkout.md).
+
+## Verificación de fase 14
+
+75 pruebas frontend correctas, incluidas 12 nuevas: recibos históricos, dos tiendas, simulación,
+historial paginado, roles/404, doble envío, respuesta perdida, recuperación al recargar,
+404 y fallo de recuperación, conflicto de revisión y respuesta posterior al logout.
+La clave UUID se guarda por usuario/pestaña en sessionStorage; nunca entrega, token ni importe.
+Un resultado incierto permite consultar el intento por GET sin repetir automáticamente la compra.
+Tras confirmar, la entrega sí forma parte del pedido persistido y su consulta privada por identidad.
+
+Regresión backend: 99 pruebas correctas (14 pedidos, 11 checkout, 12 carrito, 16 seguridad,
+22 productos, 14 API y 10 restricciones SQL). Builds, TypeScript estricto y check correctos.
+
+Brave con API compilada/PostgreSQL comprobó una compra contra entrega de Q296.25 y una
+simulada de Q170.75, ambas con dos tiendas; recibos, recarga por cookie, historial y logout.
+SQL confirmó cuatro subpedidos, cuatro movimientos OUT con saldos exactos, productos agotados
+y carrito vacío, sin compras duplicadas. Solo se utilizaron cuentas, productos y direcciones ficticias propias.
+
+Recibo inspeccionado visualmente en escritorio; confirmación y recibo también en móvil.
+Confirmación, recibo e historial sin desbordamiento horizontal a 434 píxeles CSS.
+Las capturas del historial móvil agotaron el tiempo de la herramienta; ese historial se comprobó
+por DOM, sin declarar revisión visual móvil completa de esa pantalla. Viewport restaurado.
+Las fixtures propias, incluidos pedidos, historial e inventario, se retiraron; procesos HTTP detenidos.
+Contratos, migración y limitaciones en [pedidos](orders.md). Dashboard vendedor es la siguiente fase.

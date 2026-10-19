@@ -2,6 +2,8 @@
 
 La fase 2 añadió infraestructura de desarrollo. La fase 3 incorpora las entidades y migraciones
 Prisma: consulta [el modelo de datos](data-model.md) y [la guía de Prisma](prisma.md).
+La fase 14 añade la migración de idempotencia de pedidos, aplicada con `npm run prisma:deploy`;
+no cambia el contenedor ni sus variables y no requiere reset de datos. Detalles en [pedidos](orders.md).
 
 ## Decisiones
 

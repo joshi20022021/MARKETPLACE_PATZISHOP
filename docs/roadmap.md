@@ -37,13 +37,15 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–13 completadas. React ofrece sesión, formularios, marketplace, carrito y preparación de checkout.
-La fase 13 añade entrega, selección contra entrega/simulado y revisión con precios/disponibilidad actuales,
-sin persistir direcciones, confirmar compras, generar cobros ni descontar inventario.
-La siguiente etapa es fase 14 (Órdenes multi-vendedor); solo se iniciará por petición.
-Confirmación de compra, órdenes y dashboards completos siguen pendientes.
+Fases 1–14 completadas. React ofrece sesión, formularios, marketplace, carrito, checkout e historial propio.
+La fase 14 confirma compras con subpedidos por tienda, entrega histórica, inventario atómico,
+idempotencia y recuperación de respuestas perdidas. Contra entrega queda pendiente; simulación
+queda pagada como prueba, sin cobros reales. La revisión previa sigue sin reservar inventario.
+La siguiente etapa es fase 15 (Dashboard vendedor); solo se iniciará por petición.
+Dashboards, transiciones de pedidos, cancelaciones y pagos externos siguen pendientes.
 Consulta [frontend](frontend.md) para ejecución, pruebas y límites de sesión.
 Consulta [marketplace](marketplace.md) para rutas, filtros y comprobaciones de fase 11.
 Consulta [carrito](cart.md) para contratos y comprobaciones de fase 12.
 Consulta [checkout](checkout.md) para contratos y comprobaciones de fase 13.
+Consulta [pedidos](orders.md) para contratos y comprobaciones de fase 14.
 Consulta [productos](products.md), [categorías](categories.md), [seguridad](security.md) y [CHANGELOG](../CHANGELOG.md).

@@ -30,7 +30,7 @@ erDiagram
 ```
 
 Las cardinalidades mínimas de un subpedido por compra y un ítem por subpedido son reglas
-transaccionales del futuro servicio: una clave foránea no obliga al padre a tener hijos.
+transaccionales de OrdersService desde fase 14: una clave foránea no obliga al padre a tener hijos.
 
 ## Entidades y decisiones
 
@@ -82,12 +82,16 @@ Stock nunca negativo. InventoryMovement.quantity es una variación con signo: IN
 OUT negativa y ADJUSTMENT positiva o negativa, siempre distinta de cero.
 SQL comprueba `previousStock + quantity = newStock` y que ambos saldos sean no negativos.
 La concordancia con el stock actual del producto y la inserción del movimiento será responsabilidad
-de una transacción que se implementará en el servicio de inventario.
+de la transacción de producto o confirmación que escribe el movimiento.
 
 SellerOrder guarda stockDeductedAt y stockRestoredAt; no puede restaurarse sin haber descontado.
-Estas marcas apoyan la idempotencia futura; no ejecutan ajustes automáticamente.
+La confirmación de fase 14 guarda stockDeductedAt; estas marcas no ejecutan ajustes automáticamente.
 El estado global de Order se deriva de sus subpedidos y no se guarda como valor duplicado.
-Las transiciones y la restauración única se implementarán en la fase de órdenes.
+Las transiciones y la restauración única se implementarán en fase 16.
+Order incorpora desde fase 14 idempotencyKey/requestHash opcionales para compatibilidad histórica,
+con unicidad por cliente/clave y restricción SQL de ambos ausentes o ambos válidos.
+La confirmación nueva exige ambos y crea subpedidos CONFIRMED con historial inicial.
+Detalles de bloqueos, snapshots y pagos locales en [pedidos](orders.md).
 
 ## Restricciones, eliminación e índices
 
