@@ -201,6 +201,8 @@ model Order {
   currency             String        @default("GTQ") @db.Char(3)
   paymentMethod        PaymentMethod
   paymentStatus        PaymentStatus @default(PENDING)
+  idempotencyKey       String?       @db.Uuid
+  requestHash          String?       @db.Char(64)
   recipientName        String        @db.VarChar(120)
   phone                String        @db.VarChar(30)
   addressLine          String
@@ -214,6 +216,7 @@ model Order {
   customer             User          @relation(fields: [customerId], references: [id], onDelete: Restrict)
   sellerOrders         SellerOrder[]
 
+  @@unique([customerId, idempotencyKey])
   @@index([customerId, createdAt])
   @@index([createdAt])
 }

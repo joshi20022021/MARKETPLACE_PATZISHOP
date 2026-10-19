@@ -7,5 +7,6 @@ import { LocalPaymentService, PaymentService } from './payment.service';
   imports: [CartsModule],
   controllers: [CheckoutController],
   providers: [CheckoutService, { provide: PaymentService, useClass: LocalPaymentService }],
+  exports: [PaymentService],
 })
 export class CheckoutModule {}

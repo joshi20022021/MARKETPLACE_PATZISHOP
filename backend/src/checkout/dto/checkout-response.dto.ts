@@ -18,11 +18,12 @@ export class CheckoutOptions {
   @ApiProperty({ type: [PaymentOption] }) paymentMethods!: PaymentOption[];
   @ApiProperty({ enum: ['GT'] }) countryCode!: 'GT';
   @ApiProperty({ enum: ['GTQ'] }) currency!: 'GTQ';
-  @ApiProperty({ example: false }) canPlaceOrder!: false;
+  @ApiProperty({ example: true }) canPlaceOrder!: true;
 }
 export class CheckoutPreview {
   @ApiProperty({ enum: ['REVIEW_ONLY'] }) stage!: 'REVIEW_ONLY';
-  @ApiProperty({ example: false }) canPlaceOrder!: false;
+  @ApiProperty({ example: true }) canPlaceOrder!: true;
+  @ApiProperty({ pattern: '^[a-f0-9]{64}$' }) reviewVersion!: string;
   @ApiProperty({ type: DeliveryDto }) delivery!: DeliveryDto;
   @ApiProperty({ type: CartResponse }) cart!: CartResponse;
   @ApiProperty({ type: PaymentPreparation }) payment!: PaymentPreparation;

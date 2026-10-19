@@ -13,6 +13,7 @@
   },
   "packageManager": "npm@10.9.3",
   "scripts": {
+    "test:orders": "npm run test:orders --workspace backend",
     "test:checkout": "npm run test:checkout --workspace backend",
     "test:cart": "npm run test:cart --workspace backend",
     "test:marketplace": "npm run test:marketplace --workspace backend",

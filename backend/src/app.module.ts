@@ -14,6 +14,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { CartsModule } from './carts/carts.module';
 import { CheckoutModule } from './checkout/checkout.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CheckoutModule } from './checkout/checkout.module';
     ProductsModule,
     CartsModule,
     CheckoutModule,
+    OrdersModule,
   ],
   providers: [
     ApiThrottleGuard,

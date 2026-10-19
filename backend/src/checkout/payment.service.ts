@@ -5,9 +5,14 @@ import { PaymentOption, PaymentPreparation } from './dto/checkout-response.dto';
 export abstract class PaymentService {
   abstract options(): PaymentOption[];
   abstract prepare(method: PaymentMethod, amount: string): PaymentPreparation;
+  abstract complete(method: PaymentMethod, amount: string): 'PENDING' | 'PAID';
 }
 @Injectable()
 export class LocalPaymentService extends PaymentService {
+  complete(method: PaymentMethod, amount: string): 'PENDING' | 'PAID' {
+    this.prepare(method, amount);
+    return method === 'SIMULATED' ? 'PAID' : 'PENDING';
+  }
   options(): PaymentOption[] {
     return [
       {

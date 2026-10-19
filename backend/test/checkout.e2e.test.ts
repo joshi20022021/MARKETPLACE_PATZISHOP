@@ -76,14 +76,14 @@ test('options y preview exigen CUSTOMER, sesión vigente y permisos efectivos de
   await context.prisma.user.update({ where: { id: customer.user.id }, data: { isActive: false } });
   await preview(customer.token).expect(401);
 });
-test('opciones son explícitas, locales, sin tarjetas y con compra deshabilitada', async () => {
+test('opciones son explícitas, locales y habilitan confirmación separada sin tarjetas', async () => {
   const customer = await context.identity('CUSTOMER');
   const result = await client()
     .get('/api/v1/checkout/options')
     .auth(customer.token, { type: 'bearer' })
     .expect(200);
   assert.equal(result.headers['cache-control'], 'no-store');
-  assert.equal(result.body.canPlaceOrder, false);
+  assert.equal(result.body.canPlaceOrder, true);
   assert.equal(result.body.currency, 'GTQ');
   assert.equal(result.body.countryCode, 'GT');
   assert.deepEqual(
@@ -120,7 +120,7 @@ test('revisión normaliza entrega, combina tiendas y usa decimales actuales del 
   const result = await preview(customer.token).expect(200);
   assert.equal(result.headers['cache-control'], 'no-store');
   assert.equal(result.body.stage, 'REVIEW_ONLY');
-  assert.equal(result.body.canPlaceOrder, false);
+  assert.equal(result.body.canPlaceOrder, true);
   assert.equal(result.body.cart.groups.length, 2);
   assert.equal(result.body.cart.total, '25.00');
   assert.equal(result.body.payment.amount, '25.00');
@@ -290,7 +290,7 @@ test('contrato de pago preserva cero y nunca declara PAID ni admite métodos des
   assert.equal(result.requiresOnlinePayment, false);
   assert.throws(() => service.prepare('CARD' as PaymentMethod, '1.00'), /válido/);
 });
-test('OpenAPI publica opciones y revisión protegidas, campos anidados y no crea rutas de compra', async () => {
+test('OpenAPI publica revisión y confirmación separadas con campos anidados', async () => {
   const result = await client().get('/api/docs-json').expect(200);
   for (const op of [
     result.body.paths['/api/v1/checkout/options'].get,
@@ -299,6 +299,6 @@ test('OpenAPI publica opciones y revisión protegidas, campos anidados y no crea
     assert.deepEqual(op.security, [{ bearer: [] }]);
   assert(result.body.paths['/api/v1/checkout/preview'].post.responses['409']);
   assert.equal(result.body.components.schemas.DeliveryDto.properties.recipientName.maxLength, 120);
-  assert(!result.body.paths['/api/v1/orders']);
+  assert(result.body.paths['/api/v1/orders'].post);
   assert(!result.body.paths['/api/v1/checkout/confirm']);
 });

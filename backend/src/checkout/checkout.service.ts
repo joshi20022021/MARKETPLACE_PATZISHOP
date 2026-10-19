@@ -4,6 +4,7 @@ import type { PublicUser } from '../users/public-user';
 import { PaymentService } from './payment.service';
 import { CheckoutPreviewDto } from './dto/checkout-input.dto';
 import { CheckoutOptions, CheckoutPreview } from './dto/checkout-response.dto';
+import { reviewVersion } from './review-version';
 @Injectable()
 export class CheckoutService {
   constructor(
@@ -23,7 +24,7 @@ export class CheckoutService {
       paymentMethods: this.payments.options(),
       countryCode: 'GT',
       currency: 'GTQ',
-      canPlaceOrder: false,
+      canPlaceOrder: true,
     };
   }
   async preview(user: PublicUser, input: CheckoutPreviewDto): Promise<CheckoutPreview> {
@@ -41,7 +42,8 @@ export class CheckoutService {
       });
     return {
       stage: 'REVIEW_ONLY',
-      canPlaceOrder: false,
+      canPlaceOrder: true,
+      reviewVersion: reviewVersion(user.id, input, cart),
       delivery: input.delivery,
       cart,
       payment: this.payments.prepare(input.paymentMethod, cart.total),

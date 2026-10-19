@@ -4,6 +4,15 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-18 — Pedidos multi-vendedor
+
+- Migración compatible de idempotencia por cliente y huella de revisión de entrega/productos.
+- Confirmación atómica: pedido, subpedidos CONFIRMED, snapshots, historial y descuento con movimientos OUT.
+- Bloqueos estables de inventario, validación comercial actual, rollback y protección contra doble envío.
+- Consulta propia CUSTOMER y subpedidos SELLER sin importes/líneas ajenos; recuperación por intento.
+- Catorce pruebas nuevas correctas de pedidos con PostgreSQL real; regresión backend correcta.
+- Contratos y límites en docs/orders.md; integración y revisión del frontend continúan en esta fase.
+
 ## 2026-10-18 — Preparación de checkout
 
 - CheckoutModule CUSTOMER: opciones y revisión de entrega con DTOs anidados y respuestas no-store.

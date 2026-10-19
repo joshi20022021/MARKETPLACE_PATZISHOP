@@ -11,6 +11,7 @@ import { PUBLIC_PRODUCT_SCOPE } from '../products/public-product-scope';
 import { PUBLIC_PRODUCT_SELECT } from '../products/dto/public-product-response.dto';
 import { AddCartItemDto, CartQuantityDto } from './dto/cart-input.dto';
 import { CartGroupResponse, CartResponse } from './dto/cart-response.dto';
+import { lockCustomerCart } from './cart-lock';
 const CART_LIMIT = 50;
 const QUANTITY_LIMIT = 99;
 @Injectable()
@@ -27,7 +28,7 @@ export class CartsService {
       });
     return this.prisma.$transaction(async (tx) => {
       // Serialize all cart operations for this customer, including first creation.
-      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtextextended(${user.id}, 0))::text`;
+      await lockCustomerCart(tx, user.id);
       return work(tx);
     });
   }
@@ -119,7 +120,7 @@ export class CartsService {
         message: 'La cantidad supera la disponibilidad actual',
       });
   }
-  private async snapshot(tx: Prisma.TransactionClient, userId: string): Promise<CartResponse> {
+  async snapshot(tx: Prisma.TransactionClient, userId: string): Promise<CartResponse> {
     const lines = await tx.cartItem.findMany({
       where: { cart: { userId } },
       select: { id: true, productId: true, quantity: true },
