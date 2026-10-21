@@ -9,7 +9,16 @@ al cierre de una fase completa.
 - Endpoint SELLER de métricas propias con lectura coherente y respuestas no-store.
 - Conteos de producto/stock y subpedidos; importes históricos propios contra entrega y simulados separados.
 - Seis pruebas nuevas correctas con PostgreSQL real: roles, aislamiento, vacíos, decimales y moderación.
-- Contratos y alcance en docs/seller-dashboard.md; interfaz y verificación completa en curso.
+- Panel /vendedor, listado/filtros paginados y formularios de producto conectados al CRUD existente.
+- PATCH solo envía campos editados; carga multipart y vista previa privada mediante blobs temporales.
+- Segundo paso para eliminar, explicación de historial, bloqueo de reenvíos inciertos y descarte al salir/cambiar sesión.
+- Diecisiete pruebas frontend nuevas; 92 correctas en total. Regresión backend: 120 pruebas correctas.
+- Brave/API/SQL: login con retorno, aislamiento, filtros, creación, precio/stock/estado, recarga y métricas actualizadas.
+- Carga real HTTP 201 y vista privada de borrador comprobadas; selección por navegador bloqueada por permiso de la extensión.
+- Panel, listado y formulario revisados visualmente en escritorio/móvil, sin desbordamiento a 434 píxeles CSS.
+- Builds, TypeScript estricto y check correctos; sin cambios de esquema, seed ni dependencias.
+- Fixtures propias, imágenes y procesos retirados; viewport restaurado. Guías y README actualizados.
+- Siguiente: fase 16, gestión de pedidos, por petición. Contratos y límites en docs/seller-dashboard.md.
 
 ## 2026-10-18 — Pedidos multi-vendedor
 

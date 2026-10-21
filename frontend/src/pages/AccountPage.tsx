@@ -53,8 +53,8 @@ export function AccountPage() {
               : 'Desde aquí puedes consultar los datos de tu cuenta.'}
           </p>
           {profile.data.role === 'SELLER' && (
-            <Link className="button" to="/cuenta/tienda">
-              Administrar mi tienda ↗
+            <Link className="button" to="/vendedor">
+              Abrir mi panel ↗
             </Link>
           )}
         </aside>

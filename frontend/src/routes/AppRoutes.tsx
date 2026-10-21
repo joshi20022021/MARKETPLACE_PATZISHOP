@@ -36,6 +36,17 @@ const OrdersPage = lazy(() =>
 const OrderPage = lazy(() =>
   import('../pages/OrdersPage').then((module) => ({ default: module.OrderPage })),
 );
+const SellerDashboardPage = lazy(() =>
+  import('../pages/SellerDashboardPage').then((module) => ({
+    default: module.SellerDashboardPage,
+  })),
+);
+const SellerProductsPage = lazy(() =>
+  import('../pages/SellerProductsPage').then((module) => ({ default: module.SellerProductsPage })),
+);
+const SellerProductPage = lazy(() =>
+  import('../pages/SellerProductPage').then((module) => ({ default: module.SellerProductPage })),
+);
 export function AppRoutes() {
   return (
     <Routes>
@@ -54,6 +65,10 @@ export function AppRoutes() {
           <Route path="pedidos/:id" element={<OrderPage />} />
           <Route path="cuenta" element={<AccountPage />} />
           <Route element={<SessionGate seller />}>
+            <Route path="vendedor" element={<SellerDashboardPage />} />
+            <Route path="vendedor/productos" element={<SellerProductsPage />} />
+            <Route path="vendedor/productos/nuevo" element={<SellerProductPage />} />
+            <Route path="vendedor/productos/:id/editar" element={<SellerProductPage />} />
             <Route path="cuenta/tienda" element={<ShopPage />} />
           </Route>
         </Route>

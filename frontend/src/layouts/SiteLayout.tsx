@@ -40,8 +40,8 @@ export function SiteLayout() {
                 </Link>
               )}
               {session.user.role === 'SELLER' && (
-                <Link className="nav-link" to="/cuenta/tienda">
-                  Mi tienda
+                <Link className="nav-link" to="/vendedor">
+                  Mi panel
                 </Link>
               )}
               <Link className="nav-link" to="/cuenta">

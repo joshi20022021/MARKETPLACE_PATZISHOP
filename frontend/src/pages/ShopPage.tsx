@@ -12,6 +12,7 @@ import {
 } from '../services/contracts';
 import { errorMessage, statusOf } from '../services/errors';
 import { FormField } from '../components/FormField';
+import { SellerNav } from '../components/SellerNav';
 export function ShopPage() {
   const user = useSession((state) => state.user);
   const shop = useQuery({
@@ -72,6 +73,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
   };
   return (
     <section className="wrap account-page shop-page">
+      <SellerNav />
       <Link className="back-link" to="/cuenta">
         ← Mi cuenta
       </Link>
@@ -97,6 +99,8 @@ function ShopForm({ shop }: { shop: Business | null }) {
                   : await api.post('/seller/business', input);
                 const result = businessSchema.parse(response.data);
                 client.setQueryData(['shop', user?.id], result);
+                void client.invalidateQueries({ queryKey: ['seller-business'] });
+                void client.invalidateQueries({ queryKey: ['seller-dashboard'] });
                 setSaved(true);
               } catch (cause) {
                 setError(errorMessage(cause));
