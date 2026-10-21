@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
   HttpCode,
   Param,
   ParseUUIDPipe,
@@ -49,11 +50,13 @@ export class SellerProductsController {
     return this.products.create(user, dto);
   }
   @Get()
+  @Header('Cache-Control', 'no-store')
   @ApiOkResponse({ type: ProductListResponse })
   list(@CurrentUser() user: PublicUser, @Query() query: ListProductsDto) {
     return this.products.list(user, query);
   }
   @Get(':id')
+  @Header('Cache-Control', 'no-store')
   @ApiOkResponse({ type: ProductResponse })
   byId(@CurrentUser() user: PublicUser, @Param('id', new ParseUUIDPipe()) id: string) {
     return this.products.byId(user, id);

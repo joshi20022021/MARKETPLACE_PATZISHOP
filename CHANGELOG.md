@@ -4,6 +4,13 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-20 — Panel del vendedor
+
+- Endpoint SELLER de métricas propias con lectura coherente y respuestas no-store.
+- Conteos de producto/stock y subpedidos; importes históricos propios contra entrega y simulados separados.
+- Seis pruebas nuevas correctas con PostgreSQL real: roles, aislamiento, vacíos, decimales y moderación.
+- Contratos y alcance en docs/seller-dashboard.md; interfaz y verificación completa en curso.
+
 ## 2026-10-18 — Pedidos multi-vendedor
 
 - Migración compatible de idempotencia por cliente y huella de revisión de entrega/productos.
