@@ -63,6 +63,9 @@ de carrito. No usar direcciones, tarjetas ni cuentas reales en fixtures. Contrat
 Para confirmación, consultas de pedidos o inventario de compra ejecutar `npm run test:orders`,
 además de checkout, carrito, productos y seguridad. Cubre idempotencia, concurrencia y rollback
 con PostgreSQL real. Contratos en [orders.md](orders.md).
+Para el panel vendedor ejecutar `npm run test:seller-dashboard` y la regresión de productos,
+negocios, seguridad y pedidos; los importes deben usar solo subtotales del negocio autenticado.
+Contratos y métricas en [seller-dashboard.md](seller-dashboard.md).
 Para cambios en frontend ejecutar `npm run test:frontend` y `npm run build:frontend`, además de
 comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar solo fixtures propias
 en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.

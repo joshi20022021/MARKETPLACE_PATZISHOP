@@ -5,7 +5,8 @@ de la tienda propia. La fase 11 añade catálogo público, filtros, tiendas y ga
 La fase 12 incorpora carrito persistente de cliente, selector de cantidad y agregado desde producto.
 La fase 13 añade formulario de entrega, métodos de pago y revisión de checkout con la API.
 La fase 14 añade confirmación, recuperación del intento, recibo e historial de compras propias.
-Los dashboards y la gestión de estados corresponden a etapas posteriores.
+La fase 15 conecta el panel vendedor con métricas, gestión de productos e imágenes privadas.
+Dashboard ADMIN y gestión de estados corresponden a etapas posteriores.
 
 ## Desarrollo local
 
@@ -26,22 +27,26 @@ El backend debe permitir exactamente `http://localhost:5173` en `CORS_ORIGIN`. U
 o puerto requiere ajustar proxy/origen. La cookie HttpOnly de refresh viaja mediante el proxy;
 todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 
-| Ruta                      | Acceso      | Comportamiento                             |
-| ------------------------- | ----------- | ------------------------------------------ |
-| `/`                       | Público     | Portada y enlaces de participación         |
-| `/catalogo`               | Público     | Productos, filtros y páginas en la URL     |
-| `/tiendas`                | Público     | Directorio con búsqueda y páginas          |
-| `/tiendas/:slug`          | Público     | Contacto y catálogo del negocio            |
-| `/productos/:slug`        | Público     | Detalle, precio y galería                  |
-| `/carrito`                | CUSTOMER    | Cantidades, grupos y totales del servidor  |
-| `/checkout`               | CUSTOMER    | Entrega, revisión y confirmación de pedido |
-| `/pedidos`                | CUSTOMER    | Historial propio paginado                  |
-| `/pedidos/:id`            | CUSTOMER    | Recibo, entrega y subpedidos propios       |
-| `/registro?tipo=vendedor` | Público     | Selección inicial de vendedor; nunca ADMIN |
-| `/ingresar`               | Público     | Login, errores y retorno a cuenta/tienda   |
-| `/cuenta`                 | Autenticado | Datos actuales de `GET /auth/me`           |
-| `/cuenta/tienda`          | SELLER      | GET, POST o PATCH de `/seller/business`    |
-| Otras                     | Público     | Página 404                                 |
+| Ruta                             | Acceso      | Comportamiento                             |
+| -------------------------------- | ----------- | ------------------------------------------ |
+| `/`                              | Público     | Portada y enlaces de participación         |
+| `/catalogo`                      | Público     | Productos, filtros y páginas en la URL     |
+| `/tiendas`                       | Público     | Directorio con búsqueda y páginas          |
+| `/tiendas/:slug`                 | Público     | Contacto y catálogo del negocio            |
+| `/productos/:slug`               | Público     | Detalle, precio y galería                  |
+| `/carrito`                       | CUSTOMER    | Cantidades, grupos y totales del servidor  |
+| `/checkout`                      | CUSTOMER    | Entrega, revisión y confirmación de pedido |
+| `/pedidos`                       | CUSTOMER    | Historial propio paginado                  |
+| `/pedidos/:id`                   | CUSTOMER    | Recibo, entrega y subpedidos propios       |
+| `/registro?tipo=vendedor`        | Público     | Selección inicial de vendedor; nunca ADMIN |
+| `/ingresar`                      | Público     | Login, errores y retorno a cuenta/tienda   |
+| `/cuenta`                        | Autenticado | Datos actuales de `GET /auth/me`           |
+| `/cuenta/tienda`                 | SELLER      | GET, POST o PATCH de `/seller/business`    |
+| `/vendedor`                      | SELLER      | Métricas y estado de la tienda propia      |
+| `/vendedor/productos`            | SELLER      | Lista, búsqueda, estados y paginación      |
+| `/vendedor/productos/nuevo`      | SELLER      | Crear producto inactivo o activo permitido |
+| `/vendedor/productos/:id/editar` | SELLER      | Edición, stock e imágenes privadas         |
+| Otras                            | Público     | Página 404                                 |
 
 La tienda nace PENDING. Solo un GET 404 se interpreta como ausencia de tienda; los fallos de red
 y permisos muestran un error con reintento. El formulario permite nombre, slug, descripción,
@@ -196,3 +201,28 @@ Las capturas del historial móvil agotaron el tiempo de la herramienta; ese hist
 por DOM, sin declarar revisión visual móvil completa de esa pantalla. Viewport restaurado.
 Las fixtures propias, incluidos pedidos, historial e inventario, se retiraron; procesos HTTP detenidos.
 Contratos, migración y limitaciones en [pedidos](orders.md). Dashboard vendedor es la siguiente fase.
+
+## Verificación de fase 15
+
+92 pruebas frontend correctas, incluidas 17 nuevas: contratos, roles y retorno, métricas,
+errores y tienda ausente, filtros/paginación, creación, PATCH parcial sin reenviar stock antiguo,
+eliminación y referencias históricas, fallos inciertos, multipart/vista previa privada,
+moderación y respuestas al salir del formulario o tras logout. Las imágenes liberan sus URLs blob al salir.
+
+Regresión backend: 120 pruebas correctas (6 panel, 22 productos, 16 seguridad, 14 API, 10 SQL,
+15 negocios, 14 pedidos, 11 checkout y 12 carrito). Builds, TypeScript estricto y check correctos.
+El paquete inicial es de 490.97 kB; páginas de vendedor bajo demanda, sin dependencias nuevas.
+
+Brave/API/PostgreSQL comprobaron login con retorno, métricas propias, exclusión de productos ajenos,
+filtros SKU/estado, creación inactiva, edición de precio/stock/estado, recarga por cookie,
+actualización del resumen y logout. SQL comprobó precio/stock persistidos y movimientos IN/ADJUSTMENT.
+La extensión bloqueó la selección del archivo por falta de acceso a archivos locales: la carga
+multipart se verificó mediante HTTP (201), y su imagen privada se revisó en el navegador,
+también con producto INACTIVE. La interacción de selección/carga completa por navegador queda
+limitada por ese permiso de la herramienta; no se cambiaron permisos del navegador.
+
+Panel, listado y formulario revisados visualmente en escritorio y móvil, sin desbordamiento
+horizontal a 434 píxeles CSS. Viewport restaurado. Solo se usaron fixtures propias: cuentas,
+negocios, categoría, productos e imagen sintética retirados al terminar, incluidos sus movimientos
+y archivos WebP. Procesos HTTP temporales detenidos. Sin cambios de esquema, seed ni dependencias.
+Contratos y límites en [panel vendedor](seller-dashboard.md). La fase 16 gestionará estados de pedidos.

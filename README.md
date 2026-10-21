@@ -3,7 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 14 — Órdenes multi-vendedor.** Confirmación con subpedidos por tienda,
+**Estado actual: FASE 15 — Dashboard vendedor.** Panel con métricas propias, listado y filtros,
+creación/edición de productos, ajustes de stock e imágenes privadas conectados a la API.
+Confirmación con subpedidos por tienda,
 entrega histórica, inventario transaccional, protección contra duplicados, recibo e historial propio.
 Contra entrega queda pendiente; pago simulado queda pagado como prueba, sin cobrar dinero real.
 Carrito persistente para clientes, cantidades validadas,
@@ -11,7 +13,7 @@ productos de varias tiendas y totales calculados en el servidor. Catálogo con b
 orden y paginación; directorio de tiendas, tienda pública y detalle con galería conectados a la API.
 También incluye registro, login, sesión renovable, cuenta y formulario de tienda propia.
 Solo se muestran productos disponibles de tiendas ACTIVE y vendedores activos.
-Las tiendas nacen en PENDING; aprobación administrativa, gestión de estados y dashboards completos
+Las tiendas nacen en PENDING; aprobación administrativa, gestión de estados de pedidos y dashboard ADMIN
 siguen pendientes.
 Las características siguientes son el alcance planificado.
 
@@ -45,6 +47,7 @@ La [guía del marketplace](docs/marketplace.md) explica catálogo público, filt
 La [guía del carrito](docs/cart.md) explica cantidades, totales, disponibilidad y concurrencia.
 La [guía del checkout](docs/checkout.md) explica entrega, revisión y contratos de pago.
 La [guía de pedidos](docs/orders.md) explica confirmación, idempotencia, inventario y consultas por propietario.
+La [guía del panel vendedor](docs/seller-dashboard.md) explica métricas, CRUD e imágenes privadas.
 
 ```text
 PROYECTO_VENTAS/
@@ -105,6 +108,7 @@ npm run test:marketplace
 npm run test:cart
 npm run test:checkout
 npm run test:orders
+npm run test:seller-dashboard
 npm run test:frontend
 npm run build:frontend
 npm run check
@@ -124,6 +128,7 @@ rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican e
 `test:cart` verifica propiedad, roles, cantidades, totales por tienda, disponibilidad y agregados concurrentes.
 `test:checkout` verifica entrega, métodos de pago, recálculo y ausencia de efectos de compra con PostgreSQL real.
 `test:orders` verifica transacciones, separación por tienda, stock concurrente, idempotencia, rollback y propiedad.
+`test:seller-dashboard` verifica métricas del negocio autenticado, vacíos, estados e importes propios.
 `test:frontend` verifica contratos, renovación, rutas, formularios y conexión simulada a la API.
 `build:frontend` verifica TypeScript estricto y genera el SPA en `frontend/dist`.
 
@@ -149,6 +154,8 @@ Los clientes autenticados pueden agregar productos y administrar su carrito en `
 El carrito no reserva stock. Un carrito válido permite revisar y confirmar en `/checkout`;
 la confirmación descuenta inventario y genera un recibo. `/pedidos` muestra las compras del cliente.
 Puedes registrar una cuenta de vendedor y crear su tienda; el estado inicial es «En revisión».
+El panel está en `/vendedor` y la gestión de productos en `/vendedor/productos`.
+Una tienda en revisión prepara productos inactivos; activar requiere aprobación administrativa.
 No se incluyen credenciales de administrador ni cuentas de demostración. Consulta la
 [guía del frontend](docs/frontend.md) para configurar otros orígenes y probar el build.
 
@@ -205,4 +212,4 @@ su conservación y copia deben acompañar a la BD. No hay cuentas de demostraci�
 Las capturas de documentación se consolidarán en la fase 21; las comprobaciones actuales de
 navegador y sus límites se registran en [docs/frontend.md](docs/frontend.md).
 
-El proyecto avanzará por etapas verificables; la siguiente es **Dashboard vendedor (fase 15)**.
+El proyecto avanzará por etapas verificables; la siguiente es **Gestión de pedidos (fase 16)**.

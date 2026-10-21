@@ -41,7 +41,7 @@ Reseñas, promociones y notificaciones se agregarán posteriormente como módulo
 6. La confirmación idempotente crea Order, SellerOrder CONFIRMED por tienda, líneas históricas,
    historial inicial y movimientos OUT; descuenta stock y vacía el carrito en una única transacción.
 7. El cliente consulta su recibo e historial; cada vendedor consulta solo sus subpedidos.
-8. La gestión posterior de estados por vendedor corresponde a fase 16; dashboard, a fase 15.
+8. El panel vendedor conecta métricas y productos en fase 15; la gestión de estados corresponde a fase 16.
 
 ## Entidades conceptuales
 
@@ -153,6 +153,11 @@ Se guardan snapshots de producto y entrega, historial inicial y salidas de inven
 Una migración añade idempotencia; reviewVersion detecta cambios respecto a la revisión.
 React incorpora recibos, historial y recuperación de un intento incierto mediante GET, sin repetir la compra.
 Detalles en [pedidos](orders.md). Dashboards y transiciones posteriores siguen pendientes.
+La fase 15 añade SellerDashboardModule con métricas del negocio autenticado en RepeatableRead.
+React conecta listado, filtros y CRUD de productos, ajustes de stock e imágenes privadas al panel.
+Las sumas históricas usan subtotales propios y separan simulación de contra entrega; no representan cobros.
+No modifica esquema ni dependencias. Detalles en [panel vendedor](seller-dashboard.md).
+Gestión de estados y dashboard ADMIN quedan para las fases 16 y 17 respectivamente.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

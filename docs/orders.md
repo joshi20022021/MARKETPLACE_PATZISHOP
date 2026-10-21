@@ -67,7 +67,7 @@ esta transacción SQL. Un PAID con método SIMULATED siempre es una simulación.
 
 Checkout permite confirmar después de revisar. `/pedidos` lista el historial propio y
 `/pedidos/:id` muestra recibo, entrega y estados por tienda. El vendedor tiene consulta HTTP acotada;
-su dashboard se construye en fase 15 y la gestión de estados en fase 16.
+su [dashboard](seller-dashboard.md) está implementado en fase 15 y la gestión de estados corresponde a fase 16.
 
 ```powershell
 npm run prisma:generate

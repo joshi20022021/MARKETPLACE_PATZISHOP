@@ -1,5 +1,8 @@
 # Productos — fase 9
 
+Desde fase 15, el [panel vendedor](seller-dashboard.md) conecta estas operaciones con formularios,
+listado/filtros e imágenes privadas. Los GET propios de lista y detalle responden no-store.
+
 ProductsModule importa DatabaseModule y SecurityModule. Todas las rutas `/api/v1/seller/products`
 requieren Bearer JWT de un SELLER activo con sesión vigente. La tienda se obtiene de su identidad;
 no se acepta businessId/ownerId del cuerpo o como filtros de lista.

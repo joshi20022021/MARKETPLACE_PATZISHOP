@@ -61,4 +61,11 @@ npm run check
 
 Seis pruebas nuevas de API con PostgreSQL real verifican permisos, ausencia de tienda,
 stock/estados, separación por propietario, importes decimales históricos, simulación, moderación
-y OpenAPI. La comprobación de interfaz y regresión se registra al cerrar la fase.
+y OpenAPI. El frontend añade 17 pruebas del panel, CRUD, red, imágenes, roles y sesión.
+Cierre: 120 pruebas backend y 92 frontend correctas; builds, TypeScript estricto y check correctos.
+Brave/API/SQL verificaron login, filtros, creación, edición, persistencia y métricas actualizadas;
+movimientos IN/ADJUSTMENT y vista previa privada de un borrador.
+La extensión bloqueó seleccionar un archivo local: multipart se verificó por HTTP (201), sin cambiar
+permisos del navegador. Panel, listado y formulario se revisaron visualmente en escritorio y móvil,
+sin desbordamiento a 434 píxeles CSS; viewport restaurado. Fixtures, imágenes y procesos temporales
+retirados. Más detalle en [frontend](frontend.md).

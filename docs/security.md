@@ -14,6 +14,11 @@ La entrega se persiste solo al confirmar y se consulta por el cliente propio/ven
 React guarda únicamente el UUID del intento en sessionStorage; entrega y token no van a storage.
 Las respuestas son no-store; la caché privada se acota a identidad/epoch y se limpia al cambiar sesión.
 Pruebas de aislamiento, idempotencia y concurrencia: `npm run test:orders`, [contratos](orders.md).
+El panel SELLER obtiene su negocio por ownerId del JWT, sin aceptar otra tienda en parámetros.
+Sus sumas usan SellerOrder.subtotal, excluyendo importes ajenos del pedido global y separando simulación.
+El CRUD privado de productos lleva no-store en lista/detalle. Sus vistas previas requieren Bearer;
+React solicita blobs y libera las URLs temporales, sin colocar tokens en URLs ni storage.
+Roles y aislamiento del panel: `npm run test:seller-dashboard`, [contratos](seller-dashboard.md).
 Swagger es middleware independiente de los guards; permanece desactivado por defecto en production.
 
 ## Roles
