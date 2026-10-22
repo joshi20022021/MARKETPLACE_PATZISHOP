@@ -6,6 +6,7 @@ export function SellerNav() {
         Resumen
       </NavLink>
       <NavLink to="/vendedor/productos">Mis productos</NavLink>
+      <NavLink to="/vendedor/pedidos">Pedidos</NavLink>
       <NavLink to="/cuenta/tienda">Datos de mi tienda</NavLink>
     </nav>
   );

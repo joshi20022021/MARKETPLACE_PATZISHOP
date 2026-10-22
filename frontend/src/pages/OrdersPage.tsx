@@ -5,6 +5,8 @@ import { orderListSchema, orderSchema, orderStatus } from '../services/orders';
 import { money } from '../services/marketplace';
 import { RemoteError } from '../components/RemoteState';
 import { Pagination } from '../components/Pagination';
+import { OrderHistory } from '../components/OrderHistory';
+import { OrderStatusActions } from '../components/OrderStatusActions';
 export function OrdersPage() {
   const session = useSession();
   const [params, setParams] = useSearchParams();
@@ -65,6 +67,17 @@ export function OrdersPage() {
                     {order.sellerOrders.length} tiendas
                   </p>
                   <strong>{money(order.total)}</strong>
+                  {order.activeProductsTotal !== undefined &&
+                    order.activeProductsTotal !== order.total && (
+                      <p>Productos no cancelados: {money(order.activeProductsTotal)}</p>
+                    )}
+                  <ul>
+                    {order.sellerOrders.map((group) => (
+                      <li key={group.id}>
+                        {group.business.name}: {orderStatus[group.status]}
+                      </li>
+                    ))}
+                  </ul>
                   <p>
                     {order.simulation ? 'Pago simulado · sin cobro real' : 'Pago contra entrega'}
                   </p>
@@ -94,7 +107,7 @@ export function OrderPage() {
         Cargando tu pedido…
       </p>
     );
-  if (order.isError)
+  if (!order.data)
     return (
       <section className="wrap page-state">
         <RemoteError
@@ -108,6 +121,11 @@ export function OrderPage() {
       </section>
     );
   const value = order.data;
+  const reload = async () => {
+    const result = await order.refetch();
+    if (result.error) throw result.error;
+    return result.data;
+  };
   return (
     <section className="wrap marketplace-page order-page">
       <Link className="back-link" to="/pedidos">
@@ -120,10 +138,22 @@ export function OrderPage() {
             Pedido <em>#{value.number}</em>
           </h1>
         </div>
+        <button
+          className="button button-outline"
+          disabled={order.isFetching}
+          onClick={() => void order.refetch()}
+        >
+          Actualizar pedido
+        </button>
       </div>
       <p role="status" className="checkout-notice">
-        Tu pedido está registrado. Cada tienda preparará los productos de su subpedido.
+        Tu pedido está registrado. Consulta el avance de cada tienda y su historial.
       </p>
+      {order.isRefetchError && (
+        <p role="alert" className="form-alert">
+          No se pudo actualizar el pedido. Se muestra la última información consultada.
+        </p>
+      )}
       {value.simulation && (
         <p className="form-alert">Pago simulado de prueba. No se cobró dinero real.</p>
       )}
@@ -157,9 +187,17 @@ export function OrderPage() {
                   : 'Reembolsado'}
           </p>
           <p>
-            Total de productos: <strong>{money(value.total)}</strong>
+            Total original de productos: <strong>{money(value.total)}</strong>
           </p>
+          {value.activeProductsTotal !== undefined && (
+            <p>
+              Productos no cancelados: <strong>{money(value.activeProductsTotal)}</strong>
+            </p>
+          )}
           <p>El envío no está incluido en este importe.</p>
+          <p>
+            El estado de pago es histórico. Cancelar un subpedido no ejecuta cobros ni reembolsos.
+          </p>
         </div>
         <div>
           <h2>Por tienda</h2>
@@ -179,6 +217,13 @@ export function OrderPage() {
                 ))}
               </ul>
               <p>Subtotal: {money(group.subtotal)}</p>
+              <OrderStatusActions
+                key={`${group.id}:${group.status}`}
+                part={group}
+                customer
+                reload={reload}
+              />
+              <OrderHistory history={group.history} />
             </section>
           ))}
         </div>

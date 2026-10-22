@@ -29,8 +29,10 @@ export function LoginPage() {
       '/vendedor',
       '/vendedor/productos',
       '/vendedor/productos/nuevo',
+      '/vendedor/pedidos',
     ].includes(from) ||
       /^\/vendedor\/productos\/[a-f0-9-]{36}\/editar$/u.test(from) ||
+      /^\/vendedor\/pedidos\/[a-f0-9-]{36}$/u.test(from) ||
       /^\/pedidos\/[a-f0-9-]{36}$/u.test(from) ||
       /^\/productos\/[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(from))
       ? from

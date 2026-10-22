@@ -17,8 +17,9 @@ export function RouteNotice() {
       '/vendedor': 'Mi panel',
       '/vendedor/productos': 'Mis productos',
       '/vendedor/productos/nuevo': 'Nuevo producto',
+      '/vendedor/pedidos': 'Pedidos de mi tienda',
     };
-    document.title = `${titles[pathname] ?? (pathname.startsWith('/vendedor/productos/') ? 'Editar producto' : pathname.startsWith('/pedidos/') ? 'Mi pedido' : pathname.startsWith('/productos/') ? 'Producto local' : pathname.startsWith('/tiendas/') ? 'Tienda local' : 'Página no encontrada')} · PatziShop`;
+    document.title = `${titles[pathname] ?? (pathname.startsWith('/vendedor/pedidos/') ? 'Subpedido de mi tienda' : pathname.startsWith('/vendedor/productos/') ? 'Editar producto' : pathname.startsWith('/pedidos/') ? 'Mi pedido' : pathname.startsWith('/productos/') ? 'Producto local' : pathname.startsWith('/tiendas/') ? 'Tienda local' : 'Página no encontrada')} · PatziShop`;
     document.getElementById('contenido')?.focus({ preventScroll: true });
     window.scrollTo?.(0, 0);
   }, [pathname]);

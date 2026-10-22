@@ -3,36 +3,95 @@ import { z } from 'zod';
 import { deliverySchema } from './checkout';
 import { errorMessage } from './errors';
 const money = z.string().regex(/^\d+\.\d{2}$/u);
-const status = z.enum(['PENDING', 'CONFIRMED', 'PREPARING', 'SHIPPED', 'DELIVERED', 'CANCELLED']);
+export const orderStatusSchema = z.enum([
+  'PENDING',
+  'CONFIRMED',
+  'PREPARING',
+  'SHIPPED',
+  'DELIVERED',
+  'CANCELLED',
+]);
+const status = orderStatusSchema;
+export const orderHistorySchema = z.array(
+  z.object({
+    id: z.uuid(),
+    fromStatus: status.nullable(),
+    toStatus: status,
+    note: z.string().nullable(),
+    createdAt: z.iso.datetime(),
+  }),
+);
+export const orderPartSchema = z.object({
+  id: z.uuid(),
+  business: z.object({ id: z.uuid(), name: z.string(), slug: z.string() }),
+  subtotal: money,
+  status,
+  // Older read-only API responses remain displayable; they never enable state actions.
+  allowedStatuses: z.array(status).default([]),
+  history: orderHistorySchema.default([]),
+  items: z.array(
+    z.object({
+      id: z.uuid(),
+      productId: z.uuid(),
+      productName: z.string(),
+      unitPrice: money,
+      quantity: z.number().int().positive(),
+      lineTotal: money,
+    }),
+  ),
+});
 export const orderSchema = z.object({
   id: z.uuid(),
   number: z.number().int().positive(),
   total: money,
+  activeProductsTotal: money.optional(),
   currency: z.literal('GTQ'),
   paymentMethod: z.enum(['CASH_ON_DELIVERY', 'SIMULATED']),
   paymentStatus: z.enum(['PENDING', 'PAID', 'FAILED', 'REFUNDED']),
   simulation: z.boolean(),
   delivery: deliverySchema,
   createdAt: z.iso.datetime(),
-  sellerOrders: z.array(
-    z.object({
-      id: z.uuid(),
-      business: z.object({ id: z.uuid(), name: z.string(), slug: z.string() }),
-      subtotal: money,
-      status,
-      items: z.array(
-        z.object({
-          id: z.uuid(),
-          productId: z.uuid(),
-          productName: z.string(),
-          unitPrice: money,
-          quantity: z.number().int().positive(),
-          lineTotal: money,
-        }),
-      ),
-    }),
-  ),
+  sellerOrders: z.array(orderPartSchema),
 });
+export const sellerOrderSchema = orderPartSchema.extend({
+  orderId: z.uuid(),
+  orderNumber: z.number().int().positive(),
+  delivery: deliverySchema,
+  paymentMethod: orderSchema.shape.paymentMethod,
+  paymentStatus: orderSchema.shape.paymentStatus,
+  simulation: z.boolean(),
+  createdAt: z.iso.datetime(),
+});
+export type OrderPart = z.infer<typeof orderPartSchema>;
+export type SellerOrder = z.infer<typeof sellerOrderSchema>;
+export type OrderState = z.infer<typeof status>;
+export function readSellerOrderFilters(params: URLSearchParams) {
+  for (const key of ['page', 'status'])
+    if (params.getAll(key).length > 1) throw new Error('Filtros repetidos');
+  return z
+    .object({
+      status: z.union([z.literal(''), status]),
+      page: z.string().regex(/^\d+$/u).transform(Number).pipe(z.number().int().min(1).max(10000)),
+    })
+    .parse({ status: params.get('status') ?? '', page: params.get('page') ?? '1' });
+}
+export const statusNoteSchema = z
+  .string()
+  .trim()
+  .max(500, 'La nota admite hasta 500 caracteres.')
+  .regex(/^[\P{Cc}\t\r\n]*$/u, 'La nota contiene caracteres no permitidos.');
+export function transitionError(error: unknown): string {
+  const code: unknown = axios.isAxiosError(error) ? error.response?.data?.error : undefined;
+  if (code === 'ORDER_STATE_CHANGED')
+    return 'El pedido cambió. Vuelve a consultar su estado antes de continuar.';
+  if (code === 'ORDER_TRANSITION_INVALID')
+    return 'Ese cambio ya no está permitido. Consulta el estado actual.';
+  if (code === 'ORDER_STOCK_UNAVAILABLE')
+    return 'No hay disponibilidad para confirmar este subpedido.';
+  if (code === 'ORDER_STOCK_LIMIT' || code === 'ORDER_INVENTORY_INVALID')
+    return 'No se pudo ajustar el inventario. Consulta el pedido y revisa sus existencias.';
+  return errorMessage(error);
+}
 export const orderListSchema = z.object({
   data: z.array(orderSchema),
   meta: z.object({
@@ -43,6 +102,10 @@ export const orderListSchema = z.object({
   }),
 });
 export type Order = z.infer<typeof orderSchema>;
+export const sellerOrderListSchema = z.object({
+  data: z.array(sellerOrderSchema),
+  meta: orderListSchema.shape.meta,
+});
 export const orderStatus: Record<z.infer<typeof status>, string> = {
   PENDING: 'Pendiente',
   CONFIRMED: 'Confirmado',
