@@ -17,11 +17,24 @@ export class SellerOrderResponse {
   @ApiProperty() subtotal!: string;
   @ApiProperty({ enum: OrderStatus }) status!: OrderStatus;
   @ApiProperty({ type: [OrderItemResponse] }) items!: OrderItemResponse[];
+  @ApiProperty({ enum: OrderStatus, isArray: true }) allowedStatuses!: OrderStatus[];
+  @ApiProperty({ type: () => [OrderHistoryResponse] }) history!: OrderHistoryResponse[];
+}
+export class OrderHistoryResponse {
+  @ApiProperty({ format: 'uuid' }) id!: string;
+  @ApiProperty({ enum: OrderStatus, nullable: true }) fromStatus!: OrderStatus | null;
+  @ApiProperty({ enum: OrderStatus }) toStatus!: OrderStatus;
+  @ApiProperty({ nullable: true, type: String }) note!: string | null;
+  @ApiProperty({ format: 'date-time' }) createdAt!: string;
 }
 export class OrderResponse {
   @ApiProperty({ format: 'uuid' }) id!: string;
   @ApiProperty() number!: number;
   @ApiProperty() total!: string;
+  @ApiProperty({
+    description: 'Suma de subtotales históricos de subpedidos no cancelados, sin envío.',
+  })
+  activeProductsTotal!: string;
   @ApiProperty() currency!: string;
   @ApiProperty({ enum: PaymentMethod }) paymentMethod!: PaymentMethod;
   @ApiProperty({ enum: PaymentStatus }) paymentStatus!: PaymentStatus;

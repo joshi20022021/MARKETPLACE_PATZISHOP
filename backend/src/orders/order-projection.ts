@@ -1,5 +1,6 @@
 import { Prisma } from '../generated/prisma/client';
 import { OrderResponse, SellerOrderDetail, SellerOrderResponse } from './dto/order-response.dto';
+import { nextOrderStatuses } from './order-status.policy';
 const DELIVERY_SELECT = {
   recipientName: true,
   phone: true,
@@ -23,6 +24,10 @@ const PART_SELECT = {
   subtotal: true,
   status: true,
   business: { select: { id: true, name: true, slug: true } },
+  statusHistory: {
+    select: { id: true, fromStatus: true, toStatus: true, note: true, createdAt: true },
+    orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+  },
   items: {
     select: {
       id: true,
@@ -61,12 +66,15 @@ function delivery(value: Header) {
 }
 function part(
   value: Prisma.SellerOrderGetPayload<{ select: typeof PART_SELECT }>,
+  role: 'SELLER' | 'CUSTOMER',
 ): SellerOrderResponse {
   return {
     id: value.id,
     business: value.business,
     subtotal: value.subtotal.toFixed(2),
     status: value.status,
+    allowedStatuses: nextOrderStatuses(value.status, role),
+    history: value.statusHistory.map((row) => ({ ...row, createdAt: row.createdAt.toISOString() })),
     items: value.items.map((item) => ({
       ...item,
       unitPrice: item.unitPrice.toFixed(2),
@@ -81,20 +89,26 @@ export function orderResponse(
     id: value.id,
     number: value.number,
     total: value.total.toFixed(2),
+    activeProductsTotal: value.sellerOrders
+      .reduce(
+        (sum, part) => (part.status === 'CANCELLED' ? sum : sum.plus(part.subtotal)),
+        new Prisma.Decimal(0),
+      )
+      .toFixed(2),
     currency: value.currency,
     paymentMethod: value.paymentMethod,
     paymentStatus: value.paymentStatus,
     simulation: value.paymentMethod === 'SIMULATED',
     delivery: delivery(value),
     createdAt: value.createdAt.toISOString(),
-    sellerOrders: value.sellerOrders.map(part),
+    sellerOrders: value.sellerOrders.map((value) => part(value, 'CUSTOMER')),
   };
 }
 export function sellerOrderResponse(
   value: Prisma.SellerOrderGetPayload<{ select: typeof SELLER_ORDER_SELECT }>,
 ): SellerOrderDetail {
   return {
-    ...part(value),
+    ...part(value, 'SELLER'),
     orderId: value.order.id,
     orderNumber: value.order.number,
     delivery: delivery(value.order),

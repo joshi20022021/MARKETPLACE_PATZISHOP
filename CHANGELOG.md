@@ -4,6 +4,15 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-21 — Gestión de pedidos
+
+- Transiciones SELLER y cancelación temprana CUSTOMER por subpedido, con estado esperado e historial.
+- Reposición transaccional única con movimientos IN, preservación de moderación y rollback de errores.
+- Confirmación segura de pendientes previos; historial público sin IDs de actores y filtro por estado.
+- Total original conservado y cálculo Decimal de productos no cancelados; pago histórico sin cobros/reembolsos.
+- Catorce pruebas nuevas correctas con PostgreSQL real; integración frontend y regresión en curso.
+- Contratos, reglas de actores y límites en docs/order-management.md.
+
 ## 2026-10-20 — Panel del vendedor
 
 - Endpoint SELLER de métricas propias con lectura coherente y respuestas no-store.

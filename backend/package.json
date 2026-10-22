@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:order-transitions": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/order-transitions.e2e.test.js",
     "test:seller-dashboard": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/seller-dashboard.e2e.test.js",
     "test:orders": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/orders.e2e.test.js",
     "test:checkout": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 .test-dist/test/checkout.e2e.test.js",

@@ -11,7 +11,7 @@ import { lockCustomerCart } from '../carts/cart-lock';
 import { deliverySnapshot, digest, reviewVersion } from '../checkout/review-version';
 import { PaymentService } from '../checkout/payment.service';
 import type { PublicUser } from '../users/public-user';
-import { ConfirmOrderDto, ListOrdersDto } from './dto/order-input.dto';
+import { ConfirmOrderDto, ListOrdersDto, ListSellerOrdersDto } from './dto/order-input.dto';
 import {
   OrderListResponse,
   OrderResponse,
@@ -235,10 +235,14 @@ export class OrdersService {
     this.role(user, 'CUSTOMER');
     return orderResponse(
       this.found(
-        await this.prisma.order.findFirst({
-          where: { id, customerId: user.id },
-          select: ORDER_SELECT,
-        }),
+        await this.prisma.$transaction(
+          (tx) =>
+            tx.order.findFirst({
+              where: { id, customerId: user.id },
+              select: ORDER_SELECT,
+            }),
+          { isolationLevel: 'RepeatableRead' },
+        ),
       ),
     );
   }
@@ -286,18 +290,22 @@ export class OrdersService {
     this.role(user, 'SELLER');
     return sellerOrderResponse(
       this.found(
-        await this.prisma.sellerOrder.findFirst({
-          where: { id, business: { ownerId: user.id } },
-          select: SELLER_ORDER_SELECT,
-        }),
+        await this.prisma.$transaction(
+          (tx) =>
+            tx.sellerOrder.findFirst({
+              where: { id, business: { ownerId: user.id } },
+              select: SELLER_ORDER_SELECT,
+            }),
+          { isolationLevel: 'RepeatableRead' },
+        ),
       ),
     );
   }
-  async sellerList(user: PublicUser, query: ListOrdersDto): Promise<SellerOrderListResponse> {
+  async sellerList(user: PublicUser, query: ListSellerOrdersDto): Promise<SellerOrderListResponse> {
     this.role(user, 'SELLER');
     return this.prisma.$transaction(
       async (tx) => {
-        const where = { business: { ownerId: user.id } };
+        const where = { business: { ownerId: user.id }, status: query.status };
         const total = await tx.sellerOrder.count({ where });
         const rows = await tx.sellerOrder.findMany({
           where,

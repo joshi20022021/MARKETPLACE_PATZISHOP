@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Header, Param, ParseUUIDPipe, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -16,7 +26,14 @@ import { Roles } from '../auth/roles.decorator';
 import { PublicUser } from '../users/public-user';
 import { ApiErrorResponse } from '../common/api-error.dto';
 import { OrdersService } from './orders.service';
-import { ConfirmOrderDto, ListOrdersDto } from './dto/order-input.dto';
+import {
+  ConfirmOrderDto,
+  ListOrdersDto,
+  ListSellerOrdersDto,
+  ChangeSellerOrderStatusDto,
+  CancelSellerOrderDto,
+} from './dto/order-input.dto';
+import { OrderTransitionsService } from './order-transitions.service';
 import {
   OrderResponse,
   OrderListResponse,
@@ -33,7 +50,21 @@ import {
 @ApiTooManyRequestsResponse({ type: ApiErrorResponse })
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly orders: OrdersService) {}
+  constructor(
+    private readonly orders: OrdersService,
+    private readonly transitions: OrderTransitionsService,
+  ) {}
+  @Patch('seller-orders/:id/cancel')
+  @Header('Cache-Control', 'no-store')
+  @ApiOkResponse({ type: SellerOrderDetail })
+  @ApiConflictResponse({ type: ApiErrorResponse })
+  cancel(
+    @CurrentUser() user: PublicUser,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() input: CancelSellerOrderDto,
+  ) {
+    return this.transitions.change(user, id, { ...input, status: 'CANCELLED' });
+  }
   @Post()
   @Header('Cache-Control', 'no-store')
   @ApiCreatedResponse({ type: OrderResponse })
@@ -73,11 +104,25 @@ export class OrdersController {
 @ApiTooManyRequestsResponse({ type: ApiErrorResponse })
 @Controller('seller/orders')
 export class SellerOrdersController {
-  constructor(private readonly orders: OrdersService) {}
+  constructor(
+    private readonly orders: OrdersService,
+    private readonly transitions: OrderTransitionsService,
+  ) {}
+  @Patch(':id/status')
+  @Header('Cache-Control', 'no-store')
+  @ApiOkResponse({ type: SellerOrderDetail })
+  @ApiConflictResponse({ type: ApiErrorResponse })
+  change(
+    @CurrentUser() user: PublicUser,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() input: ChangeSellerOrderStatusDto,
+  ) {
+    return this.transitions.change(user, id, input);
+  }
   @Get()
   @Header('Cache-Control', 'no-store')
   @ApiOkResponse({ type: SellerOrderListResponse })
-  list(@CurrentUser() user: PublicUser, @Query() query: ListOrdersDto) {
+  list(@CurrentUser() user: PublicUser, @Query() query: ListSellerOrdersDto) {
     return this.orders.sellerList(user, query);
   }
   @Get(':id')
