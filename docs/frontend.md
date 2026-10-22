@@ -6,7 +6,8 @@ La fase 12 incorpora carrito persistente de cliente, selector de cantidad y agre
 La fase 13 añade formulario de entrega, métodos de pago y revisión de checkout con la API.
 La fase 14 añade confirmación, recuperación del intento, recibo e historial de compras propias.
 La fase 15 conecta el panel vendedor con métricas, gestión de productos e imágenes privadas.
-Dashboard ADMIN y gestión de estados corresponden a etapas posteriores.
+La fase 16 conecta estados por tienda, historial y cancelación temprana del cliente.
+Dashboard ADMIN corresponde a la siguiente etapa.
 
 ## Desarrollo local
 
@@ -46,6 +47,8 @@ todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 | `/vendedor/productos`            | SELLER      | Lista, búsqueda, estados y paginación      |
 | `/vendedor/productos/nuevo`      | SELLER      | Crear producto inactivo o activo permitido |
 | `/vendedor/productos/:id/editar` | SELLER      | Edición, stock e imágenes privadas         |
+| `/vendedor/pedidos`              | SELLER      | Subpedidos propios, filtro y paginación    |
+| `/vendedor/pedidos/:id`          | SELLER      | Entrega, estados e historial propio        |
 | Otras                            | Público     | Página 404                                 |
 
 La tienda nace PENDING. Solo un GET 404 se interpreta como ausencia de tienda; los fallos de red
@@ -225,4 +228,28 @@ Panel, listado y formulario revisados visualmente en escritorio y móvil, sin de
 horizontal a 434 píxeles CSS. Viewport restaurado. Solo se usaron fixtures propias: cuentas,
 negocios, categoría, productos e imagen sintética retirados al terminar, incluidos sus movimientos
 y archivos WebP. Procesos HTTP temporales detenidos. Sin cambios de esquema, seed ni dependencias.
-Contratos y límites en [panel vendedor](seller-dashboard.md). La fase 16 gestionará estados de pedidos.
+Contratos y límites en [panel vendedor](seller-dashboard.md).
+
+## Verificación de fase 16
+
+Quince pruebas nuevas de frontend; 107 correctas en total. Cubren roles, retorno de login,
+filtros/páginas, capacidades por estado, revisión previa, doble clic, cancelación parcial,
+conflictos, resultado incierto, fallo de recarga y descarte de respuestas al salir.
+Regresión backend: 134 pruebas correctas (14 transiciones, 14 pedidos, 11 checkout, 12 carrito,
+22 productos, 6 panel, 15 negocios, 16 seguridad, 14 API y 10 SQL).
+Builds, TypeScript estricto y `npm run check` correctos.
+
+Brave con API y PostgreSQL locales comprobó dos pedidos ficticios con dos tiendas:
+avance CONFIRMED → PREPARING → SHIPPED → DELIVERED, filtro de pendientes confirmados,
+cancelación del vendedor desde preparación y cancelación temprana parcial del cliente.
+El recibo conservó Q 35.75 originales y mostró Q 25.50 no cancelados; la otra tienda siguió entregada.
+SQL confirmó diez eventos, cuatro OUT y cuatro IN (dos de stock inicial y dos devoluciones),
+stock final 5/3 y pago PENDING conservado. Las fixtures propias se eliminaron y se cerró la sesión.
+
+Se revisaron detalle/historial de escritorio y formulario de revisión móvil. A 434 píxeles CSS
+no hubo desbordamiento horizontal. Algunas capturas móviles agotaron el tiempo del navegador;
+la captura posterior del recibo actualizado sí se guardó como evidencia temporal, fuera de Git.
+El override de viewport se retiró. No hay sincronización en tiempo real: usar Actualizar.
+Ante un resultado incierto, la pantalla conserva lo consultado y bloquea el envío hasta un GET correcto.
+No hay cobros, marcado de contra entrega como pagado ni reembolsos. Contratos en
+[gestión de pedidos](order-management.md). Siguiente: fase 17, por petición.

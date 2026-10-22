@@ -66,6 +66,10 @@ con PostgreSQL real. Contratos en [orders.md](orders.md).
 Para el panel vendedor ejecutar `npm run test:seller-dashboard` y la regresión de productos,
 negocios, seguridad y pedidos; los importes deben usar solo subtotales del negocio autenticado.
 Contratos y métricas en [seller-dashboard.md](seller-dashboard.md).
+Para transiciones, historial o cancelaciones ejecutar `npm run test:order-transitions`, además de
+pedidos, checkout, carrito, productos, panel vendedor, negocios, seguridad, API y base de datos.
+Comprueba estados esperados, aislamiento, carreras y reposición única con PostgreSQL real.
+Contratos en [order-management.md](order-management.md).
 Para cambios en frontend ejecutar `npm run test:frontend` y `npm run build:frontend`, además de
 comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar solo fixtures propias
 en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.

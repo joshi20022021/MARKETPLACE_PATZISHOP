@@ -87,7 +87,8 @@ de la transacción de producto o confirmación que escribe el movimiento.
 SellerOrder guarda stockDeductedAt y stockRestoredAt; no puede restaurarse sin haber descontado.
 La confirmación de fase 14 guarda stockDeductedAt; estas marcas no ejecutan ajustes automáticamente.
 El estado global de Order se deriva de sus subpedidos y no se guarda como valor duplicado.
-Las transiciones y la restauración única se implementarán en fase 16.
+La fase 16 implementa transiciones e historial con estado esperado y restauración única;
+véase [gestión de pedidos](order-management.md). No cambia el esquema.
 Order incorpora desde fase 14 idempotencyKey/requestHash opcionales para compatibilidad histórica,
 con unicidad por cliente/clave y restricción SQL de ambos ausentes o ambos válidos.
 La confirmación nueva exige ambos y crea subpedidos CONFIRMED con historial inicial.

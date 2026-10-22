@@ -74,6 +74,7 @@ npm run test:checkout
 npm run test:cart
 npm run test:products
 npm run test:seller-dashboard
+npm run test:businesses
 npm run test:security
 npm run test:api
 npm run test:database
@@ -86,4 +87,13 @@ npm run check
 
 Catorce pruebas nuevas de PostgreSQL/HTTP comprueban secuencia, permisos, aislamiento, snapshots,
 cancelaciones concurrentes, carreras, restauración, moderación, rollback, PENDING y OpenAPI.
-Interfaz, regresión y comprobación real se registrarán al cerrar la fase.
+Quince pruebas nuevas de frontend verifican contratos, roles, filtros, revisión previa, duplicados,
+conflictos, resultado incierto, recuperación de GET y descarte al cambiar sesión.
+Resultado: 134 backend y 107 frontend correctas; builds, TypeScript estricto y check correctos.
+
+Brave/API/SQL comprobaron entrega completa, cancelación del vendedor desde preparación y
+cancelación parcial del cliente con dos tiendas. Se preservaron totales/pago y la parte ajena;
+SQL confirmó diez eventos y devolución de una unidad por cancelación, con stock final 5/3.
+Se revisaron escritorio/móvil; fixtures propias y procesos retirados, sesión cerrada y override
+de viewport restaurado. Detalles y límites de captura en [frontend](frontend.md).
+La siguiente fase es 17 (dashboard administrador), por petición.

@@ -42,7 +42,8 @@ una creación incierta dirige al listado para comprobar si existe. Las respuesta
 a identidad/epoch y se descartan tras logout. No se añaden almacenamiento local ni dependencias.
 Actualizar resumen consulta las métricas; no existe actualización en tiempo real.
 
-La gestión de estados de pedidos corresponde a fase 16 y el panel ADMIN a fase 17.
+La [gestión de estados de pedidos](order-management.md) está conectada desde fase 16;
+el panel ADMIN queda para fase 17.
 
 ## Comprobación
 

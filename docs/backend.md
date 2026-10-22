@@ -1,4 +1,4 @@
-# API NestJS — fases 4 a 15
+# API NestJS — fases 4 a 16
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
@@ -12,6 +12,7 @@ El carrito protegido CUSTOMER está documentado en [carrito](cart.md).
 Las opciones y revisión de entrega CUSTOMER están documentadas en [checkout](checkout.md).
 Confirmación, recibos CUSTOMER y subpedidos SELLER están documentados en [pedidos](orders.md).
 Las métricas del negocio autenticado están documentadas en [panel vendedor](seller-dashboard.md).
+Transiciones, historial y cancelaciones están documentados en [gestión de pedidos](order-management.md).
 
 ## Archivos y responsabilidades
 

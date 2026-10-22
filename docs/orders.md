@@ -19,8 +19,8 @@ No se integran tarjetas ni proveedores externos. Envío no incluido en el total 
 GETs y POST llevan no-store; requieren JWT, sesión y usuario activos, roles exactos y cuotas existentes.
 ADMIN no hereda esos permisos. IDs inexistentes/ajenos comparten 404. Las listas admiten page 1–10000
 y limit 1–50 (predeterminados 1/12), orden estable y total coherente; campos extra se rechazan.
-El vendedor no recibe total global ni líneas de otras tiendas. No hay cambios de estado, cancelación,
-devolución de stock ni dashboards en esta fase: corresponden a etapas siguientes.
+El vendedor no recibe total global ni líneas de otras tiendas. La fase 16 añade filtro por estado,
+historial, capacidades por rol y cancelación/reposición: véase [gestión de pedidos](order-management.md).
 
 ## Revisión e idempotencia
 
@@ -67,7 +67,7 @@ esta transacción SQL. Un PAID con método SIMULATED siempre es una simulación.
 
 Checkout permite confirmar después de revisar. `/pedidos` lista el historial propio y
 `/pedidos/:id` muestra recibo, entrega y estados por tienda. El vendedor tiene consulta HTTP acotada;
-su [dashboard](seller-dashboard.md) está implementado en fase 15 y la gestión de estados corresponde a fase 16.
+su [dashboard](seller-dashboard.md) está implementado en fase 15 y la [gestión de estados](order-management.md) en fase 16.
 
 ```powershell
 npm run prisma:generate

@@ -83,7 +83,11 @@ Los módulos de negocio deben importar SecurityModule y aplicar estos filtros en
 BusinessesModule los consume desde la fase 7: ownerId viene de la identidad autenticada,
 la actualización conserva el ámbito en la misma consulta y el DTO rechaza campos privilegiados.
 La consulta pública filtra ACTIVE y propietario SELLER activo sin publicar ownerId ni estado.
-Las reglas de aprobación de tiendas, transiciones de pedidos e inventario corresponden a sus fases.
+Las reglas de aprobación de tiendas corresponden al módulo administrativo pendiente.
+La fase 16 aplica roles exactos y propiedad dentro de las transiciones: CUSTOMER cancela temprano
+su subpedido, SELLER atiende solo su tienda y ADMIN no hereda acceso. El actor se toma del JWT;
+las respuestas no incluyen sus identificadores privados. Estado esperado y bloqueo transaccional
+impiden decisiones obsoletas y efectos duplicados. Contratos en [gestión de pedidos](order-management.md).
 Consulta [negocios](businesses.md) para las quince pruebas reales de estos endpoints.
 La fase 8 aplica Roles ADMIN a todos los endpoints administrativos de categorías. El registro
 no concede ADMIN y no se introduce una excepción para SELLER. La proyección pública excluye

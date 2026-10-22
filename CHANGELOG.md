@@ -10,7 +10,14 @@ al cierre de una fase completa.
 - Reposición transaccional única con movimientos IN, preservación de moderación y rollback de errores.
 - Confirmación segura de pendientes previos; historial público sin IDs de actores y filtro por estado.
 - Total original conservado y cálculo Decimal de productos no cancelados; pago histórico sin cobros/reembolsos.
-- Catorce pruebas nuevas correctas con PostgreSQL real; integración frontend y regresión en curso.
+- Listado SELLER con filtro por estado, detalle, acciones revisables e historial; cancelación CUSTOMER por tienda.
+- Bloqueo de reenvíos tras conflicto/respuesta incierta, recarga recuperable y descarte al cambiar sesión.
+- Catorce pruebas nuevas de PostgreSQL/HTTP y quince de frontend; 134 backend y 107 frontend correctas.
+- Builds, TypeScript estricto y check correctos; sin cambios de esquema, seed ni dependencias.
+- Brave/API/SQL: avance hasta entrega, cancelación del vendedor y cancelación parcial del cliente comprobados.
+- Historial, pago/total originales y reposición exacta verificados; revisión de escritorio/móvil sin desbordamiento.
+- Fixtures y procesos propios retirados; sesión cerrada y override de viewport restaurado.
+- Siguiente: fase 17, dashboard administrador, por petición.
 - Contratos, reglas de actores y límites en docs/order-management.md.
 
 ## 2026-10-20 — Panel del vendedor

@@ -88,7 +88,8 @@ stock/precios negativos, cantidades de carrito, totales manipulados, SKU por tie
 de productos históricos y consistencia de movimientos. Estas pruebas SQL no verifican flujos HTTP;
 JWT, guards, negocios, categorías y productos tienen suites propias. Checkout tiene `test:checkout`;
 `test:orders` comprueba confirmación, idempotencia, concurrencia y rollback HTTP con PostgreSQL.
-Las transiciones posteriores siguen pendientes de fase 16.
+La fase 16 implementa transiciones y reposición única usando las tablas y marcas existentes,
+sin otra migración. Contratos en [gestión de pedidos](order-management.md).
 
 ## Dependencias transitivas de la CLI
 

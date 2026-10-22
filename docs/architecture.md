@@ -41,7 +41,7 @@ Reseñas, promociones y notificaciones se agregarán posteriormente como módulo
 6. La confirmación idempotente crea Order, SellerOrder CONFIRMED por tienda, líneas históricas,
    historial inicial y movimientos OUT; descuenta stock y vacía el carrito en una única transacción.
 7. El cliente consulta su recibo e historial; cada vendedor consulta solo sus subpedidos.
-8. El panel vendedor conecta métricas y productos en fase 15; la gestión de estados corresponde a fase 16.
+8. El panel vendedor conecta métricas y productos en fase 15; la fase 16 añade estados e historial por tienda.
 
 ## Entidades conceptuales
 
@@ -152,12 +152,16 @@ La fase 14 añade OrdersModule, confirmación CUSTOMER y lectura propia CUSTOMER
 Se guardan snapshots de producto y entrega, historial inicial y salidas de inventario en una transacción.
 Una migración añade idempotencia; reviewVersion detecta cambios respecto a la revisión.
 React incorpora recibos, historial y recuperación de un intento incierto mediante GET, sin repetir la compra.
-Detalles en [pedidos](orders.md). Dashboards y transiciones posteriores siguen pendientes.
+Detalles en [pedidos](orders.md). El dashboard vendedor y las transiciones se incorporan en fases 15 y 16.
 La fase 15 añade SellerDashboardModule con métricas del negocio autenticado en RepeatableRead.
 React conecta listado, filtros y CRUD de productos, ajustes de stock e imágenes privadas al panel.
 Las sumas históricas usan subtotales propios y separan simulación de contra entrega; no representan cobros.
 No modifica esquema ni dependencias. Detalles en [panel vendedor](seller-dashboard.md).
-Gestión de estados y dashboard ADMIN quedan para las fases 16 y 17 respectivamente.
+La fase 16 añade OrderTransitionsService con autorización por actor, estado esperado e historial atómico.
+Los bloqueos siguen el orden del inventario y la cancelación repone una sola vez sin reactivar moderación.
+React conecta acciones revisables, recuperación tras resultados inciertos e historial por tienda.
+Los totales y pagos históricos se conservan; no se ejecutan cobros ni reembolsos.
+Detalles en [gestión de pedidos](order-management.md). El dashboard ADMIN queda para fase 17.
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.
