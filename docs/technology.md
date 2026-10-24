@@ -43,6 +43,10 @@ Axios 1.20.0, TanStack Query 5.104.1, Zustand 5.0.15, React Hook Form 7.90.0, re
 El plugin React es 5.2.0. Vitest 4.1.11, Testing Library React 16.3.3, user-event 14.6.7 y jsdom 26.1.0
 prueban contratos, sesiones y formularios. La línea Vitest 3 se descartó por avisos de seguridad;
 se verificaron engines, peers, build, tests y audit con las versiones fijadas.
+La fase 18 actualiza Vitest a 4.1.12 y declara @testing-library/dom 10.4.2 como dependencia
+explícita de pruebas. Actualiza body-parser a 2.4.0, fast-uri a 3.1.9 y limita el override
+de Multer 2.5.0 a @nestjs/platform-express. Conserva las líneas principales; avisos y comprobaciones
+en [revisión de seguridad](security-review.md). CI ejecuta `npm run audit:security`.
 `npm ci` reproduce las dependencias del lockfile; `npm install` se usa al cambiar manifiestos.
 Se eligió ESLint 10 al comprobar que npm marca ESLint 9 como fuera de soporte.
 ESLint 10 admite Node 22.13+ y typescript-eslint 8.57.0 declara compatibilidad con ESLint 10.

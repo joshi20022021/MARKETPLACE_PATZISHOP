@@ -4,6 +4,12 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-24 - Parches de dependencias y auditoria continua
+
+- Multer 2.5.0, body-parser 2.4.0, fast-uri 3.1.9 y Vitest 4.1.12; peer DOM de pruebas declarado.
+- Lockfile reproducible con peers compatibles; npm ci, tipos, check y ambos builds correctos.
+- npm run audit:security incorporado a CI; cero vulnerabilidades reportadas.
+
 ## 2026-10-23 — Consolidación de testing (fase 19)
 
 - Runner completo y comandos de unitarias, backend y recorridos HTTP, con compilación única y ejecución secuencial.

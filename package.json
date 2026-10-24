@@ -17,6 +17,7 @@
     "test:backend": "node scripts/run-tests.mjs backend",
     "test:unit": "node scripts/run-tests.mjs unit",
     "test:journey": "node scripts/run-tests.mjs journey",
+    "audit:security": "npm audit --audit-level=moderate",
     "test:prepare": "node scripts/prepare-test-db.mjs",
     "test:migrate": "node scripts/run-tests.mjs migrate",
     "admin:create": "npm run admin:create --workspace backend",
@@ -63,6 +64,9 @@
     "test:security": "npm run test:security --workspace backend"
   },
   "overrides": {
+    "@nestjs/platform-express": {
+      "multer": "2.5.0"
+    },
     "@nestjs/swagger": {
       "js-yaml": "5.4.3"
     },
