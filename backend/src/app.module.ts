@@ -16,6 +16,7 @@ import { CartsModule } from './carts/carts.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { OrdersModule } from './orders/orders.module';
 import { SellerDashboardModule } from './seller-dashboard/seller-dashboard.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { SellerDashboardModule } from './seller-dashboard/seller-dashboard.modul
     CheckoutModule,
     OrdersModule,
     SellerDashboardModule,
+    AdminModule,
   ],
   providers: [
     ApiThrottleGuard,

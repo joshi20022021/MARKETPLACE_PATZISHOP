@@ -4,6 +4,15 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-23 — Dashboard administrador
+
+- Métricas ADMIN globales, compras/subpedidos diferenciados e importes no cancelados por método.
+- Consulta paginada y revisión de tiendas con estado/versión esperados y bloqueo transaccional.
+- Aprobación solo de vendedor activo; suspensión aplicada mediante filtros comerciales existentes.
+- Aprovisionamiento local de cuentas nuevas ADMIN sin credenciales seed ni cambios de cuentas existentes.
+- Trece pruebas nuevas de PostgreSQL/HTTP correctas; integración frontend y regresión en curso.
+- Contratos y operación en docs/admin-dashboard.md; sin migraciones ni nuevas dependencias.
+
 ## 2026-10-21 — Gestión de pedidos
 
 - Transiciones SELLER y cancelación temprana CUSTOMER por subpedido, con estado esperado e historial.

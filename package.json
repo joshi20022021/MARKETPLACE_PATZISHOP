@@ -13,6 +13,8 @@
   },
   "packageManager": "npm@10.9.3",
   "scripts": {
+    "admin:create": "npm run admin:create --workspace backend",
+    "test:admin": "npm run test:admin --workspace backend",
     "test:order-transitions": "npm run test:order-transitions --workspace backend",
     "test:seller-dashboard": "npm run test:seller-dashboard --workspace backend",
     "test:orders": "npm run test:orders --workspace backend",
