@@ -86,7 +86,10 @@ de fixtures se conservó tanto en la ejecución fallida como en las correctas.
 Instalación limpia con npm ci y auditoría completa correctas, con cero vulnerabilidades reportadas.
 La suite completa pasó: 202 backend, 120 frontend y una guarda del runner (323 en total), conservando
 los conteos de trece tablas. TypeScript estricto, npm run check y ambos builds correctos.
-La validación remota se registrará al cerrar la fase.
+La [ejecución remota del código](https://github.com/joshi20022021/MARKETPLACE_PATZISHOP/actions/runs/40069885860)
+del commit f5225f8 aprobó instalación limpia, auditoría, migraciones, check, suite completa y ambos
+builds en Linux/PostgreSQL efímero. El cierre documental se publica después de esa comprobación;
+cada nuevo push vuelve a ejecutar CI. Fase 18 completada; siguiente etapa: fase 20.
 
 Las alertas audit dependen de la base de avisos del registro y deben repetirse. La revisión no
 garantiza ausencia de vulnerabilidades desconocidas. Antes de producción quedan las tareas de

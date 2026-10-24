@@ -1,8 +1,8 @@
 # Testing — fase 19
 
 Consolida pruebas unitarias, integración PostgreSQL, recorridos HTTP y componentes React.
-La fase 18 (revisión integral de validaciones y seguridad) sigue pendiente: no queda completada
-por ejecutar esta etapa fuera de orden. No cambia funcionalidad, esquema, seed ni dependencias.
+La fase 19 se ejecutó primero; posteriormente la [revisión de fase 18](security-review.md)
+añadió regresión HTTP y auditoría de dependencias. No cambia esquema ni seed.
 
 ## Preparación local
 
@@ -40,6 +40,7 @@ anterior: para aislamiento y verificación completa usar los comandos consolidad
 | `npm run test:backend`  | Todos los archivos backend, compilados una vez                                               |
 | `npm run test:unit`     | Guardas del entorno de pruebas, configuración, pagos y política de estados, sin conexión SQL |
 | `npm run test:journey`  | Dos recorridos completos HTTP con PostgreSQL y controles reales                              |
+| `npm run test:boundary` | Nueve pruebas HTTP de seguridad con PostgreSQL aislado                                       |
 | `npm run test:frontend` | Contratos, rutas, sesión, formularios, permisos, errores y recuperación en jsdom             |
 
 La compilación descubre archivos `.test.ts` actuales en backend/test y ejecuta sus salidas ordenadas
@@ -72,7 +73,7 @@ adaptadores simulados; las verificaciones visuales de fases anteriores siguen re
 ## Integración continua
 
 `.github/workflows/tests.yml` prepara PostgreSQL 17 efímero y ejecuta instalación limpia, generación
-Prisma, migraciones de test, check, suite completa y ambos builds. No publica una aplicación,
+Prisma, auditoría de dependencias, migraciones de test, check, suite completa y ambos builds. No publica una aplicación,
 no usa credenciales de producción y solo solicita lectura del repositorio. Las acciones se fijan
 por SHA; referencias oficiales: [checkout](https://github.com/actions/checkout) y
 [setup-node](https://github.com/actions/setup-node). Corre en push a main, pull request o ejecución manual.
@@ -80,7 +81,7 @@ La ejecución remota debe comprobarse por separado: el estado local no demuestra
 
 ## Estado de comprobación
 
-Ejecución local completa correcta: 193 backend, 120 frontend y una guarda del runner, 314 en total.
+La fase 19 se verificó con 193 backend, 120 frontend y una guarda del runner, 314 en total.
 Incluye las 17 pruebas de categorías existentes, que no se ejecutaron en la regresión seleccionada
 de fase 17. Se añadieron nueve pruebas: seis unitarias backend, dos recorridos y una guarda del entorno.
 Los conteos de las trece tablas se conservaron. Los recorridos eliminaron cuentas, tiendas,
@@ -93,4 +94,6 @@ La [ejecución remota inicial](https://github.com/joshi20022021/MARKETPLACE_PATZ
 del commit 0433c2b terminó con success: instalación limpia, generación, migraciones, check,
 suite completa y ambos builds aprobados en Linux/PostgreSQL efímero. El cierre documental
 se publica después de esa comprobación; cada nuevo push vuelve a ejecutar el workflow.
-Fase 19 completada; fase 18 pendiente. No se iniciaron fases 20–22.
+La fase 18 añade nueve pruebas HTTP: la suite actual contiene 202 backend, 120 frontend y una
+guarda del runner (323 en total). Resultado final y CI en [revisión de seguridad](security-review.md).
+Fases 18 y 19 completadas. No se iniciaron fases 20–22.

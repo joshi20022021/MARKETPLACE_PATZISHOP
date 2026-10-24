@@ -12,7 +12,9 @@ al cierre de una fase completa.
 - Nueve pruebas nuevas de frontera HTTP, matriz de rutas privadas y verificación aislada sin residuos.
 - Parches Multer/body-parser/fast-uri/Vitest y peer DOM explícito; audit incorporado al workflow.
 - Matriz de revisión, avisos y límites en docs/security-review.md; 323 pruebas aprobadas y conteos de 13 tablas conservados.
-- Instalación limpia, check, tipos y ambos builds correctos; validación remota en curso.
+- Instalación limpia, check, tipos y ambos builds correctos.
+- CI del código f5225f8 aprobó auditoría, migraciones, check, suite completa y builds (run 40069885860).
+- README y roadmap actualizados: fases 1–19 completadas; siguiente etapa 20, sin iniciarla. test.py conservado.
 
 ## 2026-10-24 - Parches de dependencias y auditoria continua
 

@@ -3,9 +3,11 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 19 — Testing.** Suite consolidada, PostgreSQL de pruebas separado,
-unitarias, integración y recorridos HTTP reproducibles. La fase 18 sigue pendiente;
-se adelantó testing por petición del propietario. Métricas globales y revisión de tiendas
+**Estado actual: fases 1–19 completadas.** La revisión de seguridad de fase 18 se completó después
+de consolidar testing. Incluye entradas HTTP estrictas, controles de origen, respuestas no-store
+y auditoría de dependencias; consulta [la revisión](docs/security-review.md).
+Suite consolidada, PostgreSQL de pruebas separado, unitarias, integración y recorridos HTTP reproducibles.
+Métricas globales y revisión de tiendas
 con aprobación, rechazo, suspensión y reactivación protegidos por versión. Estados e historial por tienda,
 cancelación temprana del cliente y reposición única de inventario. Panel con métricas propias, listado y filtros,
 creación/edición de productos, ajustes de stock e imágenes privadas conectados a la API.
@@ -240,5 +242,4 @@ su conservación y copia deben acompañar a la BD. No hay cuentas de demostraci�
 Las capturas de documentación se consolidarán en la fase 21; las comprobaciones actuales de
 navegador y sus límites se registran en [docs/frontend.md](docs/frontend.md).
 
-La **fase 18, Validaciones y seguridad**, sigue pendiente. La etapa posterior a testing es
-**Dockerización completa (fase 20)**; ninguna se inicia sin petición.
+La siguiente etapa es **Dockerización completa (fase 20)**; no se inicia sin petición.
