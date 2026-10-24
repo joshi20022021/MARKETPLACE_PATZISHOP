@@ -12,7 +12,8 @@ al cierre de una fase completa.
 - Guía reproducible en docs/testing.md. La fase 18 continúa pendiente por elección de orden del propietario.
 - Dos recorridos HTTP multi-tienda correctos con ambos pagos, sesiones reales, aislamiento, entrega y cancelación parcial.
 - 314 pruebas locales correctas: 193 backend, 120 frontend y una guarda del runner. Conteos de 13 tablas conservados.
-- Builds y check correctos; workflow CI en preparación para publicación y verificación remota.
+- Builds y check correctos; GitHub Actions completó instalación limpia, migraciones, suite y builds con success (run 40065957144).
+- Documentación y README actualizados; fase 19 completada, fase 18 pendiente. test.py conservado sin cambios.
 
 ## 2026-10-23 — Dashboard administrador
 

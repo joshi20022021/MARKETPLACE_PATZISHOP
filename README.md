@@ -3,7 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: FASE 17 — Dashboard administrador.** Métricas globales y revisión de tiendas
+**Estado actual: FASE 19 — Testing.** Suite consolidada, PostgreSQL de pruebas separado,
+unitarias, integración y recorridos HTTP reproducibles. La fase 18 sigue pendiente;
+se adelantó testing por petición del propietario. Métricas globales y revisión de tiendas
 con aprobación, rechazo, suspensión y reactivación protegidos por versión. Estados e historial por tienda,
 cancelación temprana del cliente y reposición única de inventario. Panel con métricas propias, listado y filtros,
 creación/edición de productos, ajustes de stock e imágenes privadas conectados a la API.
@@ -51,6 +53,7 @@ La [guía de pedidos](docs/orders.md) explica confirmación, idempotencia, inven
 La [guía del panel vendedor](docs/seller-dashboard.md) explica métricas, CRUD e imágenes privadas.
 La [guía de gestión de pedidos](docs/order-management.md) explica estados, cancelaciones e historial.
 La [guía del administrador](docs/admin-dashboard.md) explica métricas, revisión y creación local de la primera cuenta ADMIN.
+La [guía de testing](docs/testing.md) explica la base aislada, comandos y flujo de integración continua.
 
 ```text
 PROYECTO_VENTAS/
@@ -139,6 +142,19 @@ rate limiting y rechazo de JSON grande. Los endpoints de prueba no se publican e
 `test:frontend` verifica contratos, renovación, rutas, formularios y conexión simulada a la API.
 `build:frontend` verifica TypeScript estricto y genera el SPA en `frontend/dist`.
 
+Desde fase 19, la verificación completa se puede ejecutar contra una base separada:
+
+```powershell
+npm run test:prepare
+npm run test:migrate
+npm test
+```
+
+Requiere el PostgreSQL local iniciado y backend/.env preparado. `npm test` exige `patzishop_test`,
+compila backend una vez, ejecuta todas sus suites y las de React, y comprueba limpieza de fixtures.
+`npm run test:unit` no conecta con PostgreSQL. Los comandos individuales anteriores conservan su
+entorno histórico; consulta [testing](docs/testing.md) para aislamiento, CI y límites.
+
 Para iniciar la API con recompilación automática:
 
 ```powershell
@@ -224,4 +240,5 @@ su conservación y copia deben acompañar a la BD. No hay cuentas de demostraci�
 Las capturas de documentación se consolidarán en la fase 21; las comprobaciones actuales de
 navegador y sus límites se registran en [docs/frontend.md](docs/frontend.md).
 
-El proyecto avanzará por etapas verificables; la siguiente es **Validaciones y seguridad (fase 18)**.
+La **fase 18, Validaciones y seguridad**, sigue pendiente. La etapa posterior a testing es
+**Dockerización completa (fase 20)**; ninguna se inicia sin petición.

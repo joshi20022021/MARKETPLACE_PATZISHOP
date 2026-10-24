@@ -1,5 +1,10 @@
 # Prisma, migraciones y comprobaciones
 
+La fase 19 ejecuta la regresión completa sobre `patzishop_test`: preparar con `npm run test:prepare`,
+aplicar migraciones con `npm run test:migrate` y verificar con `npm test`. Estos comandos no cambian
+la base de desarrollo. Los comandos Prisma de esta guía conservan su entorno habitual.
+Consulta [testing](testing.md) para aislamiento, CI y comandos de pruebas por nivel.
+
 La fase 3 incorpora Prisma ORM 7.10.0, Client y adaptador PostgreSQL en la misma versión.
 El esquema se explica en [modelo de datos](data-model.md). La fase 4 integra el cliente en NestJS
 mediante PrismaService; autenticación, seguridad, negocios, categorías y productos se añaden en las fases 5–9.

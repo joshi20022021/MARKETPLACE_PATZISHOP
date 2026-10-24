@@ -36,6 +36,18 @@ Antes de publicar, consultar cambios remotos y resolver cualquier divergencia si
 
 ## Antes de guardar cambios
 
+Desde fase 19, usar la suite consolidada para la regresión completa en PostgreSQL separado:
+
+```powershell
+npm run test:prepare
+npm run test:migrate
+npm test
+```
+
+Requiere el entorno local preparado; el runner nunca usa la base de desarrollo como alternativa.
+No ejecutar suites simultáneas contra patzishop_test. Los comandos individuales por dominio de
+abajo siguen disponibles con su entorno histórico. Guía, pruebas rápidas y CI en [testing](testing.md).
+
 ```powershell
 npm run check
 git status --short

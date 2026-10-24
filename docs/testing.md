@@ -76,9 +76,21 @@ Prisma, migraciones de test, check, suite completa y ambos builds. No publica un
 no usa credenciales de producción y solo solicita lectura del repositorio. Las acciones se fijan
 por SHA; referencias oficiales: [checkout](https://github.com/actions/checkout) y
 [setup-node](https://github.com/actions/setup-node). Corre en push a main, pull request o ejecución manual.
-El resultado remoto se registrará después de publicar el workflow; el estado local no demuestra CI verde.
+La ejecución remota debe comprobarse por separado: el estado local no demuestra CI verde.
 
 ## Estado de comprobación
 
-Pruebas unitarias y los dos recorridos HTTP correctos con la base aislada. La suite consolidada,
-builds y verificación final se registrarán al cerrar la fase.
+Ejecución local completa correcta: 193 backend, 120 frontend y una guarda del runner, 314 en total.
+Incluye las 17 pruebas de categorías existentes, que no se ejecutaron en la regresión seleccionada
+de fase 17. Se añadieron nueve pruebas: seis unitarias backend, dos recorridos y una guarda del entorno.
+Los conteos de las trece tablas se conservaron. Los recorridos eliminaron cuentas, tiendas,
+productos, pedidos, historial y categoría propios. La suite de seed conserva las categorías base.
+
+`test:prepare` se comprobó dos veces sin reset; un destino de desarrollo fue rechazado con código
+de error antes de ejecutar suites. `test:unit` pasó con DATABASE_URL inválida, comprobando ausencia
+de conexiones SQL. Ambos builds, TypeScript estricto y `npm run check` correctos. No cambió la UI.
+La [ejecución remota inicial](https://github.com/joshi20022021/MARKETPLACE_PATZISHOP/actions/runs/40065957144)
+del commit 0433c2b terminó con success: instalación limpia, generación, migraciones, check,
+suite completa y ambos builds aprobados en Linux/PostgreSQL efímero. El cierre documental
+se publica después de esa comprobación; cada nuevo push vuelve a ejecutar el workflow.
+Fase 19 completada; fase 18 pendiente. No se iniciaron fases 20–22.

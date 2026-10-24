@@ -1,5 +1,9 @@
 # PostgreSQL local con Docker Compose
 
+Desde fase 19, `npm run test:prepare` crea la base separada `patzishop_test` en este mismo servidor
+local y `npm run test:migrate` aplica allí las migraciones existentes. La suite completa no usa la
+base de desarrollo como alternativa ni requiere reset. Entorno y límites en [testing](testing.md).
+
 La fase 2 añadió infraestructura de desarrollo. La fase 3 incorpora las entidades y migraciones
 Prisma: consulta [el modelo de datos](data-model.md) y [la guía de Prisma](prisma.md).
 La fase 14 añade la migración de idempotencia de pedidos, aplicada con `npm run prisma:deploy`;

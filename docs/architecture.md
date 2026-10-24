@@ -169,5 +169,9 @@ React incorpora resumen y revisión ADMIN con segundo paso y recuperación por c
 El propietario aprovisiona cuentas ADMIN nuevas mediante utilidad local; el seed y registro público
 no conceden ese rol. Sin nueva migración ni dependencia. Detalles en [panel administrador](admin-dashboard.md).
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
+La fase 19 consolida la verificación en PostgreSQL separado con unitarias, todas las suites
+de integración y dos recorridos HTTP desde registro hasta entrega/cancelación y cierre de sesión.
+CI repite instalación limpia, migraciones, pruebas, check y builds. La fase 18 de revisión integral
+continúa pendiente; la ejecución de estas pruebas no la reemplaza. Detalles en [testing](testing.md).
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.
