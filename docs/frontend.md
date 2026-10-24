@@ -7,7 +7,7 @@ La fase 13 añade formulario de entrega, métodos de pago y revisión de checkou
 La fase 14 añade confirmación, recuperación del intento, recibo e historial de compras propias.
 La fase 15 conecta el panel vendedor con métricas, gestión de productos e imágenes privadas.
 La fase 16 conecta estados por tienda, historial y cancelación temprana del cliente.
-Dashboard ADMIN corresponde a la siguiente etapa.
+La fase 17 conecta métricas globales y revisión de tiendas en el panel ADMIN.
 
 ## Desarrollo local
 
@@ -49,6 +49,9 @@ todos los POST de autenticación incluyen `X-PatziShop-CSRF: 1`.
 | `/vendedor/productos/:id/editar` | SELLER      | Edición, stock e imágenes privadas         |
 | `/vendedor/pedidos`              | SELLER      | Subpedidos propios, filtro y paginación    |
 | `/vendedor/pedidos/:id`          | SELLER      | Entrega, estados e historial propio        |
+| `/admin/dashboard`               | ADMIN       | Métricas globales de la plataforma         |
+| `/admin/negocios`                | ADMIN       | Búsqueda, estados y lista de tiendas       |
+| `/admin/negocios/:id`            | ADMIN       | Datos y revisión comercial con versión     |
 | Otras                            | Público     | Página 404                                 |
 
 La tienda nace PENDING. Solo un GET 404 se interpreta como ausencia de tienda; los fallos de red
@@ -253,3 +256,27 @@ El override de viewport se retiró. No hay sincronización en tiempo real: usar 
 Ante un resultado incierto, la pantalla conserva lo consultado y bloquea el envío hasta un GET correcto.
 No hay cobros, marcado de contra entrega como pagado ni reembolsos. Contratos en
 [gestión de pedidos](order-management.md). Siguiente: fase 17, por petición.
+
+## Verificación de fase 17
+
+Trece pruebas frontend nuevas correctas; 120 en total. Contratos, permisos, retorno al login,
+métricas, filtros, páginas, revisión previa, doble clic, versión esperada, propietario no elegible,
+conflicto, respuesta incierta, recarga fallida, 404 y descarte de respuestas tras logout.
+Regresión backend: 168 correctas (13 administración, 15 negocios, 22 productos, 8 marketplace,
+14 pedidos, 14 transiciones, 6 panel vendedor, 11 checkout, 12 carrito, 13 auth, 16 seguridad,
+14 API y 10 SQL). Builds, TypeScript estricto y `npm run check` correctos.
+
+Brave/API/SQL verificaron aprovisionamiento local, login con retorno a /admin/dashboard,
+resumen, lista de pendientes, filtro/búsqueda, aprobación, suspensión y reactivación persistentes.
+La tienda aprobada mostró un producto disponible y mantuvo otro borrador oculto; suspensión
+produjo 404 públicos de tienda/producto y reactivación recuperó la publicación elegible.
+Stock 5/3 y dos movimientos iniciales conservados sin movimientos adicionales.
+El resumen pasó de una pendiente/cero publicados a una activa/un publicado, con dos usuarios.
+
+Se revisaron resumen y detalle en escritorio, revisión de decisión en móvil y resumen móvil,
+sin desbordamiento a 434 píxeles CSS. Una captura móvil agotó el tiempo y la captura completa
+alternativa repitió segmentos; la evidencia final normal de escritorio sí se guardó correctamente
+fuera de Git. Viewport restaurado, sesión cerrada, fixtures y procesos propios retirados.
+No hay actualización en tiempo real ni bitácora de decisiones de tiendas en esta etapa.
+Contratos, límites y creación de cuenta ADMIN en [panel administrador](admin-dashboard.md).
+Siguiente: fase 18, validaciones y seguridad, por petición.

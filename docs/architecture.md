@@ -118,7 +118,7 @@ de propiedad, límites de solicitudes y de tamaño JSON. El rol y la sesión se 
 La fase 7 añade BusinessesModule: creación, consulta y edición de la tienda propia con filtros
 de propietario dentro de las consultas, además de lista pública paginada y detalle por slug.
 La consulta pública exige tienda ACTIVE y propietario SELLER activo; usa una proyección explícita.
-Los dashboards completos y la gestión posterior de estados siguen pendientes.
+Las fases 15–17 incorporan paneles y gestión de estados sobre estos controles de propiedad.
 Consulta [negocios](businesses.md) para contratos, visibilidad y pruebas reales del módulo.
 La fase 8 añade CategoriesModule: administración global exclusiva de ADMIN y consulta pública
 paginada de categorías activas. Desactivar conserva referencias; el seed no sobrescribe ediciones.
@@ -161,7 +161,13 @@ La fase 16 añade OrderTransitionsService con autorización por actor, estado es
 Los bloqueos siguen el orden del inventario y la cancelación repone una sola vez sin reactivar moderación.
 React conecta acciones revisables, recuperación tras resultados inciertos e historial por tienda.
 Los totales y pagos históricos se conservan; no se ejecutan cobros ni reembolsos.
-Detalles en [gestión de pedidos](order-management.md). El dashboard ADMIN queda para fase 17.
+Detalles en [gestión de pedidos](order-management.md).
+La fase 17 añade AdminModule para métricas globales y revisión de tiendas con versión esperada.
+La aprobación exige propietario SELLER activo; la suspensión usa las reglas comerciales existentes.
+Las sumas Decimal globales usan partes no canceladas por método y no se confunden con cobros.
+React incorpora resumen y revisión ADMIN con segundo paso y recuperación por consulta.
+El propietario aprovisiona cuentas ADMIN nuevas mediante utilidad local; el seed y registro público
+no conceden ese rol. Sin nueva migración ni dependencia. Detalles en [panel administrador](admin-dashboard.md).
 Consulta [seguridad](security.md) para la política de roles, propiedad y cuotas por IP.
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

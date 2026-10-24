@@ -10,9 +10,12 @@ al cierre de una fase completa.
 - Consulta paginada y revisión de tiendas con estado/versión esperados y bloqueo transaccional.
 - Aprobación solo de vendedor activo; suspensión aplicada mediante filtros comerciales existentes.
 - Aprovisionamiento local de cuentas nuevas ADMIN sin credenciales seed ni cambios de cuentas existentes.
-- Trece pruebas nuevas de PostgreSQL/HTTP correctas; integración frontend y regresión en curso.
+- Trece pruebas nuevas de PostgreSQL/HTTP correctas; regresión backend de 168 pruebas correcta.
 - Panel React ADMIN, lista con filtros y detalle con revisión previa y recuperación tras fallos.
 - Trece pruebas frontend nuevas correctas; 120 en total. Flujo Brave/API/SQL comprobado en escritorio/móvil.
+- Aprobación, suspensión, reactivación y visibilidad pública comprobadas; stock y movimientos conservados.
+- Builds, TypeScript estricto y check correctos. Sesión cerrada, fixtures y procesos propios retirados.
+- README y guías actualizados; siguiente fase 18, validaciones y seguridad, por petición.
 - Contratos y operación en docs/admin-dashboard.md; sin migraciones ni nuevas dependencias.
 
 ## 2026-10-21 — Gestión de pedidos

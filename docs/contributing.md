@@ -70,6 +70,11 @@ Para transiciones, historial o cancelaciones ejecutar `npm run test:order-transi
 pedidos, checkout, carrito, productos, panel vendedor, negocios, seguridad, API y base de datos.
 Comprueba estados esperados, aislamiento, carreras y reposición única con PostgreSQL real.
 Contratos en [order-management.md](order-management.md).
+Para métricas globales, revisión de tiendas o aprovisionamiento ADMIN ejecutar `npm run test:admin`,
+además de negocios, productos, marketplace, pedidos, transiciones, panel vendedor, checkout,
+carrito, autenticación, seguridad, API y base de datos. No usar cuentas ni credenciales reales en fixtures.
+Los importes globales usan subtotales no cancelados por método y no representan cobros.
+Contratos y acceso inicial en [admin-dashboard.md](admin-dashboard.md).
 Para cambios en frontend ejecutar `npm run test:frontend` y `npm run build:frontend`, además de
 comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar solo fixtures propias
 en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.

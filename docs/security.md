@@ -83,7 +83,11 @@ Los módulos de negocio deben importar SecurityModule y aplicar estos filtros en
 BusinessesModule los consume desde la fase 7: ownerId viene de la identidad autenticada,
 la actualización conserva el ámbito en la misma consulta y el DTO rechaza campos privilegiados.
 La consulta pública filtra ACTIVE y propietario SELLER activo sin publicar ownerId ni estado.
-Las reglas de aprobación de tiendas corresponden al módulo administrativo pendiente.
+La fase 17 añade revisión comercial con rol ADMIN exacto, revalidación del actor/propietario,
+bloqueos y estado/versión esperados. La suspensión se refleja en filtros comerciales de catálogo,
+media y checkout; no modifica inventario ni cancela pedidos existentes. El aprovisionamiento
+ADMIN es una utilidad local para cuentas nuevas; nunca convierte una cuenta existente ni forma
+parte del registro público. Detalles y límites en [panel administrador](admin-dashboard.md).
 La fase 16 aplica roles exactos y propiedad dentro de las transiciones: CUSTOMER cancela temprano
 su subpedido, SELLER atiende solo su tienda y ADMIN no hereda acceso. El actor se toma del JWT;
 las respuestas no incluyen sus identificadores privados. Estado esperado y bloqueo transaccional

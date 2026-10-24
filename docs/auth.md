@@ -104,6 +104,9 @@ Abre http://127.0.0.1:3000/api/docs, registra un usuario y proporciona el encabe
 Copia accessToken a Authorize (Bearer) para /me. El navegador recibe y envía la cookie HttpOnly
 en refresh/logout; no intentes leerla desde JavaScript. Mantén el mismo host durante el flujo.
 No existe cuenta ADMIN ni contraseña de demostración en el seed.
+Desde fase 17, el propietario puede crear una cuenta nueva con `npm run admin:create` mediante
+su conexión privada a PostgreSQL. No modifica cuentas existentes ni expone creación de ADMIN
+por HTTP. Preparación y contraseña sin historial en [panel administrador](admin-dashboard.md).
 
 En PowerShell puedes conservar la cookie con una WebSession:
 

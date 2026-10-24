@@ -56,7 +56,7 @@ Las restricciones únicas de PostgreSQL garantizan una tienda por vendedor y un 
 otros campos. Los slugs ocupados por tiendas no publicadas tampoco pueden reutilizarse.
 
 La tienda nace PENDING y el vendedor puede editar sus datos en cualquiera de los estados, sin
-alterar la moderación. La aprobación o suspensión administrativa corresponde a la fase 17.
+alterar la moderación. La fase 17 implementa la [revisión administrativa](admin-dashboard.md).
 Cambiar el slug modificará la futura URL pública; no se mantienen alias o redirecciones históricos.
 
 ## Verificación
@@ -119,6 +119,6 @@ El detalle devuelve esa proyección directamente. El frontend combina esta respu
 
 El seed sigue incluyendo solo ocho categorías. Una tienda recién registrada queda PENDING y no
 aparece públicamente. Las pruebas preparan sus propias tiendas ACTIVE directamente en BD para
-comprobar visibilidad; la API de aprobación se implementará en la fase 17. No se publica un atajo
+comprobar visibilidad; desde fase 17 existe una [API de revisión ADMIN](admin-dashboard.md). No se publica un atajo
 para activar tiendas ni credenciales de demostración. La página visual está implementada en
 la fase 11; consulta [marketplace](marketplace.md).

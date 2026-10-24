@@ -97,4 +97,13 @@ No guardar contraseña en archivos, argumentos, capturas ni historial. Después,
 
 `npm run test:admin`: trece pruebas PostgreSQL/HTTP para roles, sesiones, aprovisionamiento,
 métricas globales, precisión, filtros, privacidad, transiciones, concurrencia, versiones y visibilidad.
-La integración frontend y comprobación de navegador se registrarán al cerrar la etapa.
+Trece pruebas nuevas frontend comprueban contratos, acceso, filtros, revisión previa, versión,
+duplicados, conflictos, recuperación y descarte al salir. Resultado: 168 backend y 120 frontend
+correctas. Builds, TypeScript estricto y `npm run check` correctos.
+
+Brave/API/SQL comprobaron creación local, sesión ADMIN, métricas, lista/filtros y aprobación,
+suspensión y reactivación. Catálogo público 200 → 404 → 200 para el producto elegible;
+el borrador siguió oculto. Stock 5/3 y dos movimientos iniciales conservados.
+Se revisaron escritorio y móvil; límites de captura en [frontend](frontend.md).
+Fixtures propias, cuenta de prueba y procesos retirados; sesión cerrada y viewport restaurado.
+Siguiente: fase 18 (validaciones y seguridad), por petición.

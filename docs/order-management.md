@@ -96,4 +96,4 @@ cancelación parcial del cliente con dos tiendas. Se preservaron totales/pago y 
 SQL confirmó diez eventos y devolución de una unidad por cancelación, con stock final 5/3.
 Se revisaron escritorio/móvil; fixtures propias y procesos retirados, sesión cerrada y override
 de viewport restaurado. Detalles y límites de captura en [frontend](frontend.md).
-La siguiente fase es 17 (dashboard administrador), por petición.
+La fase 17 conecta el [dashboard administrador](admin-dashboard.md) y revisión de tiendas.

@@ -43,7 +43,7 @@ a identidad/epoch y se descartan tras logout. No se añaden almacenamiento local
 Actualizar resumen consulta las métricas; no existe actualización en tiempo real.
 
 La [gestión de estados de pedidos](order-management.md) está conectada desde fase 16;
-el panel ADMIN queda para fase 17.
+el [panel ADMIN](admin-dashboard.md) está conectado desde fase 17.
 
 ## Comprobación
 

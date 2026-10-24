@@ -1,4 +1,4 @@
-# API NestJS — fases 4 a 16
+# API NestJS — fases 4 a 17
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
@@ -13,6 +13,7 @@ Las opciones y revisión de entrega CUSTOMER están documentadas en [checkout](c
 Confirmación, recibos CUSTOMER y subpedidos SELLER están documentados en [pedidos](orders.md).
 Las métricas del negocio autenticado están documentadas en [panel vendedor](seller-dashboard.md).
 Transiciones, historial y cancelaciones están documentados en [gestión de pedidos](order-management.md).
+Métricas globales, revisión de tiendas y aprovisionamiento local están documentados en [panel administrador](admin-dashboard.md).
 
 ## Archivos y responsabilidades
 
@@ -31,6 +32,7 @@ Transiciones, historial y cancelaciones están documentados en [gestión de pedi
 - `src/checkout/`: entrega, revisión sin escritura comercial y abstracción de métodos de pago.
 - `src/orders/`: confirmación idempotente, bloqueos, inventario, snapshots y consultas por propietario.
 - `src/seller-dashboard/`: métricas propias de productos, stock, subpedidos e importes históricos.
+- `src/admin/`: métricas globales, revisión comercial con estado/versión y utilidad local para cuentas ADMIN.
 - `src/media/`: abstracción ImageStorage, archivos locales y limpieza compensatoria.
 - `src/health/`: controller, service y respuestas documentadas.
 - `src/common/`: formato de errores HTTP y DTO OpenAPI.
