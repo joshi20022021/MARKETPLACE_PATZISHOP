@@ -4,6 +4,16 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-23 — Consolidación de testing (fase 19)
+
+- Runner completo y comandos de unitarias, backend y recorridos HTTP, con compilación única y ejecución secuencial.
+- Base local patzishop_test separada, migraciones explícitas y comprobación de limpieza sin reset.
+- Seis pruebas unitarias nuevas para pagos/estados y guarda del destino de pruebas sin revelar credenciales.
+- Guía reproducible en docs/testing.md. La fase 18 continúa pendiente por elección de orden del propietario.
+- Dos recorridos HTTP multi-tienda correctos con ambos pagos, sesiones reales, aislamiento, entrega y cancelación parcial.
+- 314 pruebas locales correctas: 193 backend, 120 frontend y una guarda del runner. Conteos de 13 tablas conservados.
+- Builds y check correctos; workflow CI en preparación para publicación y verificación remota.
+
 ## 2026-10-23 — Dashboard administrador
 
 - Métricas ADMIN globales, compras/subpedidos diferenciados e importes no cancelados por método.

@@ -13,6 +13,12 @@
   },
   "packageManager": "npm@10.9.3",
   "scripts": {
+    "test": "node scripts/run-tests.mjs all",
+    "test:backend": "node scripts/run-tests.mjs backend",
+    "test:unit": "node scripts/run-tests.mjs unit",
+    "test:journey": "node scripts/run-tests.mjs journey",
+    "test:prepare": "node scripts/prepare-test-db.mjs",
+    "test:migrate": "node scripts/run-tests.mjs migrate",
     "admin:create": "npm run admin:create --workspace backend",
     "test:admin": "npm run test:admin --workspace backend",
     "test:order-transitions": "npm run test:order-transitions --workspace backend",
