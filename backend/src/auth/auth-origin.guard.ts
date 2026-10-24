@@ -12,11 +12,7 @@ export class AuthOriginGuard implements CanActivate {
     if (request.method === 'GET') return true;
     const origin = request.get('origin');
     const allowed = this.config.getOrThrow<string>('CORS_ORIGIN');
-    const sameOrigin = `${request.protocol}://${request.get('host')}`;
-    if (
-      request.get(CSRF_HEADER) !== '1' ||
-      (origin !== undefined && origin !== allowed && origin !== sameOrigin)
-    ) {
+    if (request.get(CSRF_HEADER) !== '1' || (origin !== undefined && origin !== allowed)) {
       throw new ForbiddenException({
         message: 'Origen o encabezado de autenticación inválido',
         error: 'CSRF_REJECTED',

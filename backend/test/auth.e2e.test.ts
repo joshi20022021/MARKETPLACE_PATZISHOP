@@ -252,7 +252,7 @@ test('POST auth exige encabezado y rechaza orígenes externos o null', async () 
   await post('logout')
     .set('Host', '127.0.0.1:3000')
     .set('Origin', 'http://127.0.0.1:3000')
-    .expect(204);
+    .expect(403);
 });
 
 test('cookie usa Secure en producción y el mismo alcance al borrarse', async () => {

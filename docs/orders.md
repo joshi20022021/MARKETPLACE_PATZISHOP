@@ -19,6 +19,8 @@ No se integran tarjetas ni proveedores externos. Envío no incluido en el total 
 GETs y POST llevan no-store; requieren JWT, sesión y usuario activos, roles exactos y cuotas existentes.
 ADMIN no hereda esos permisos. IDs inexistentes/ajenos comparten 404. Las listas admiten page 1–10000
 y limit 1–50 (predeterminados 1/12), orden estable y total coherente; campos extra se rechazan.
+Desde la revisión de fase 18, page/limit aceptan solo dígitos decimales: notación científica,
+hexadecimal, signos, espacios, fracciones y parámetros duplicados devuelven 400.
 El vendedor no recibe total global ni líneas de otras tiendas. La fase 16 añade filtro por estado,
 historial, capacidades por rol y cancelación/reposición: véase [gestión de pedidos](order-management.md).
 

@@ -154,7 +154,10 @@ Las rutas NestJS están protegidas por defecto; Public declara excepciones, Role
 exactos. Throttler se ejecuta antes de JWT/roles y limita las llamadas por IP/handler, con límites
 más estrictos en auth. Los POST auth verifican encabezado y origen; JWT verifica usuario y sesión
 activos en PostgreSQL. Los filtros de propiedad deben permanecer en las consultas de negocio.
-JSON tiene un máximo de 32 KiB. Políticas y límites del storage en [security.md](security.md).
+JSON tiene un máximo de 32 KiB, sin compresión y con charset UTF-8. JSON malformado devuelve 400;
+cuerpo excesivo, 413; tipo o codificación no admitidos, 415. Las escrituras con cuerpo requieren
+application/json, salvo POST multipart de imágenes del vendedor. Todo /api/v1 envía no-store y
+Pragma: no-cache, incluidos errores. Políticas y límites del storage en [security.md](security.md).
 
 ## Pruebas
 

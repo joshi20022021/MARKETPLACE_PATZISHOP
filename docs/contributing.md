@@ -50,6 +50,7 @@ abajo siguen disponibles con su entorno histórico. Guía, pruebas rápidas y CI
 
 ```powershell
 npm run check
+npm run audit:security
 git status --short
 git diff --check
 ```
@@ -60,6 +61,8 @@ con `npm run test:database`. Para autenticación ejecutar también `npm run test
 requiere PostgreSQL, migraciones aplicadas y `npm run auth:env`. Las fases funcionales
 agregarán pruebas de sus reglas críticas. Ejecutar `npm run test:security` ante cambios de guards,
 roles, consultas acotadas por propiedad, cuotas o parsing HTTP; las pruebas de aislamiento usan PostgreSQL.
+Para la frontera HTTP ejecutar también `npm run test:boundary`, con patzishop_test preparado;
+comprueba rutas privadas, origen, tipos, caché y DTO. La suite completa ya lo incluye.
 Para cambios en tiendas ejecutar `npm run test:businesses`: usa PostgreSQL real y elimina solo
 sus propias fixtures. Los contratos y límites del módulo están en [businesses.md](businesses.md).
 Para cambios de categorías o seed ejecutar `npm run test:categories`; verifica permisos ADMIN,

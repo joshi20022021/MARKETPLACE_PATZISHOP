@@ -4,6 +4,16 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-24 — Revisión integral de validaciones y seguridad (fase 18)
+
+- Origin de auth limitado a CORS_ORIGIN, sin derivar confianza de Host/Forwarded.
+- No-store central bajo /api/v1, incluidos rechazos previos al controller; JSON estricto y compresión no admitida.
+- Paginación de pedidos decimal estricta y rechazo de role null en registro.
+- Nueve pruebas nuevas de frontera HTTP, matriz de rutas privadas y verificación aislada sin residuos.
+- Parches Multer/body-parser/fast-uri/Vitest y peer DOM explícito; audit incorporado al workflow.
+- Matriz de revisión, avisos y límites en docs/security-review.md; 323 pruebas aprobadas y conteos de 13 tablas conservados.
+- Instalación limpia, check, tipos y ambos builds correctos; validación remota en curso.
+
 ## 2026-10-24 - Parches de dependencias y auditoria continua
 
 - Multer 2.5.0, body-parser 2.4.0, fast-uri 3.1.9 y Vitest 4.1.12; peer DOM de pruebas declarado.

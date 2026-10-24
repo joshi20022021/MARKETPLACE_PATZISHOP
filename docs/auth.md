@@ -41,7 +41,7 @@ Base: `/api/v1/auth`. Todos los POST exigen `X-PatziShop-CSRF: 1`.
 El correo se recorta y convierte a minúsculas; el nombre se recorta. El registro admite nombre
 de 2 a 120 caracteres, correo de hasta 254 y contraseña de al menos 12 caracteres y hasta
 72 bytes UTF-8. La contraseña no se recorta. Login acepta contraseñas de 1 a 72 bytes.
-Se rechazan propiedades extra en registro/login. Role omitido o null usa CUSTOMER;
+Se rechazan propiedades extra en registro/login. Role omitido usa CUSTOMER; null se rechaza;
 los únicos valores explícitos aceptados son CUSTOMER y SELLER.
 
 Registro, login y refresh responden:
@@ -93,16 +93,18 @@ el mismo alcance. Frontend y API deben compartir sitio para SameSite=Strict; dur
 usa localhost para ambos o 127.0.0.1 para ambos, con CORS_ORIGIN acorde. Si se despliegan en sitios
 distintos habrá que definir y verificar una política de cookies adecuada en la fase de despliegue.
 
-Los POST auth exigen el encabezado personalizado y rechazan Origin cuando no coincide con
-CORS_ORIGIN ni con el origen de la API. Origin=null se rechaza. Clientes de consola sin Origin
+Los POST auth exigen el encabezado personalizado y rechazan Origin cuando no coincide exactamente con
+CORS_ORIGIN. Host y Forwarded no definen un origen confiable. Origin=null se rechaza. Clientes de consola sin Origin
 pueden usarlos con el encabezado. CORS permite credenciales únicamente para el origen configurado.
 Este mecanismo utiliza encabezado y origen; no hay un token CSRF secreto de sincronización.
 
 ## Probar en Swagger y PowerShell
 
-Abre http://127.0.0.1:3000/api/docs, registra un usuario y proporciona el encabezado 1.
-Copia accessToken a Authorize (Bearer) para /me. El navegador recibe y envía la cookie HttpOnly
-en refresh/logout; no intentes leerla desde JavaScript. Mantén el mismo host durante el flujo.
+Abre http://127.0.0.1:3000/api/docs para consultar contratos. Obtén accessToken desde el frontend
+configurado o la consola y cópialo a Authorize (Bearer) para /me. Los POST auth desde Swagger se
+rechazan si su Origin difiere de CORS_ORIGIN; no añadas confianza basada en Host para habilitarlos.
+El frontend recibe y envía la cookie HttpOnly en refresh/logout; no intentes leerla desde JavaScript.
+Mantén el mismo host durante el flujo.
 No existe cuenta ADMIN ni contraseña de demostración en el seed.
 Desde fase 17, el propietario puede crear una cuenta nueva con `npm run admin:create` mediante
 su conexión privada a PostgreSQL. No modifica cuentas existentes ni expone creación de ADMIN

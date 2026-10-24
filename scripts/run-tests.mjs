@@ -19,7 +19,7 @@ async function run(command, args, cwd, env = process.env) {
 }
 async function main() {
   const mode = process.argv[2] ?? 'all';
-  if (!['all', 'backend', 'unit', 'journey', 'migrate'].includes(mode))
+  if (!['all', 'backend', 'unit', 'journey', 'boundary', 'migrate'].includes(mode))
     throw new Error('Modo de pruebas desconocido.');
   const cwd = fileURLToPath(root);
   const backend = fileURLToPath(new URL('backend/', root));
@@ -46,7 +46,9 @@ async function main() {
         ? name.endsWith('.unit.test.js')
         : mode === 'journey'
           ? name === 'marketplace-journey.e2e.test.js'
-          : true,
+          : mode === 'boundary'
+            ? name === 'http-boundary.e2e.test.js'
+            : true,
     )
     .sort()
     .map((name) => `.test-dist/test/${name}`);

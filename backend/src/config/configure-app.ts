@@ -2,6 +2,7 @@ import {
   BadRequestException,
   INestApplication,
   PayloadTooLargeException,
+  UnsupportedMediaTypeException,
   ValidationPipe,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -18,9 +19,21 @@ export function configureApp(app: INestApplication): void {
   app.setGlobalPrefix('api/v1');
   app.use(helmet());
   app.use(cookieParser());
-  app.use('/api/v1/auth', (_request: Request, response: Response, next: NextFunction) => {
+  app.use('/api/v1', (request: Request, response: Response, next: NextFunction) => {
     response.setHeader('Cache-Control', 'no-store');
     response.setHeader('Pragma', 'no-cache');
+    const hasBody =
+      Number(request.get('content-length') ?? 0) > 0 ||
+      request.get('transfer-encoding') !== undefined;
+    const upload =
+      request.method === 'POST' && /^\/seller\/products\/[^/]+\/images\/?$/u.test(request.path);
+    if (
+      hasBody &&
+      ['POST', 'PUT', 'PATCH'].includes(request.method) &&
+      !request.is('application/json') &&
+      !(upload && request.is('multipart/form-data'))
+    )
+      return next(new UnsupportedMediaTypeException());
     next();
   });
   app.enableCors({
@@ -33,12 +46,14 @@ export function configureApp(app: INestApplication): void {
       'X-RateLimit-Reset',
     ],
   });
-  const parseJson = json({ limit: JSON_BODY_LIMIT });
+  const parseJson = json({ limit: JSON_BODY_LIMIT, inflate: false });
   app.use((request: Request, response: Response, next: NextFunction) => {
     parseJson(request, response, (error: unknown) => {
       if (error && typeof error === 'object' && 'type' in error) {
         if (error.type === 'entity.too.large') return next(new PayloadTooLargeException());
         if (error.type === 'entity.parse.failed') return next(new BadRequestException());
+        if (error.type === 'encoding.unsupported' || error.type === 'charset.unsupported')
+          return next(new UnsupportedMediaTypeException());
       }
       next(error);
     });

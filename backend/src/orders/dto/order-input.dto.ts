@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import {
   IsEnum,
   IsInt,
@@ -13,6 +13,8 @@ import {
 } from 'class-validator';
 import { OrderStatus } from '../../generated/prisma/enums';
 import { CheckoutPreviewDto } from '../../checkout/dto/checkout-input.dto';
+const integer = ({ value }: { value: unknown }) =>
+  typeof value === 'string' && /^[0-9]+$/u.test(value) ? Number(value) : value;
 export class ConfirmOrderDto extends CheckoutPreviewDto {
   @ApiProperty({ format: 'uuid' }) @IsUUID('4') idempotencyKey!: string;
   @ApiProperty({ pattern: '^[a-f0-9]{64}$' }) @Matches(/^[a-f0-9]{64}$/u) reviewVersion!: string;
@@ -31,13 +33,13 @@ export class ChangeSellerOrderStatusDto extends CancelSellerOrderDto {
 }
 export class ListOrdersDto {
   @ApiPropertyOptional({ default: 1, minimum: 1, maximum: 10000 })
-  @Type(() => Number)
+  @Transform(integer)
   @IsInt()
   @Min(1)
   @Max(10000)
   page: number = 1;
   @ApiPropertyOptional({ default: 12, minimum: 1, maximum: 50 })
-  @Type(() => Number)
+  @Transform(integer)
   @IsInt()
   @Min(1)
   @Max(50)

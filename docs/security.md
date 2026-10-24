@@ -1,4 +1,4 @@
-# Seguridad y autorización — fase 6
+# Seguridad y autorización — fases 6 y 18
 
 La API protege por defecto las rutas de controllers NestJS. `@Public()` es una excepción explícita:
 salud, registro, login, refresh, logout, consulta pública de tiendas/categorías/productos y media elegible admiten invitados.
@@ -33,7 +33,7 @@ Combinar Public y Roles no concede permisos: el guard de rol rechaza la falta de
 @Controller('seller/products')
 @Roles('SELLER')
 export class SellerProductsController {
-  // El CRUD se añadirá en la fase 9.
+  // Los handlers conservan además el ámbito del propietario.
 }
 ```
 
@@ -138,6 +138,9 @@ Los contadores de los handlers son independientes; variar IDs o query strings no
 Salud/readiness quedan exentos para comprobaciones operativas; Swagger y rutas sin handler no
 están cubiertos por el guard. Un JSON de más de 32 KiB se rechaza en middleware con 413
 PAYLOAD_TOO_LARGE antes de llegar a guards o services; JSON malformado devuelve 400 sin reflejarlo.
+Las escrituras con cuerpo exigen application/json; la única excepción multipart es POST de imágenes
+del vendedor. Tipos distintos, JSON comprimido o charset no admitido devuelven 415.
+Todo /api/v1 lleva Cache-Control: no-store y Pragma: no-cache, incluso errores previos a guards.
 Este límite se aplica a JSON. Desde la fase 9, la carga multipart de productos admite un archivo
 de hasta 5 MiB, sin campos adicionales y hasta seis imágenes por producto. Formato, píxeles,
 normalización, concurrencia y compensación se detallan en [productos](products.md).
@@ -159,6 +162,11 @@ salud, CORS, JSON grande y OpenAPI. Sustituyen AuthService para contar llamadas 
 usan el guard y storage reales. Las pruebas de regresión auth desactivan solo el limiter dentro
 de su módulo de prueba para aislar las reglas de sesión; la aplicación nunca lo desactiva por NODE_ENV.
 `test:security` ejecuta dieciséis pruebas en total. No se han añadido variables de entorno ni migraciones.
+
+La revisión integral de fase 18 y sus límites están en [security-review.md](security-review.md).
+`npm run test:boundary` añade nueve pruebas con el entorno aislado de fase 19; `npm test` también
+las incluye. Verifican la matriz de rutas privadas, origen, parsing, caché y validación sin efectos.
+`npm run audit:security` comprueba todas las dependencias y forma parte de CI.
 
 Referencias oficiales: [autorización en NestJS 11](https://docs.nestjs.com/v11/security/authorization)
 y [rate limiting](https://docs.nestjs.com/v11/security/rate-limiting).

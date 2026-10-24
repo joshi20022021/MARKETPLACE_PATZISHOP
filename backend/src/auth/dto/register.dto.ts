@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsIn, IsOptional, IsString, Length, MinLength } from 'class-validator';
+import { IsIn, IsString, Length, MinLength, ValidateIf } from 'class-validator';
 import { LoginDto } from './login.dto';
 import { MaxByteLength } from '../../common/validators/max-byte-length';
 
@@ -18,7 +18,7 @@ export class RegisterDto extends LoginDto {
   declare password: string;
 
   @ApiPropertyOptional({ enum: ['CUSTOMER', 'SELLER'], default: 'CUSTOMER' })
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsIn(['CUSTOMER', 'SELLER'])
   role?: 'CUSTOMER' | 'SELLER';
 }
