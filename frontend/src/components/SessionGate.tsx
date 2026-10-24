@@ -1,6 +1,12 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { refreshSession, useSession } from '../services/session';
-export function SessionGate({ seller = false }: { seller?: boolean }) {
+export function SessionGate({
+  seller = false,
+  admin = false,
+}: {
+  seller?: boolean;
+  admin?: boolean;
+}) {
   const session = useSession();
   const location = useLocation();
   if (session.status === 'loading')
@@ -29,6 +35,13 @@ export function SessionGate({ seller = false }: { seller?: boolean }) {
       </div>
     );
   if (!session.user) return <Navigate to="/ingresar" replace state={{ from: location.pathname }} />;
+  if (admin && session.user.role !== 'ADMIN')
+    return (
+      <div className="wrap page-state">
+        <h1>Esta sección es para administradores</h1>
+        <p>Tu cuenta actual no tiene acceso a la administración.</p>
+      </div>
+    );
   if (seller && session.user.role !== 'SELLER')
     return (
       <div className="wrap page-state">

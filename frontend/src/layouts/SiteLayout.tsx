@@ -44,6 +44,11 @@ export function SiteLayout() {
                   Mi panel
                 </Link>
               )}
+              {session.user.role === 'ADMIN' && (
+                <Link className="nav-link" to="/admin/dashboard">
+                  Administración
+                </Link>
+              )}
               <Link className="nav-link" to="/cuenta">
                 Mi cuenta
               </Link>
