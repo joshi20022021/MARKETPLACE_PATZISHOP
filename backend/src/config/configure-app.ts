@@ -76,7 +76,7 @@ export function configureApp(app: INestApplication): void {
     const builder = new DocumentBuilder()
       .setTitle('PatziShop API')
       .setDescription(
-        'API del marketplace: autenticación, negocios, categorías y productos del vendedor con imágenes.',
+        'API del marketplace: autenticación, negocios, categorías, productos e imágenes, carrito, checkout, pedidos y paneles de vendedor y administrador.',
       )
       .addBearerAuth()
       .addCookieAuth(REFRESH_COOKIE)

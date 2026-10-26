@@ -4,6 +4,16 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-26 — Documentación consolidada (fase 21)
+
+- README centrado en el arranque y nuevo índice con instalación desde checkout, referencia API, seed y decisiones.
+- Inventario contrastado con las 48 operaciones OpenAPI; descripción Swagger actualizada a todos los módulos disponibles.
+- Guías corregidas para reflejar stack implementado, seed limitado a categorías, preview y base aislada de pruebas.
+- Seis capturas reales revisadas con datos ficticios; sesiones, base y servidores exclusivos retirados al terminar.
+- Exportación de captura móvil fallida por timeout del navegador; comprobación de ancho y límite registrados sin imagen ficticia.
+- docs:check integrado a check para enlaces/imágenes locales y scripts root; 202 pruebas backend aprobadas sin residuos.
+- Cierre y verificación remota en curso; no se inició Deployment.
+
 ## 2026-10-26 — Stack Docker completo (fase 20)
 
 - Imágenes multietapa para NestJS y React/Caddy, con Node 22 y Caddy fijados por digest y procesos sin root.

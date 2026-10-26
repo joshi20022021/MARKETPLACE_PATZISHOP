@@ -55,7 +55,10 @@ git status --short
 git diff --check
 ```
 
-`check` verifica configuración, TypeScript del frontend, lint y formato. Para cambios en backend, ejecutar también
+`check` verifica configuración, documentación, TypeScript del frontend, lint y formato.
+`docs:check` comprueba destinos de enlaces/imágenes locales y scripts root mencionados, sin validar
+anchors ni URLs externas. Revisar las capturas finales y no incluir datos privados o imágenes temporales.
+Para cambios en backend, ejecutar también
 `npm run typecheck`, `npm run build:backend`, `npm run test:api` y las pruebas de datos pertinentes
 con `npm run test:database`. Para autenticación ejecutar también `npm run test:auth`;
 requiere PostgreSQL, migraciones aplicadas y `npm run auth:env`. Las fases funcionales

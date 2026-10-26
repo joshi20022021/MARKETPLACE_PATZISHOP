@@ -1,4 +1,4 @@
-# API NestJS — fases 4 a 17
+# API NestJS
 
 NestJS 11.2.7 con Express y TypeScript estricto. Se mantienen separados arranque HTTP,
 configuración, persistencia, salud, autenticación y seguridad. AuthModule y UsersModule implementan
@@ -93,6 +93,9 @@ Se comprobará la existencia de las tablas al utilizar los módulos de negocio; 
 que todas las migraciones estén aplicadas.
 
 ## Endpoints actuales
+
+El inventario completo de las 48 operaciones y sus contratos por dominio está en
+[API v1](api.md). La tabla siguiente cubre salud y acceso al OpenAPI, no toda la aplicación.
 
 | Método | Ruta                 | Comprobación                                 |
 | ------ | -------------------- | -------------------------------------------- |

@@ -66,9 +66,9 @@ privados de `.env`. La contraseña se introduce desde el archivo local, no se gu
 La conexión TCP interna del verificador no comprueba el puerto publicado en Windows;
 puedes comprobarlo con `Test-NetConnection 127.0.0.1 -Port 5432`.
 
-El futuro backend local usará `127.0.0.1:POSTGRES_PORT`; un backend dentro del mismo Compose
-usará `postgres:5432`. `npm run db:backend-env` prepara `DATABASE_URL` en `backend/.env`.
-El `.env` raíz configura Docker y es independiente de los entornos de frontend y backend.
+El backend local usa `127.0.0.1:POSTGRES_PORT`; el backend del stack usa `postgres:5432`
+en su red privada. `npm run db:backend-env` prepara `DATABASE_URL` en `backend/.env`.
+El `.env` raíz configura PostgreSQL de desarrollo; docker/.env configura el stack independiente.
 
 En el equipo de desarrollo actual se usa `POSTGRES_PORT=5433` porque 5432 ya está ocupado.
 La plantilla conserva 5432; consulta tu `.env` al configurar un cliente SQL.

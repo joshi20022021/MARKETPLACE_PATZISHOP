@@ -59,7 +59,7 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run verify:setup && npm run typecheck:frontend && npm run lint && npm run format:check",
+    "check": "npm run verify:setup && npm run docs:check && npm run typecheck:frontend && npm run lint && npm run format:check",
     "auth:env": "node scripts/init-auth-env.mjs",
     "test:auth": "npm run test:auth --workspace backend",
     "test:security": "npm run test:security --workspace backend",
@@ -70,7 +70,8 @@
     "stack:ps": "docker compose --env-file docker/.env -f compose.stack.yml ps",
     "stack:logs": "docker compose --env-file docker/.env -f compose.stack.yml logs --tail 100",
     "stack:seed": "docker compose --env-file docker/.env -f compose.stack.yml run --rm migrate ../node_modules/.bin/prisma db seed",
-    "stack:check": "node scripts/verify-stack.mjs"
+    "stack:check": "node scripts/verify-stack.mjs",
+    "docs:check": "node scripts/verify-docs.mjs"
   },
   "overrides": {
     "@nestjs/platform-express": {

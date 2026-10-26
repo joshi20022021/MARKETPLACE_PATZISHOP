@@ -93,13 +93,18 @@ npm audit
 ```
 
 El build primero verifica TypeScript estricto y produce `frontend/dist` (ignorado por Git).
-`npm run preview:frontend` sirve el build en localhost:4173; para probar autenticación debes
-configurar el backend con ese origen y conservar el proxy. Vite es una herramienta de desarrollo,
+`npm run preview:frontend` sirve el build en localhost:4173 y hereda server.proxy según las
+[opciones de preview de Vite](https://vite.dev/config/preview-options#preview-proxy).
+Para probar autenticación, configurar CORS_ORIGIN=http://localhost:4173 antes de iniciar backend.
+Vite es una herramienta de desarrollo,
 no el servidor definitivo de producción. El hosting futuro debe servir el SPA con fallback a
-index.html, HTTPS y `/api` hacia NestJS; despliegue y contenedores completos siguen pendientes.
+index.html, HTTPS y `/api` hacia NestJS. El [stack Docker](docker.md) ya implementa esos requisitos
+para ejecución local; el despliegue público sigue pendiente de fase 22.
 
 La interfaz usa tipografía del sistema, SVG propios y una paleta crema/verde/coral. Incluye
 etiquetas, mensajes de estado, foco de navegación, enlace para saltar al contenido y movimiento reducido.
+La [galería de fase 21](screenshots.md) documenta seis capturas reales con datos ficticios y los
+límites de la comprobación móvil. Las verificaciones históricas siguientes conservan su alcance original.
 
 ## Verificación de fase 10
 

@@ -80,8 +80,8 @@ El seed hace upsert por slug de las ocho categorías y crea solo las faltantes; 
 todos los datos existentes, incluidos nombres editados y desactivaciones. No elimina registros.
 Se ejecuta manualmente y se puede repetir sin duplicar un mismo slug. Si se renombra un slug base,
 el siguiente seed recrea ese slug como otro registro; detalles en [categorías](categories.md).
-El seed completo con usuarios, tiendas, productos y pedidos se ampliará junto a los módulos
-que implementen sus reglas. Actualmente no hay usuarios de acceso de demostración.
+No existe un seed comercial ampliado ni usuarios de acceso de demostración. Datos iniciales,
+entornos y límites actuales en [seed.md](seed.md); las capturas utilizan fixtures independientes.
 
 Las pruebas usan Prisma y PostgreSQL reales. Crean fixtures con IDs y emails únicos dentro de
 transacciones y hacen rollback al terminar, incluso si fallan. Los hashes de las fixtures son

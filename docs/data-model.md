@@ -112,6 +112,6 @@ Detalles de bloqueos, snapshots y pagos locales en [pedidos](orders.md).
 
 El seed asegura las ocho categorías globales del MVP por slug sin borrar datos. Desde la fase 8
 crea solo las faltantes y conserva los cambios administrativos de registros existentes.
-No crea credenciales ni pedidos ficticios antes de implementar reglas de autenticación y órdenes.
-El seed completo de administrador, vendedores, tiendas, productos, clientes y pedidos se ampliará
-cuando esos servicios existan. El seed no debe ejecutarse automáticamente al aplicar migraciones.
+No crea credenciales ni pedidos ficticios; las funciones de autenticación y órdenes no ampliaron
+su alcance. El seed no se ejecuta automáticamente al aplicar migraciones. Contrato actual,
+categorías y separación de fixtures en [seed.md](seed.md).
