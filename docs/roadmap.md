@@ -37,7 +37,7 @@ comisiones, planes y reportes. No se implementan en la configuración inicial.
 
 ## Estado actual
 
-Fases 1–19 completadas. La fase 18 se revisó después de consolidar testing en la fase 19.
+Fases 1–20 completadas. La fase 18 se revisó después de consolidar testing en la fase 19.
 React ofrece sesión, formularios, marketplace, carrito, checkout e historial propio.
 La fase 14 confirma compras con subpedidos por tienda, entrega histórica, inventario atómico,
 idempotencia y recuperación de respuestas perdidas. Contra entrega queda pendiente; simulación
@@ -49,7 +49,9 @@ Incluye aprovisionamiento local de cuentas nuevas ADMIN, sin credenciales seed n
 La fase 19 incorpora base de pruebas aislada, ejecución completa, unitarias y recorridos HTTP multi-vendedor.
 La fase 18 revisa entradas, sesión, permisos, propiedad, archivos y dependencias, corrige los hallazgos
 y añade regresión HTTP. Matriz y límites en [revisión de seguridad](security-review.md).
-La siguiente etapa es fase 20 (Dockerización completa); no se inicia sin petición.
+La fase 20 contiene el stack completo con imágenes Linux, migraciones, HTTPS local, volúmenes,
+healthchecks y verificación de sesión a través del proxy. Operación y límites en [Docker](docker.md).
+La siguiente etapa es fase 21 (Documentación); no se inicia sin petición.
 Pagos externos y las extensiones posteriores al MVP siguen pendientes.
 Consulta [frontend](frontend.md) para ejecución, pruebas y límites de sesión.
 Consulta [marketplace](marketplace.md) para rutas, filtros y comprobaciones de fase 11.

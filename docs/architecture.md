@@ -175,4 +175,9 @@ CI repite instalación limpia, auditoría, migraciones, pruebas, check y builds.
 los controles, corrigió entradas/origen/caché y añadió nueve pruebas HTTP.
 Detalles en [testing](testing.md) y [revisión de seguridad](security-review.md).
 Consulta [la guía del backend](backend.md) para iniciar y comprobar la API.
+La fase 20 empaqueta frontend/API y herramientas Prisma en imágenes separadas por etapas. Compose
+espera PostgreSQL saludable y migraciones exitosas antes de arrancar la API; Caddy sirve React y
+reenvía /api por un único origen HTTPS local. BD, imágenes y CA tienen volúmenes independientes.
+Solo se publica el frontend en loopback; el stack no reutiliza el entorno de desarrollo.
+Detalles y límites operativos en [Docker](docker.md); el despliegue público queda para fase 22.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

@@ -3,7 +3,9 @@
 Proyecto de portafolio de Ingeniería en Ciencias y Sistemas: una plataforma para que distintos
 negocios publiquen productos y reciban pedidos, con experiencias de cliente, vendedor y administrador.
 
-**Estado actual: fases 1–19 completadas.** La revisión de seguridad de fase 18 se completó después
+**Estado actual: fases 1–20 completadas.** Stack Docker completo con HTTPS local, migraciones
+controladas, API y frontend compilados y almacenamiento persistente: [guía Docker](docs/docker.md).
+La revisión de seguridad de fase 18 se completó después
 de consolidar testing. Incluye entradas HTTP estrictas, controles de origen, respuestas no-store
 y auditoría de dependencias; consulta [la revisión](docs/security-review.md).
 Suite consolidada, PostgreSQL de pruebas separado, unitarias, integración y recorridos HTTP reproducibles.
@@ -79,7 +81,23 @@ PROYECTO_VENTAS/
 └── package-lock.json
 ```
 
-## Requisitos de esta etapa
+## Stack completo con Docker
+
+Con Docker Desktop/Engine y Compose v2 disponibles:
+
+```powershell
+npm run stack:env
+npm run stack:up
+npm run stack:seed
+npm run stack:check
+```
+
+Abrir **https://localhost:8443**. El navegador necesita confiar en la CA local de Caddy;
+la guía [docs/docker.md](docs/docker.md) explica el certificado, variables, volúmenes y operación.
+El stack usa docker/.env y datos propios, separados del entorno de desarrollo siguiente.
+`npm run stack:down` detiene los contenedores conservando datos. No usar down -v para actualizar.
+
+## Requisitos del entorno de desarrollo
 
 - Node.js 22.18.0 o posterior dentro de la rama 22 (consulta `.nvmrc`).
 - npm 10; la configuración inicial se verificó con npm 10.9.3.
@@ -197,8 +215,9 @@ npm run format
 
 ## Variables de entorno
 
-Las plantillas están en `.env.example`, `backend/.env.example` y `frontend/.env.example`.
-El `.env` raíz configura Docker; `npm run db:env` lo genera con contraseña aleatoria sin sobrescribirlo.
+Las plantillas están en `.env.example`, `backend/.env.example`, `frontend/.env.example` y `docker/.env.example`.
+El `.env` raíz configura PostgreSQL de desarrollo; `npm run db:env` lo genera sin sobrescribirlo.
+El stack completo usa exclusivamente docker/.env, creado por `npm run stack:env` con secretos propios.
 `npm run db:backend-env` crea la conexión Prisma en `backend/.env` desde los datos locales,
 sin mostrar secretos ni sobrescribir un entorno existente. NestJS valida su entorno antes de iniciar.
 `npm run auth:env` genera el secreto JWT faltante sin mostrarlo ni cambiar un secreto existente.
@@ -242,4 +261,4 @@ su conservación y copia deben acompañar a la BD. No hay cuentas de demostraci�
 Las capturas de documentación se consolidarán en la fase 21; las comprobaciones actuales de
 navegador y sus límites se registran en [docs/frontend.md](docs/frontend.md).
 
-La siguiente etapa es **Dockerización completa (fase 20)**; no se inicia sin petición.
+La siguiente etapa es **Documentación (fase 21)**; no se inicia sin petición.

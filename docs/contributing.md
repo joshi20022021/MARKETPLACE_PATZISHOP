@@ -95,6 +95,10 @@ comprobar el flujo afectado con la API real y revisar escritorio/móvil. Usar so
 en la base local y eliminarlas después; nunca guardar cuentas, cookies o credenciales en capturas.
 
 El propietario autorizó publicar el proyecto y guardar los avances mediante commits frecuentes.
+Para cambios en Docker ejecutar `stack:env`, `stack:up`, `stack:seed` y `stack:check`, además de check.
+Verificar contexto sin archivos privados, migraciones, salud y conservación de datos al recrear;
+usar únicamente fixtures propias. CI incluye un job de contenedores. Guía en [Docker](docker.md).
+
 Para una unidad de trabajo, seleccionar explícitamente sus archivos y revisar el contenido preparado:
 
 ```powershell

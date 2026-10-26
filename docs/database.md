@@ -9,6 +9,10 @@ Prisma: consulta [el modelo de datos](data-model.md) y [la guía de Prisma](pris
 La fase 14 añade la migración de idempotencia de pedidos, aplicada con `npm run prisma:deploy`;
 no cambia el contenedor ni sus variables y no requiere reset de datos. Detalles en [pedidos](orders.md).
 
+El stack completo de fase 20 se ejecuta con compose.stack.yml, docker/.env y volúmenes separados.
+No apunta a esta base de desarrollo ni publica un puerto PostgreSQL. Migraciones, seed y operación
+de ese entorno se explican en [Docker](docker.md). Los comandos siguientes mantienen su alcance local original.
+
 ## Decisiones
 
 - Imagen oficial `postgres:17.11-alpine`, con versión explícita y sin etiqueta `latest`.

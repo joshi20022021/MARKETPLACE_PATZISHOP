@@ -96,3 +96,6 @@ garantiza ausencia de vulnerabilidades desconocidas. Antes de producción quedan
 las fases 20–22: stack, HTTPS/proxy confiable, secretos y rotación operativa, backup/restauración
 de BD/archivos, monitorización y políticas de conservación. Si se añaden réplicas, usar un limiter
 compartido. No se debilitaron validación TLS, guards ni controles del sistema para esta revisión.
+
+Actualización de fase 20: el [stack local](docker.md) ya implementa contenedores y HTTPS local;
+dominio público, confianza del proxy y operación de producción siguen sujetos al despliegue.

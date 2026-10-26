@@ -78,6 +78,9 @@ no usa credenciales de producción y solo solicita lectura del repositorio. Las 
 por SHA; referencias oficiales: [checkout](https://github.com/actions/checkout) y
 [setup-node](https://github.com/actions/setup-node). Corre en push a main, pull request o ejecución manual.
 La ejecución remota debe comprobarse por separado: el estado local no demuestra CI verde.
+Desde fase 20, el job containers construye las imágenes y levanta un stack independiente, aplica
+migraciones, seed y `stack:check` sobre HTTPS real. No requiere node_modules del host ni secretos
+externos. Recoge logs si falla y detiene los servicios al terminar. Contratos en [Docker](docker.md).
 
 ## Estado de comprobación
 
@@ -96,4 +99,5 @@ suite completa y ambos builds aprobados en Linux/PostgreSQL efímero. El cierre 
 se publica después de esa comprobación; cada nuevo push vuelve a ejecutar el workflow.
 La fase 18 añade nueve pruebas HTTP: la suite actual contiene 202 backend, 120 frontend y una
 guarda del runner (323 en total). Resultado final y CI en [revisión de seguridad](security-review.md).
-Fases 18 y 19 completadas. No se iniciaron fases 20–22.
+Fases 18 y 19 completadas. La fase 20 añade la verificación del stack descrita arriba;
+las comprobaciones históricas de fase 19 no incluían contenedores. No se iniciaron fases 21–22.

@@ -83,8 +83,18 @@ carrito, cookie Secure, rotación y revocación; elimina únicamente su cuenta y
 No imprime tokens, cookies ni secretos. Es una prueba contra los contenedores reales; complementa
 las 323 pruebas de [testing](testing.md), no representa automatización de navegador.
 
-La verificación local y CI se registran al cerrar esta fase. El frontend de producción no usa
-el servidor de desarrollo Vite. Las migraciones no se ejecutan al construir imágenes.
+Verificado el 2026-10-26: build limpio con exclusión explícita de archivos privados, migraciones
+desde base vacía, seed repetible y todos los servicios saludables. La cuenta de comprobación se
+eliminó tras cada ejecución. Recrear API/frontend conservó un archivo propio en product_images
+(retirado después), la CA y el funcionamiento de la sesión. Recrear PostgreSQL conservó las ocho
+categorías del seed; la prueba HTTPS volvió a pasar. El generador de entorno conserva archivos existentes.
+
+El [job remoto de contenedores](https://github.com/joshi20022021/MARKETPLACE_PATZISHOP/actions/runs/40317085684)
+del commit 522f9cd aprobó build desde checkout limpio, migraciones, seed y stack:check en Linux.
+El job verify de esa misma ejecución aprobó auditoría, check, las 323 pruebas de regresión y ambos builds.
+El cierre documental se publica tras esa comprobación; cada nuevo push vuelve a ejecutar ambos jobs.
+El frontend de producción no usa el servidor de desarrollo Vite. Las migraciones no se ejecutan
+al construir imágenes. No se cambiaron esquema, reglas de negocio ni dependencias npm.
 
 Este stack es local. El despliegue público corresponde a fase 22: dominio/TLS público, copias y
 restauración operativa, observabilidad y secretos del proveedor. Express conserva trust proxy

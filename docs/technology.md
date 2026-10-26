@@ -63,3 +63,7 @@ principal. Prisma CLI, Client y adaptador utilizan la misma versión exacta.
 Su configuración y overrides de dependencias transitivas se documentan en [la guía de Prisma](prisma.md).
 Swagger utiliza js-yaml 5.4.3 mediante un override limitado, explicado en [la guía del backend](backend.md).
 Tailwind 4 utiliza su integración oficial con Vite desde la fase 10.
+La fase 20 utiliza Node 22 sobre Debian bookworm-slim y Caddy 2 Alpine, fijados por digest
+en sus Dockerfiles. OpenSSL/CA se instalan en la etapa de herramientas Prisma. No modifica
+las versiones npm; binarios de bcrypt/Sharp y cliente Prisma se preparan dentro de Linux.
+Configuración y límites del stack local en [Docker](docker.md).
