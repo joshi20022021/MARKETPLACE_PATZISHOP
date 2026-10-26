@@ -39,3 +39,25 @@ se abordará en fase 22. El historial de comprobaciones permanece en [CHANGELOG]
 `npm run docs:check` verifica destinos de enlaces locales e imágenes y referencias a scripts root
 en README, CHANGELOG y docs. No comprueba enlaces externos, anchors, credenciales ni el resultado
 de ejecutar comandos. Forma parte de `npm run check` y de CI; las pruebas funcionales se ejecutan aparte.
+
+## Comprobación de fase 21
+
+Revisión del 2026-10-26 contra código, configuración y aplicación real:
+
+| Área            | Evidencia                                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Instalación     | Instrucciones separadas para desarrollo y stack; builds y comandos de preparación comprobados en fases anteriores y CI  |
+| API             | Las 48 operaciones se contrastaron con OpenAPI generado por AppModule; descripción Swagger actualizada                  |
+| Seed            | Código de upsert revisado y ejecutado en base vacía exclusiva; solo categorías, sin credenciales                        |
+| Capturas        | Seis JPEG reales revisados; cuentas ficticias, placeholders e importes de muestra explícitos                            |
+| Móvil           | Observación de ancho sin desborde horizontal; exportación de imagen fallida documentada en la galería                   |
+| Limpieza        | Sesiones cerradas, base exclusiva eliminada, credenciales temporales retiradas y servidores propios detenidos           |
+| Documentación   | Enlaces/imágenes locales y scripts root comprobados automáticamente; no se declaran anchors o URLs externas verificados |
+| Regresión local | 202 pruebas backend aprobadas, conteos de trece tablas conservados y TypeScript/check correctos                         |
+
+La [ejecución remota](https://github.com/joshi20022021/MARKETPLACE_PATZISHOP/actions/runs/40327978922)
+del commit b31c317 aprobó verify y containers: instalación limpia, auditoría, documentación,
+las 323 pruebas, builds y stack HTTPS con migraciones y seed. El cierre documental se publica
+después de esa comprobación; cada push vuelve a ejecutar CI.
+Fase 21 completada. No se cambió el esquema, seed, permisos, pagos ni dependencias;
+el despliegue público sigue pendiente de fase 22.

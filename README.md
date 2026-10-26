@@ -4,8 +4,8 @@ Marketplace de comercio local con React, NestJS, PostgreSQL y Prisma. Clientes c
 de varias tiendas; cada vendedor administra su negocio y sus subpedidos; ADMIN revisa tiendas
 y consulta métricas globales.
 
-**Estado: fase 21 en cierre documental; fases 1–20 completadas.** La siguiente etapa será el
-Deployment (fase 22), que no está iniciado. El stack disponible es local, con HTTPS de una CA propia.
+**Estado: fases 1–21 completadas.** La siguiente etapa será el Deployment (fase 22), que no está
+iniciado. El stack disponible es local, con HTTPS de una CA propia.
 
 ![Portada real de PatziShop](docs/screenshots/inicio.jpg)
 

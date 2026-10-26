@@ -180,4 +180,7 @@ espera PostgreSQL saludable y migraciones exitosas antes de arrancar la API; Cad
 reenvía /api por un único origen HTTPS local. BD, imágenes y CA tienen volúmenes independientes.
 Solo se publica el frontend en loopback; el stack no reutiliza el entorno de desarrollo.
 Detalles y límites operativos en [Docker](docker.md); el despliegue público queda para fase 22.
+La fase 21 consolida las [decisiones](decisions.md), la [referencia API](api.md) y el
+[índice de documentación](index.md). Las capturas usan datos ficticios de una base temporal,
+no amplían el seed ni las funciones del marketplace. No cambian esquema, permisos ni pagos.
 Consulta [la guía de base de datos](database.md) para operar el entorno.

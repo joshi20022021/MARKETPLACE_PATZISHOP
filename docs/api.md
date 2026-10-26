@@ -46,7 +46,7 @@ cuotas, origen de auth o límites de cuerpos. No existen endpoints públicos de 
 
 <!-- operations:start -->
 
-| Metodo | Ruta                                                 | Acceso      |
+| Método | Ruta                                                 | Acceso      |
 | ------ | ---------------------------------------------------- | ----------- |
 | GET    | `/api/v1/admin/businesses`                           | ADMIN       |
 | GET    | `/api/v1/admin/businesses/{id}`                      | ADMIN       |

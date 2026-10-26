@@ -78,6 +78,9 @@ no usa credenciales de producción y solo solicita lectura del repositorio. Las 
 por SHA; referencias oficiales: [checkout](https://github.com/actions/checkout) y
 [setup-node](https://github.com/actions/setup-node). Corre en push a main, pull request o ejecución manual.
 La ejecución remota debe comprobarse por separado: el estado local no demuestra CI verde.
+Desde fase 21, check incluye `npm run docs:check`: detecta enlaces/imágenes locales faltantes
+y referencias a scripts root inexistentes. No verifica anchors ni URLs externas y no sustituye
+pruebas de comportamiento. El índice y la evidencia documental están en [documentación](index.md).
 Desde fase 20, el job containers construye las imágenes y levanta un stack independiente, aplica
 migraciones, seed y `stack:check` sobre HTTPS real. No requiere node_modules del host ni secretos
 externos. Recoge logs si falla y detiene los servicios al terminar. Contratos en [Docker](docker.md).
