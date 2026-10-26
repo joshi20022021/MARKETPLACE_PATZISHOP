@@ -62,7 +62,15 @@
     "check": "npm run verify:setup && npm run typecheck:frontend && npm run lint && npm run format:check",
     "auth:env": "node scripts/init-auth-env.mjs",
     "test:auth": "npm run test:auth --workspace backend",
-    "test:security": "npm run test:security --workspace backend"
+    "test:security": "npm run test:security --workspace backend",
+    "stack:env": "node scripts/init-stack-env.mjs",
+    "stack:build": "docker compose --env-file docker/.env -f compose.stack.yml build",
+    "stack:up": "docker compose --env-file docker/.env -f compose.stack.yml up -d --build --wait --wait-timeout 180",
+    "stack:down": "docker compose --env-file docker/.env -f compose.stack.yml down",
+    "stack:ps": "docker compose --env-file docker/.env -f compose.stack.yml ps",
+    "stack:logs": "docker compose --env-file docker/.env -f compose.stack.yml logs --tail 100",
+    "stack:seed": "docker compose --env-file docker/.env -f compose.stack.yml run --rm migrate ../node_modules/.bin/prisma db seed",
+    "stack:check": "node scripts/verify-stack.mjs"
   },
   "overrides": {
     "@nestjs/platform-express": {

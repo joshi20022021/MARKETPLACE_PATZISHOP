@@ -1,0 +1,29 @@
+{
+	admin off
+	skip_install_trust
+	auto_https disable_redirects
+}
+
+http://:8080 {
+	respond /healthz 200
+}
+
+https://{$APP_HOST}:{$HTTPS_PORT} {
+	tls internal
+	encode gzip
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+	request_body {
+		max_size 6MB
+	}
+	handle /api/* {
+		reverse_proxy backend:3000
+	}
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

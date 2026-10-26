@@ -1,0 +1,76 @@
+name: patzishop-stack
+
+x-database: &database
+  DATABASE_URL: postgresql://${POSTGRES_USER:?}:${POSTGRES_PASSWORD:?}@postgres:5432/${POSTGRES_DB:?}
+
+services:
+  postgres:
+    image: postgres:17.11-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?}
+      POSTGRES_USER: ${POSTGRES_USER:?}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  migrate:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: tools
+    environment: *database
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: 'no'
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: runtime
+    environment:
+      <<: *database
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      CORS_ORIGIN: https://${APP_HOST:-localhost}:${HTTPS_PORT:-8443}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?}
+      SWAGGER_ENABLED: 'false'
+    volumes:
+      - product_images:/app/backend/uploads/product-images
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    init: true
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      APP_HOST: ${APP_HOST:-localhost}
+      HTTPS_PORT: ${HTTPS_PORT:-8443}
+    ports:
+      - '127.0.0.1:${HTTPS_PORT:-8443}:${HTTPS_PORT:-8443}'
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  product_images:
+  caddy_data:
+  caddy_config:

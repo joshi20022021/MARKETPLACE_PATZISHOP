@@ -4,6 +4,15 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-10-26 — Stack Docker completo (fase 20)
+
+- Imágenes multietapa para NestJS y React/Caddy, con Node 22 y Caddy fijados por digest y procesos sin root.
+- Compose separado con PostgreSQL interno, migraciones previas al arranque, healthchecks y volúmenes persistentes.
+- HTTPS local, proxy de /api, cookies Secure y configuración externa con secretos generados sin sobrescribir desarrollo.
+- Comandos stack:env/up/down/seed/check, guía docs/docker.md y job de contenedores en CI.
+- Build limpio, exclusión de archivos privados, migraciones, seed y prueba HTTPS/sesión correctos; check aprobado.
+- Persistencia y CI en verificación; no se inició despliegue público ni fase 21.
+
 ## 2026-10-24 — Revisión integral de validaciones y seguridad (fase 18)
 
 - Origin de auth limitado a CORS_ORIGIN, sin derivar confianza de Host/Forwarded.
