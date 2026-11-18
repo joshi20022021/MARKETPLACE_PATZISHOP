@@ -9,6 +9,39 @@ La fase 15 conecta el panel vendedor con métricas, gestión de productos e imá
 La fase 16 conecta estados por tienda, historial y cancelación temprana del cliente.
 La fase 17 conecta métricas globales y revisión de tiendas en el panel ADMIN.
 
+## Identidad visual (2026-11-17)
+
+La portada usa una composición editorial: papel marfil, verde pino, barro y ocre, titulares
+sans serif con acentos en Georgia, fotografía ambiental y accesos a catálogo, tiendas y registro.
+Los enlaces muestran su destino y la navegación marca catálogo/tiendas con `aria-current`.
+Las tarjetas del catálogo conservan sus datos de la API; no se inventan productos ni métricas.
+
+`src/storefront.css` contiene la identidad compartida y los componentes de la nueva portada;
+`src/styles.css` conserva los estilos funcionales de formularios, paneles y compra. Se retiraron
+las reglas de la portada anterior. No se añadieron dependencias ni fuentes externas.
+La navegación se distribuye en varias filas en pantallas pequeñas; la portada y sus tarjetas
+pasan a una columna. Se conservan foco visible, salto al contenido y movimiento reducido.
+
+La imagen final está en `frontend/public/images/comunidad-artesana.webp` (1440 × 960, 272028 bytes),
+con dimensiones declaradas, prioridad alta y texto alternativo. Se creó con la habilidad imagegen
+en modo integrado, se revisó el resultado y se optimizó a WebP con Sharp. Es una composición
+ambiental generada con IA, identificada en pantalla; no representa inventario ni un negocio real.
+Prompt utilizado: fotografía editorial cálida de cerámica de barro, cesta de palma, tejido verde
+pino y ocre y una rama, sobre una repisa y pared de yeso crema; luz natural matutina, sombras
+suaves, textura artesanal, encuadre horizontal 3:2, sin personas, texto, marcas ni etiquetas.
+
+Verificación: check, 120 pruebas frontend y build de producción correctos. La revisión visual de
+escritorio/móvil y el recorrido con API desde navegador quedan pendientes: el helper de
+Computer Use no pudo conectarse a su pipe nativo, incluso después del reintento y reinicio.
+Las [capturas existentes](screenshots.md) documentan el diseño anterior.
+El stack local fue reconstruido en https://localhost:8443 y pasó stack:check (TLS verificado,
+SPA, proxy, readiness y sesión). El WebP respondió 200 como image/webp, con contenido idéntico
+al asset del proyecto. Estas comprobaciones HTTP no sustituyen la revisión visual pendiente.
+
+La auditoría de dependencias del 2026-11-17 reporta 27 avisos (11 moderados, 16 altos), con
+`No fix available` para follow-redirects, glob, minimatch y picomatch y sus cadenas dependientes.
+El rediseño no modifica package.json ni el lockfile; no equivale a una auditoría aprobada.
+
 ## Desarrollo local
 
 Desde la raíz, instala con `npm ci` y sigue [la preparación del backend](backend.md), incluyendo

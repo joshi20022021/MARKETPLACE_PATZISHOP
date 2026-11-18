@@ -1,5 +1,5 @@
 import { Suspense, useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Brand } from '../components/Brand';
 import { RouteNotice } from '../components/RouteNotice';
 import { logout, useSession } from '../services/session';
@@ -21,12 +21,12 @@ export function SiteLayout() {
       <header className="site-header wrap">
         <Brand />
         <nav aria-label="Navegación principal">
-          <Link className="nav-link" to="/catalogo">
+          <NavLink className="nav-link" to="/catalogo">
             Catálogo
-          </Link>
-          <Link className="nav-link" to="/tiendas">
+          </NavLink>
+          <NavLink className="nav-link" to="/tiendas">
             Tiendas
-          </Link>
+          </NavLink>
           {(!session.user || session.user.role === 'CUSTOMER') && (
             <Link className="nav-link" to="/carrito">
               Carrito
@@ -101,7 +101,11 @@ export function SiteLayout() {
       </main>
       <footer className="site-footer wrap">
         <Brand />
-        <p>Nuestro comercio, más cerca.</p>
+        <p>
+          Lo que nos une, está cerca.
+          <br />
+          <strong>El mercado de nuestra comunidad.</strong>
+        </p>
         <span>Patzicía · Chimaltenango, Guatemala</span>
       </footer>
     </>

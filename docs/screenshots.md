@@ -1,5 +1,9 @@
 # Capturas de la aplicación
 
+Estas capturas son históricas: corresponden al diseño del 2026-10-26, anterior al
+[rediseño del 2026-11-17](frontend.md). No se han sustituido por maquetas. La conexión nativa
+del navegador no estuvo disponible durante el rediseño y no se obtuvieron capturas nuevas.
+
 Capturas reales tomadas el 2026-10-26 en Brave, usando frontend de desarrollo y API NestJS
 contra una base exclusiva de documentación. No son maquetas ni imágenes generadas. Los nombres,
 productos, contactos e importes son ficticios y llevan «muestra»; no representan ventas reales.

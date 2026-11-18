@@ -4,6 +4,17 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-11-17 — Identidad visual del marketplace
+
+- Nueva portada editorial con fotografía ambiental propia, acentos de barro/ocre y accesos a productos, tiendas y vendedores.
+- Encabezado, navegación activa, tarjetas de productos, filtros y pie con una identidad compartida; disposición adaptable y foco visible conservados.
+- Imagen WebP de 272028 bytes, texto alternativo, dimensiones explícitas y procedencia IA visible; sin dependencias ni fuentes externas nuevas.
+- Retiradas 43 reglas obsoletas de portada y scripts temporales de una sesión anterior que impedían lint.
+- check, 120 pruebas frontend y build de producción correctos; revisión visual y recorrido con API desde navegador pendientes por fallo de conexión del helper nativo.
+- Auditoría ejecutada: 27 avisos en dependencias existentes (11 moderados, 16 altos), sin corrección disponible según npm; no se modificaron dependencias.
+- Las seis capturas históricas quedan identificadas como anteriores al rediseño. RutaSegura.py se conserva sin cambios.
+- Stack local reconstruido en https://localhost:8443: servicios saludables, stack:check correcto (TLS, SPA, proxy y sesión) y WebP servido con MIME y contenido verificados.
+
 ## 2026-10-26 — Documentación consolidada (fase 21)
 
 - README centrado en el arranque y nuevo índice con instalación desde checkout, referencia API, seed y decisiones.

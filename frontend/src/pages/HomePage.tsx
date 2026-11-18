@@ -1,88 +1,159 @@
-import { Link } from 'react-router-dom';
-import { ShopIllustration } from '../components/ShopIllustration';
+﻿import { Link } from 'react-router-dom';
+
+const discoveries = [
+  {
+    number: '01',
+    title: 'Encuentra algo tuyo.',
+    description: 'Explora productos, compara opciones y descubre lo que se hace cerca.',
+    to: '/catalogo',
+    label: 'Recorrer el catálogo',
+    style: 'clay',
+  },
+  {
+    number: '02',
+    title: 'Ponle nombre a lo local.',
+    description: 'Conoce las tiendas y a los negocios que forman nuestra comunidad.',
+    to: '/tiendas',
+    label: 'Conocer las tiendas',
+    style: 'olive',
+  },
+  {
+    number: '03',
+    title: 'Dale espacio a tu idea.',
+    description: 'Tu negocio también puede tener su propia vitrina en PatziShop.',
+    to: '/registro?tipo=vendedor',
+    label: 'Empezar a vender',
+    style: 'ochre',
+  },
+];
+
 export function HomePage() {
   return (
     <>
-      <section className="hero wrap">
-        <div className="hero-copy">
+      <section className="local-hero wrap" aria-labelledby="home-title">
+        <div className="local-hero-copy">
           <p className="eyebrow">
-            <span className="small-dot" /> UN ENCUENTRO CON LO LOCAL
+            <span className="small-dot" /> EL MERCADO DE NUESTRA COMUNIDAD
           </p>
-          <h1>
+          <h1 id="home-title">
             Hecho cerca.
             <br />
             Elegido <em>por ti.</em>
           </h1>
-          <p className="hero-description">
-            Las buenas historias empiezan en nuestra comunidad. Conectamos a las personas con los
-            negocios que le dan vida a Patzicía.
+          <p className="local-hero-description">
+            Hay mucho por descubrir a la vuelta de casa. Encuentra productos, conoce negocios y
+            lleva contigo un poquito de Patzicía.
           </p>
-          <div className="hero-actions">
+          <div className="local-hero-actions">
             <Link className="button" to="/catalogo">
               Explorar productos <span aria-hidden="true">↗</span>
             </Link>
-            <Link className="text-link" to="/registro?tipo=vendedor">
-              Da el siguiente paso con tu negocio <span aria-hidden="true">→</span>
+            <Link className="local-secondary-link" to="/tiendas">
+              Conocer las tiendas <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div className="hero-note">
-            <span className="note-icon" aria-hidden="true">
-              ⌁
-            </span>
-            <span>
-              Personas reales. Negocios de aquí.
+          <div className="local-origin">
+            <span aria-hidden="true">✳</span>
+            <p>
+              Lo nuestro tiene su encanto.
               <br />
-              <strong>Una comunidad que crece contigo.</strong>
-            </span>
+              <strong>Descúbrelo, apóyalo, compártelo.</strong>
+            </p>
           </div>
         </div>
-        <div className="hero-art">
-          <ShopIllustration />
-          <div className="art-label">
-            <span aria-hidden="true">✦</span> El valor de comprar cerca.
+        <figure className="local-hero-visual">
+          <div className="local-photo-frame">
+            <img
+              src="/images/comunidad-artesana.webp"
+              width="1440"
+              height="960"
+              fetchPriority="high"
+              alt="Composición editorial de cerámica de barro, una cesta y un tejido en tonos verdes y cálidos"
+            />
           </div>
-          <div className="art-stamp">
-            HECHO CON
-            <br />
-            <strong>orgullo local</strong>
-            <br />
-            PATZICÍA · GT
+          <div className="local-seal" aria-hidden="true">
+            <span>DE NUESTRA</span>
+            <strong>tierra.</strong>
+            <span>CON MUCHO ORGULLO</span>
           </div>
+          <figcaption>
+            <span>OBJETOS CON TEXTURA. IDEAS CON RAÍCES.</span>
+            <span>Imagen ambiental · generada con IA</span>
+          </figcaption>
+          <div className="local-photo-note" aria-hidden="true">
+            Pequeños hallazgos.
+            <br />
+            <em>Grandes historias.</em>
+          </div>
+        </figure>
+      </section>
+      <div className="local-ribbon" aria-hidden="true">
+        <span>COMERCIO LOCAL</span>
+        <b>✳</b>
+        <span>IDEAS QUE CONECTAN</span>
+        <b>✳</b>
+        <span>ORGULLO DE PATZICÍA</span>
+        <b>✳</b>
+        <span>COMERCIO LOCAL</span>
+      </div>
+      <section className="local-discover wrap" aria-labelledby="discover-title">
+        <div className="local-section-heading">
+          <div>
+            <p className="eyebrow">MUY DE AQUÍ. MUY PARA TI.</p>
+            <h2 id="discover-title">
+              Tu próximo descubrimiento
+              <br />
+              empieza <em>cerca.</em>
+            </h2>
+          </div>
+          <p>
+            Un lugar para encontrar lo que buscas
+            <br />y conocer lo que todavía no conocías.
+          </p>
+        </div>
+        <div className="local-discovery-grid">
+          {discoveries.map((item) => (
+            <Link
+              key={item.number}
+              to={item.to}
+              className={`local-discovery local-discovery-${item.style}`}
+            >
+              <div className="local-discovery-top">
+                <span>{item.number} / PATZISHOP</span>
+                <span className="local-link-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <span className="local-discovery-label">
+                {item.label} <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
-      <section className="principles wrap" aria-label="Nuestra comunidad">
-        <article>
-          <span className="principle-number">01 / CERCA DE TI</span>
-          <h2>El talento de nuestra gente.</h2>
-          <p>
-            Detrás de cada negocio hay una historia, una familia y muchas ganas de salir adelante.
-          </p>
-        </article>
-        <article>
-          <span className="principle-number">02 / TU PROPIO ESPACIO</span>
-          <h2>Tu negocio tiene un lugar.</h2>
-          <p>
-            Crea tu cuenta de vendedor y presenta tu tienda a la comunidad con tu propia identidad.
-          </p>
-        </article>
-        <article>
-          <span className="principle-number">03 / JUNTOS CRECEMOS</span>
-          <h2>Conectemos lo que nos une.</h2>
-          <p>Forma parte de una comunidad que cree en las ideas y el comercio de nuestra tierra.</p>
-        </article>
-      </section>
-      <section className="community wrap">
+      <section className="local-community wrap" aria-labelledby="community-title">
+        <div className="local-community-symbol" aria-hidden="true">
+          ✳
+        </div>
         <div>
-          <p className="eyebrow">EL PRÓXIMO CAPÍTULO ES CONTIGO</p>
-          <h2>
-            Tu historia también
+          <p className="eyebrow">LAS BUENAS HISTORIAS SE HACEN EN COMUNIDAD</p>
+          <h2 id="community-title">
+            Aquí también
             <br />
-            pertenece aquí.
+            hay lugar <em>para ti.</em>
           </h2>
+          <p>Compra cerca. Comparte tu talento. Hagamos crecer lo nuestro.</p>
+          <Link className="button button-light" to="/registro">
+            Crea tu cuenta <span aria-hidden="true">↗</span>
+          </Link>
         </div>
-        <Link className="button button-light" to="/registro">
-          Crea tu cuenta <span aria-hidden="true">↗</span>
-        </Link>
+        <span className="local-community-location">
+          PATZICÍA
+          <br />
+          CHIMALTENANGO · GT
+        </span>
       </section>
     </>
   );

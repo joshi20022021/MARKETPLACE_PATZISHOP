@@ -6,6 +6,7 @@ import { queryClient } from './services/query-client';
 import { initializeSession } from './services/session';
 import { AppRoutes } from './routes/AppRoutes';
 import './styles.css';
+import './storefront.css';
 initializeSession();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
