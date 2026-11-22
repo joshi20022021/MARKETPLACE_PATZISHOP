@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { Link, useSearchParams } from 'react-router-dom';
 export function Pagination({ page, totalPages }: { page: number; totalPages: number }) {
   const [params] = useSearchParams();

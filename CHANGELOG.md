@@ -8,8 +8,14 @@ al cierre de una fase completa.
 
 - Bloque 1: patrones reutilizables ui.ts y migración de botones, campos, validación visual, contraseñas, ingreso, registro, cuenta y estados de sesión/error.
 - Selección de rol basada en input:checked, foco visible y disposición adaptable conservados; sin cambios en API, permisos o contratos de formularios.
-- El CSS heredado se mantiene temporalmente para compra y paneles hasta completar los bloques siguientes.
+- Durante los bloques 1 y 2 se mantuvo temporalmente el CSS heredado para los consumidores pendientes.
 - Bloque 2: catálogo restante, imágenes, producto, tienda pública, carrito, cantidades, entrega, revisión y recibos migrados a utilidades Tailwind. Formatos de imagen explícitos para portada y galería; check, 120 pruebas y build correctos.
+- Bloque 3: vendedor y administración completos: navegación, métricas, filtros, editores, imágenes, revisión de tiendas, decisiones e historial con Tailwind.
+- Eliminados styles.css (1634 líneas), su import de compatibilidad y la ilustración sin consumidores. app.css solo conserva Tailwind, @theme y estilos globales con @apply.
+- Patrones ui.ts exportados individualmente y compilados en un chunk separado; estados de tiendas con clases estáticas por estado, sin concatenar nombres de clases.
+- Comprobación de consumidores: ninguna clase del CSS heredado queda en JSX. check, 120 pruebas y build correctos; sin dependencias nuevas ni cambios en API/contratos.
+- Las 533 utilidades compartidas aparecen en el CSS compilado; sin selectores heredados. Build principal de 498.31 kB y patrones en chunk independiente, sin ampliar límites.
+- Stack local reconstruido: TLS, SPA, API y sesión correctos; CSS servido idéntico al build y ui-patterns disponible. Revisión visual pendiente por fallo del helper nativo del navegador; auditoría conserva 20 avisos existentes sin corrección disponible.
 
 ## 2026-11-21 — Rediseño de la interfaz con Tailwind CSS
 

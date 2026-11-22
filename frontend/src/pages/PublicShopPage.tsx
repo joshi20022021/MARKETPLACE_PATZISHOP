@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { publicApi, publicBusinessSchema, safeImageUrl } from '../services/marketplace';
@@ -52,6 +52,7 @@ export function PublicShopPage() {
           src={safeImageUrl(value.logo)}
           alt={`Logo de ${value.name}`}
           className={ui.shopLogo}
+          fit="contain"
           eager
         />
         <div>

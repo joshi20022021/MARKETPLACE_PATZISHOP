@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useEffect, useRef, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
@@ -39,7 +39,7 @@ export function SellerProductPage() {
     queryFn: ({ signal }) => categories(signal),
   });
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <SellerNav />
       <Link className={ui.backLink} to="/vendedor/productos">
         ← Mis productos
@@ -212,7 +212,7 @@ function ProductEditor({
           )}
         </div>
       )}
-      <div className={`${ui.formCard} seller-editor`}>
+      <div className={`${ui.formCard} ${ui.sellerEditor}`}>
         <form
           noValidate
           onSubmit={handleSubmit((input) => {
@@ -345,7 +345,7 @@ function ProductEditor({
         <p>Después de crear el producto podrás añadir hasta seis imágenes.</p>
       )}
       {base && editable && (
-        <section className="seller-delete">
+        <section className={ui.sellerDelete}>
           <h2>Retirar producto</h2>
           <p>
             Un producto con compras se conserva por su historial; puedes cambiar su estado a

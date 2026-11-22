@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { useId, type InputHTMLAttributes } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 type Props = InputHTMLAttributes<HTMLInputElement> & {

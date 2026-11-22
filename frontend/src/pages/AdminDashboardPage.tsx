@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { api, useSession } from '../services/session';
@@ -16,7 +16,7 @@ export function AdminDashboardPage() {
   });
   const value = result.data;
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <AdminNav />
       <div className={ui.marketHeading}>
         <div>
@@ -40,7 +40,7 @@ export function AdminDashboardPage() {
         <RemoteError error={result.error} retry={() => void result.refetch()} />
       ) : (
         <>
-          <div className="seller-metrics">
+          <div className={ui.sellerMetrics}>
             {[
               ['Usuarios registrados', value.users.total],
               ['Usuarios activos', value.users.active],
@@ -60,13 +60,13 @@ export function AdminDashboardPage() {
               ['Entregados', value.orders.delivered],
               ['Cancelados', value.orders.cancelled],
             ].map(([label, n]) => (
-              <article className="metric-card" key={label}>
+              <article className={ui.metricCard} key={label}>
                 <h3>{label}</h3>
                 <strong>{n}</strong>
               </article>
             ))}
           </div>
-          <div className="seller-amounts">
+          <div className={ui.sellerAmounts}>
             <article className={ui.formCard}>
               <h2>Importe contra entrega</h2>
               <strong>{money(value.orders.cashOnDeliveryTotal)}</strong>

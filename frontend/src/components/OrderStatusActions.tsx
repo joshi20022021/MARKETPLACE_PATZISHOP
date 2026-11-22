@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { useEffect, useId, useRef, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
@@ -43,7 +43,7 @@ export function OrderStatusActions({
   if (!options.length && !blocked) return null;
   const current = () => mounted.current && useSession.getState().epoch === session.epoch;
   return (
-    <div className="order-status-actions">
+    <div className={ui.orderStatusActions}>
       <h4>{customer ? 'Cancelar este subpedido' : 'Actualizar estado'}</h4>
       <p>
         Estado actual: {orderStatus[part.status]}.{' '}

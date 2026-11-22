@@ -12,65 +12,64 @@ La fase 17 conecta métricas globales y revisión de tiendas en el panel ADMIN.
 ## Migración integral por bloques (2026-11-21)
 
 El rediseño inicial migró la interfaz pública, pero conservó CSS manual para compra y paneles.
-La migración integral separa unidades verificables, sin cambiar API ni reglas de negocio:
+La migración integral se completó en tres unidades, sin cambiar API ni reglas de negocio:
 
-| Bloque | Alcance                                                                        | Estado                                                      |
-| ------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------- |
-| 1      | Patrones ui.ts, botones, formularios, ingreso, registro, cuenta y sesión       | Implementado; check, 120 pruebas frontend y build correctos |
-| 2      | Catálogo restante, producto, tienda pública, carrito, entrega y pedidos        | Implementado; check, 120 pruebas frontend y build correctos |
-| 3      | Panel vendedor, productos/imágenes, administración y retirada del CSS heredado | Pendiente                                                   |
+| Bloque | Alcance                                                                  | Estado                                        |
+| ------ | ------------------------------------------------------------------------ | --------------------------------------------- |
+| 1      | Patrones ui.ts, botones, formularios, ingreso, registro, cuenta y sesión | Check, 120 pruebas frontend y build correctos |
+| 2      | Catálogo restante, producto, tienda pública, carrito, entrega y pedidos  | Check, 120 pruebas frontend y build correctos |
+| 3      | Vendedor, productos/imágenes, administración y retirada del CSS heredado | Check, 120 pruebas frontend y build correctos |
 
-`components/ui.ts` define cadenas completas de utilidades Tailwind reutilizadas por React;
-los estados seleccionados, inválidos y deshabilitados conservan sus atributos accesibles.
-El CSS anterior solo se retirará una vez migrados todos sus consumidores.
+Se eliminaron styles.css (1634 líneas), su import de compatibilidad y la ilustración sin consumidores.
+Todas las vistas usan utilidades Tailwind directamente o patrones compartidos en components/ui.ts.
+Sus exports individuales se compilan en ui-patterns; no se amplió el límite del build ni se añadieron dependencias.
 
 ## Identidad visual con Tailwind CSS (2026-11-21)
 
-La interfaz pública usa Tailwind CSS 4.3.3, ya instalado con el plugin de Vite. La portada
-combina una superficie verde oscura con fotografía ambiental y acentos dorados, titulares grandes
-y accesos asimétricos a catálogo, tiendas y vendedores. Encabezado fijo con navegación activa,
-tarjetas de producto, directorio y filtros comparten la misma identidad. Los datos comerciales
-siguen viniendo de la API; no se inventan productos ni métricas.
+Toda la interfaz usa Tailwind CSS 4.3.3 con el plugin de Vite. Portada, ingreso, registro, cuenta,
+catálogo, tiendas, producto, carrito, entrega, recibos, pedidos, vendedor y administración comparten
+colores verde pino, crema, coral y dorado, con tipografía del sistema y acentos en Georgia.
+La portada y las historias de acceso tienen superficies oscuras; formularios y paneles usan tarjetas,
+las métricas forman una cuadrícula y el historial muestra una línea de tiempo. Los datos comerciales
+siguen viniendo de la API; no se inventan productos, métricas ni transacciones.
 
-`src/app.css` es la única entrada de estilos: importa Tailwind, define colores y fuentes con
-`@theme` y carga `src/styles.css` en `layer(components)`. Así las utilidades de los componentes
-React tienen prioridad sobre el CSS funcional existente. Los patrones compartidos usan `@apply`;
-se retiró `storefront.css`, que acumulaba 679 líneas de CSS manual. Referencias oficiales:
-[tema](https://tailwindcss.com/docs/theme) y [capas y componentes](https://tailwindcss.com/docs/adding-custom-styles).
+`src/app.css` es la única entrada CSS: importa Tailwind, define colores y fuentes con `@theme`
+y aplica utilidades globales en `@layer base` para tipografía, foco y movimiento reducido.
+No hay capa de compatibilidad ni selectores de componentes heredados. La composición y los
+estados visuales viven en los componentes React y los patrones compartidos de `components/ui.ts`.
+Las clases son cadenas completas, incluidas las variantes de botones y los colores por estado de tienda.
+Referencias oficiales: [tema](https://tailwindcss.com/docs/theme) y
+[estilos globales](https://tailwindcss.com/docs/adding-custom-styles).
 
-HomePage, SiteLayout, Brand, ProductCard, CatalogResults y las vistas de catálogo/tiendas usan
-utilidades de Tailwind para composición, variantes responsive y estados hover/activo.
-`ShopIcon` reutiliza SVG decorativos sin otra librería. Las clases variables se guardan como
-cadenas completas para que Tailwind las detecte al compilar. No se añadieron dependencias,
-fuentes externas ni nuevas imágenes. Se conservan foco visible, salto al contenido, movimiento
-reducido, etiquetas de controles y enlaces según rol.
+Los controles mantienen etiquetas, foco, selección, validación y estado deshabilitado. Las opciones
+de rol y pago se representan con input:checked, sin clases construidas a partir de datos externos.
+`ShopIcon` aporta SVG decorativos. No se añadieron dependencias, fuentes externas ni nuevas imágenes.
+La portada pasa a dos columnas en lg; los productos a dos en sm y tres en xl. Los filtros y resúmenes
+pasan de una disposición apilada a lateral en lg; las métricas y formularios usan cuadrículas adaptables.
+Los logos usan ajuste contain y las fotografías cover, sin depender del orden entre utilidades.
 
-La portada pasa a dos columnas en `lg`, los productos a dos en `sm` y tres en `xl`, y el
-encabezado permite varias filas. Los filtros pasan de una columna a dos en `sm` y a la barra
-lateral en `lg`. En escritorio la barra queda fija bajo el encabezado al desplazarse.
+La imagen existente es `frontend/public/images/comunidad-artesana.webp` (1440 × 960, 272028 bytes),
+con dimensiones declaradas, prioridad alta y texto alternativo. Se creó con imagegen en modo integrado,
+se revisó y se optimizó a WebP con Sharp. Es una composición ambiental generada con IA, identificada
+en pantalla; no representa inventario ni un negocio real. Prompt: fotografía editorial cálida de
+cerámica de barro, cesta de palma, tejido verde pino y ocre y una rama, sobre una repisa y pared de
+estuco crema; luz matutina, sombras suaves, textura artesanal, horizontal 3:2, sin personas ni marcas.
 
-La imagen existente está en `frontend/public/images/comunidad-artesana.webp` (1440 × 960, 272028 bytes),
-con dimensiones declaradas, prioridad alta y texto alternativo. Se creó con la habilidad imagegen
-en modo integrado, se revisó el resultado y se optimizó a WebP con Sharp. Es una composición
-ambiental generada con IA, identificada en pantalla; no representa inventario ni un negocio real.
-Prompt utilizado: fotografía editorial cálida de cerámica de barro, cesta de palma, tejido verde
-pino y ocre y una rama, sobre una repisa y pared de yeso crema; luz natural matutina, sombras
-suaves, textura artesanal, encuadre horizontal 3:2, sin personas, texto, marcas ni etiquetas.
+Verificación final: check, 120 pruebas frontend y build correctos. Las 533 utilidades compartidas
+aparecen en el CSS compilado; no quedan clases heredadas en JSX ni selectores de esos componentes
+en el build. El bundle principal mide 498.31 kB y ui-patterns 17.08 kB, sin ampliar límites.
+La revisión visual de escritorio/móvil y el recorrido con API desde navegador quedan pendientes:
+el helper de Computer Use no pudo conectarse a su pipe nativo tras reintento y reinicio.
+Las [capturas existentes](screenshots.md) muestran el diseño histórico; no se sustituyen por maquetas.
 
-Verificación del 2026-11-21: check, 120 pruebas frontend y build de producción correctos; capas
-components/utilities y utilidades de portada presentes en el CSS compilado. La revisión visual de
-escritorio/móvil y el recorrido con API desde navegador quedan pendientes: el helper de
-Computer Use no pudo conectarse a su pipe nativo, incluso después del reintento y reinicio.
-Las [capturas existentes](screenshots.md) documentan el diseño anterior.
-El stack local fue reconstruido en https://localhost:8443 y pasó stack:check (TLS verificado,
-SPA, proxy, readiness y sesión). El WebP respondió 200 como image/webp, con contenido idéntico
-al asset del proyecto. Estas comprobaciones HTTP no sustituyen la revisión visual pendiente.
-Los bundles JS/CSS servidos incluyen las utilidades nuevas; categorías, productos y tiendas
-respondieron 200 a consultas públicas de comprobación, sin modificar datos comerciales.
+El stack local se reconstruyó en https://localhost:8443 y pasó stack:check: TLS, SPA, proxy,
+readiness y sesión. El CSS servido coincide byte a byte con el build final y ui-patterns responde 200.
+Las rutas de acceso, cuenta, compra, vendedor y administración tienen fallback SPA. Esto no demuestra
+el render autenticado de cada pantalla ni sustituye la revisión visual pendiente.
 
-La auditoría de dependencias del 2026-11-21 reporta 20 avisos (13 moderados, 7 altos), con
-`No fix available` para effect, follow-redirects, glob, minimatch y sus cadenas dependientes.
-El rediseño no modifica package.json ni el lockfile; no equivale a una auditoría aprobada.
+La auditoría ejecutada conserva 20 avisos (13 moderados, 7 altos), con No fix available para effect,
+follow-redirects, glob, minimatch y sus cadenas dependientes. La migración no modifica package.json
+ni el lockfile; no equivale a una auditoría aprobada. RutaSegura.py y miniproyecto.py quedan intactos.
 
 ## Desarrollo local
 

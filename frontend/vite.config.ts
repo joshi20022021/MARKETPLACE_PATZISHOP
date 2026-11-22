@@ -11,6 +11,16 @@ export default defineConfig({
     proxy: { '/api': 'http://127.0.0.1:3000' },
   },
   preview: { host: 'localhost', port: 4173, strictPort: true },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (/[/\\]src[/\\]components[/\\]ui\.ts$/u.test(id)) return 'ui-patterns';
+          return undefined;
+        },
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     setupFiles: ['./test/setup.ts'],

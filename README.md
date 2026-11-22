@@ -9,6 +9,9 @@ iniciado. El stack disponible es local, con HTTPS de una CA propia.
 
 ![Portada real de PatziShop](docs/screenshots/inicio.jpg)
 
+Captura histórica del diseño del 2026-10-26. La interfaz actual usa Tailwind CSS en todas las
+vistas, incluidos cuenta, compra, vendedor y administración; [detalle de la migración](docs/frontend.md).
+
 ## Empezar
 
 Requiere Git, Node 22.18+ dentro de la rama 22, npm 10 y Docker con motor Linux/Compose v2.
@@ -35,6 +38,8 @@ Registrar cliente/vendedor en la aplicación y aprovisionar la primera cuenta AD
 [utilidad local](docs/admin-dashboard.md). Las capturas usan fixtures ficticias que no se incluyen en el seed.
 
 ## Funciones disponibles
+
+- Diseño completo con Tailwind CSS: tema propio, formularios, compra y paneles adaptables.
 
 - Registro, login, JWT, refresh rotatorio y roles exactos CUSTOMER, SELLER y ADMIN.
 - Tiendas sujetas a aprobación, categorías, productos, inventario e imágenes normalizadas.

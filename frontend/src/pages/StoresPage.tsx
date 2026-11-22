@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 import { businessPageSchema, publicApi, safeImageUrl } from '../services/marketplace';
@@ -95,7 +95,12 @@ export function StoresPage() {
               {stores.data.data.map((store) => (
                 <article className={ui.storeCard} key={store.id}>
                   <Link to={`/tiendas/${store.slug}`}>
-                    <PublicImage key={store.logo} src={safeImageUrl(store.logo)} alt={store.name} />
+                    <PublicImage
+                      key={store.logo}
+                      src={safeImageUrl(store.logo)}
+                      alt={store.name}
+                      fit="contain"
+                    />
                     <div className={ui.storeCardCopy}>
                       <h2>{store.name}</h2>
                       <p>{store.description || 'Conoce los productos de este negocio local.'}</p>

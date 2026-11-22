@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { useState } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FormField } from './FormField';

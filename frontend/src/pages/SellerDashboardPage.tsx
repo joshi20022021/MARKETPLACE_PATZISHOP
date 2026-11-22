@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { api, useSession } from '../services/session';
@@ -15,7 +15,7 @@ export function SellerDashboardPage() {
       dashboardSchema.parse((await api.get('/seller/dashboard', { signal })).data),
   });
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <SellerNav />
       <div className={ui.marketHeading}>
         <div>
@@ -47,7 +47,7 @@ export function SellerDashboardPage() {
         </div>
       ) : (
         <>
-          <div className="seller-business">
+          <div className={ui.sellerBusiness}>
             <h2>{result.data.business.name}</h2>
             <span className={ui.availableBadge}>{businessStates[result.data.business.status]}</span>
             <p>
@@ -58,7 +58,7 @@ export function SellerDashboardPage() {
                   : 'Tu tienda permite consulta; la edición de productos está bloqueada.'}
             </p>
           </div>
-          <div className="seller-metrics">
+          <div className={ui.sellerMetrics}>
             {[
               ['Productos', result.data.products.total],
               ['Activos (estado)', result.data.products.active],
@@ -70,13 +70,13 @@ export function SellerDashboardPage() {
               ['Entregados', result.data.orders.delivered],
               ['Cancelados', result.data.orders.cancelled],
             ].map(([label, value]) => (
-              <article className="metric-card" key={label}>
+              <article className={ui.metricCard} key={label}>
                 <h3>{label}</h3>
                 <strong>{value}</strong>
               </article>
             ))}
           </div>
-          <div className="seller-amounts">
+          <div className={ui.sellerAmounts}>
             <article className={ui.formCard}>
               <h2>Pedidos contra entrega</h2>
               <strong>{money(result.data.orders.cashOnDeliveryTotal)}</strong>

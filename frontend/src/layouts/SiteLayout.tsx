@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { Suspense, useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Brand } from '../components/Brand';
@@ -18,7 +18,7 @@ export function SiteLayout() {
   return (
     <>
       <RouteNotice />
-      <a className="skip-link rounded-lg" href="#contenido">
+      <a className={`${ui.skipLink} rounded-lg`} href="#contenido">
         Saltar al contenido
       </a>
       <div className="bg-patzi-green px-5 py-2.5 text-center text-[8px] font-semibold tracking-[0.15em] text-patzi-cream sm:text-[10px]">

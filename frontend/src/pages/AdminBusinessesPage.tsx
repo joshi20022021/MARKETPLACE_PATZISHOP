@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
@@ -44,7 +44,7 @@ export function AdminBusinessesPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <AdminNav />
       <div className={ui.marketHeading}>
         <div>
@@ -72,7 +72,7 @@ export function AdminBusinessesPage() {
       ) : (
         <>
           <form
-            className="seller-filters"
+            className={ui.sellerFilters}
             key={`${filters.search}:${filters.status}`}
             onSubmit={(event) => {
               event.preventDefault();
@@ -162,7 +162,7 @@ function ReviewBusiness({
   }, []);
   const current = () => mounted.current && useSession.getState().epoch === session.epoch;
   return (
-    <section className="order-status-actions">
+    <section className={ui.orderStatusActions}>
       <h2>Decisión sobre la tienda</h2>
       {error && (
         <p className={ui.formAlert} role="alert">
@@ -308,7 +308,7 @@ export function AdminBusinessPage() {
     return r.data;
   };
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <AdminNav />
       <Link className={ui.backLink} to="/admin/negocios">
         ← Revisión de tiendas

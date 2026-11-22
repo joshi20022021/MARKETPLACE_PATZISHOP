@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';

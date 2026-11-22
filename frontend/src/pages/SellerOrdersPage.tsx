@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { api, useSession } from '../services/session';
@@ -37,7 +37,7 @@ export function SellerOrdersPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <SellerNav />
       <div className={ui.marketHeading}>
         <div>
@@ -64,7 +64,7 @@ export function SellerOrdersPage() {
         </div>
       ) : (
         <>
-          <div className="seller-filters">
+          <div className={ui.sellerFilters}>
             <label>
               Estado del pedido
               <select
@@ -140,7 +140,7 @@ export function SellerOrderPage() {
     return r.data;
   };
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page ${ui.orderPage}`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage} ${ui.orderPage}`}>
       <SellerNav />
       <Link className={ui.backLink} to="/vendedor/pedidos">
         ← Pedidos de mi tienda

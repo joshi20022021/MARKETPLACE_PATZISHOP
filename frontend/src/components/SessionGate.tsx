@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { refreshSession, useSession } from '../services/session';
 export function SessionGate({

@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -73,7 +73,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
     REJECTED: 'No aprobada',
   };
   return (
-    <section className={`${ui.wrap} ${ui.accountPage} shop-page`}>
+    <section className={`${ui.wrap} ${ui.accountPage} `}>
       <SellerNav />
       <Link className={ui.backLink} to="/cuenta">
         ← Mi cuenta
@@ -160,7 +160,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
                 autoComplete="street-address"
               />
             </div>
-            <details className="image-links">
+            <details className={ui.imageLinks}>
               <summary>Imágenes de tu tienda (opcional)</summary>
               <p className={ui.fieldHint}>Pega enlaces públicos HTTP(S) de tu logo y portada.</p>
               <FormField
@@ -195,7 +195,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
           <span aria-hidden="true">✳</span>
           <h2>Un espacio para lo tuyo</h2>
           {shop && (
-            <p className={`status-badge status-${shop.status.toLowerCase()}`}>
+            <p className={`${ui.statusBadge} ${ui.businessStatusTone[shop.status]}`}>
               {labels[shop.status]}
             </p>
           )}

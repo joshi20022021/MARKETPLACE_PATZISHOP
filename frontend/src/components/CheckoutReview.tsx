@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import type { CheckoutPreview } from '../services/checkout';

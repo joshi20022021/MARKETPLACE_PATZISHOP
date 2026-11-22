@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { useState } from 'react';
 export function PublicImage({
   src,
@@ -6,12 +6,14 @@ export function PublicImage({
   className = '',
   eager = false,
   shape = 'square',
+  fit = 'cover',
 }: {
   src: string | null;
   alt: string;
   className?: string;
   eager?: boolean;
   shape?: 'square' | 'banner';
+  fit?: 'cover' | 'contain';
 }) {
   const [failed, setFailed] = useState(false);
   return (
@@ -22,6 +24,7 @@ export function PublicImage({
         <img
           src={src}
           alt={alt}
+          className={fit === 'contain' ? 'object-contain' : 'object-cover'}
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
           referrerPolicy="no-referrer"

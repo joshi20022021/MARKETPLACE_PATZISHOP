@@ -1,8 +1,8 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { orderStatus, type OrderPart } from '../services/orders';
 export function OrderHistory({ history }: { history: OrderPart['history'] }) {
   return (
-    <div className="order-history">
+    <div className={ui.orderHistory}>
       <h4>Historial del subpedido</h4>
       {history.length ? (
         <ol>

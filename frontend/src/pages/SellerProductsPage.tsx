@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -42,7 +42,7 @@ export function SellerProductsPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.sellerPage}`}>
       <SellerNav />
       <div className={ui.marketHeading}>
         <div>
@@ -95,9 +95,9 @@ export function SellerProductsPage() {
           ) : (
             <>
               <p role="status">{products.data.meta.total} productos encontrados</p>
-              <div className="seller-product-list">
+              <div className={ui.sellerProductList}>
                 {products.data.data.map((product) => (
-                  <article className="seller-product-card" key={product.id}>
+                  <article className={ui.sellerProductCard} key={product.id}>
                     <div>
                       <h2>{product.name}</h2>
                       <p>SKU: {product.sku}</p>
@@ -144,7 +144,7 @@ function ProductFilters({
   const [state, setState] = useState(status);
   return (
     <form
-      className="seller-filters"
+      className={ui.sellerFilters}
       onSubmit={(event) => {
         event.preventDefault();
         const next = new URLSearchParams();

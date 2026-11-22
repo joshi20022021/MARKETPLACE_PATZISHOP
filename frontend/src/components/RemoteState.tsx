@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { Link } from 'react-router-dom';
 import { errorMessage, statusOf } from '../services/errors';
 export function RemoteError({

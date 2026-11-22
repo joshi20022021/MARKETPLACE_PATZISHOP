@@ -1,4 +1,4 @@
-import { ui } from '../components/ui';
+import * as ui from '../components/ui';
 import { Link } from 'react-router-dom';
 export function NotFoundPage() {
   return (

@@ -1,7 +1,8 @@
+import * as ui from './ui';
 import { NavLink } from 'react-router-dom';
 export function SellerNav() {
   return (
-    <nav className="seller-nav" aria-label="Panel del vendedor">
+    <nav className={ui.sellerNav} aria-label="Panel del vendedor">
       <NavLink to="/vendedor" end>
         Resumen
       </NavLink>

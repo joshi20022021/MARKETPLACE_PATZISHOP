@@ -1,4 +1,4 @@
-import { ui } from './ui';
+import * as ui from './ui';
 import { useEffect, useRef, useState } from 'react';
 import { api, useSession } from '../services/session';
 import { sellerProductSchema, type SellerProduct } from '../services/seller';
@@ -17,13 +17,13 @@ export function SellerProductImages({
   const [remove, setRemove] = useState<string | null>(null);
   const session = useSession();
   return (
-    <section className={`${ui.formCard} seller-images`}>
+    <section className={`${ui.formCard} ${ui.sellerImages}`}>
       <h2>Imágenes del producto</h2>
       <p>
         Hasta seis imágenes JPEG, PNG o WebP de 5 MiB como máximo. La primera disponible es la
         portada.
       </p>
-      <div className="seller-image-grid">
+      <div className={ui.sellerImageGrid}>
         {product.images.map((image, index) => (
           <article key={image.id}>
             <PrivateImage productId={product.id} imageId={image.id} />
