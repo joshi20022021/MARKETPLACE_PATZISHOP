@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { Link, useSearchParams } from 'react-router-dom';
 export function Pagination({ page, totalPages }: { page: number; totalPages: number }) {
   const [params] = useSearchParams();
@@ -14,12 +15,12 @@ export function Pagination({ page, totalPages }: { page: number; totalPages: num
       </span>
       <div>
         {page > 1 && (
-          <Link className="button button-outline" to={href(page - 1)}>
+          <Link className={ui.buttonOutline} to={href(page - 1)}>
             ← Anterior
           </Link>
         )}
         {page < totalPages && (
-          <Link className="button button-outline" to={href(page + 1)}>
+          <Link className={ui.buttonOutline} to={href(page + 1)}>
             Siguiente →
           </Link>
         )}

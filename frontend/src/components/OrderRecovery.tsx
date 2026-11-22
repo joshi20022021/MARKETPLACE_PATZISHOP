@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -28,7 +29,7 @@ export function OrderRecovery({ attempt, onMissing }: { attempt: string; onMissi
     }
   }, [result.data, session.user, session.epoch, navigate]);
   return (
-    <section className="wrap page-state">
+    <section className={`${ui.wrap} ${ui.pageState}`}>
       <h1>Comprobemos tu confirmación</h1>
       <p>Estamos comprobando el intento anterior para evitar una compra duplicada.</p>
       {result.isPending || result.isFetching || result.data ? (
@@ -38,7 +39,7 @@ export function OrderRecovery({ attempt, onMissing }: { attempt: string; onMissi
           <p role="alert">
             No pudimos comprobar el resultado. Consulta de nuevo antes de confirmar otra compra.
           </p>
-          <button className="button" onClick={() => void result.refetch()}>
+          <button className={ui.button} onClick={() => void result.refetch()}>
             Comprobar de nuevo
           </button>
         </>
@@ -46,7 +47,7 @@ export function OrderRecovery({ attempt, onMissing }: { attempt: string; onMissi
         <>
           <p>No se encontró un pedido para este intento.</p>
           <button
-            className="button"
+            className={ui.button}
             onClick={() => {
               if (session.user) clearOrderKey(session.user.id);
               onMissing();
@@ -57,7 +58,7 @@ export function OrderRecovery({ attempt, onMissing }: { attempt: string; onMissi
         </>
       )}
       <p>
-        <Link className="text-link" to="/pedidos">
+        <Link className={ui.textLink} to="/pedidos">
           Consultar mis pedidos ↗
         </Link>
       </p>

@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
@@ -43,18 +44,18 @@ export function AdminBusinessesPage() {
       ),
   });
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <AdminNav />
       <div className="market-heading">
         <div>
-          <p className="eyebrow">UN ESPACIO PARA CADA NEGOCIO</p>
+          <p className={ui.eyebrow}>UN ESPACIO PARA CADA NEGOCIO</p>
           <h1>
             Revisión de <em>tiendas.</em>
           </h1>
           <p>Consulta sus datos antes de decidir.</p>
         </div>
         <button
-          className="button button-outline"
+          className={ui.buttonOutline}
           disabled={!filters || result.isFetching}
           onClick={() => void result.refetch()}
         >
@@ -64,7 +65,7 @@ export function AdminBusinessesPage() {
       {!filters ? (
         <div className="remote-state">
           <h2>Revisa los filtros del enlace</h2>
-          <button className="button" onClick={() => setParams({})}>
+          <button className={ui.button} onClick={() => setParams({})}>
             Restablecer filtros
           </button>
         </div>
@@ -99,7 +100,7 @@ export function AdminBusinessesPage() {
                 ))}
               </select>
             </label>
-            <button className="button" type="submit">
+            <button className={ui.button} type="submit">
               Aplicar filtros
             </button>
           </form>
@@ -164,7 +165,7 @@ function ReviewBusiness({
     <section className="order-status-actions">
       <h2>Decisión sobre la tienda</h2>
       {error && (
-        <p className="form-alert" role="alert">
+        <p className={ui.formAlert} role="alert">
           {error}
         </p>
       )}
@@ -172,7 +173,7 @@ function ReviewBusiness({
         <>
           <p>Consulta el estado actual antes de enviar otra decisión.</p>
           <button
-            className="button"
+            className={ui.button}
             disabled={busy}
             onClick={async () => {
               if (lock.current) return;
@@ -204,7 +205,7 @@ function ReviewBusiness({
             if (target && business.allowedStatuses.includes(target)) setReview(true);
           }}
         >
-          <div className="field">
+          <div className={ui.field}>
             <label htmlFor="business-decision">Próximo estado</label>
             <select
               id="business-decision"
@@ -220,7 +221,7 @@ function ReviewBusiness({
               ))}
             </select>
           </div>
-          <button type="submit" className="button button-outline" disabled={!target || busy}>
+          <button type="submit" className={ui.buttonOutline} disabled={!target || busy}>
             Revisar decisión
           </button>
         </form>
@@ -238,7 +239,7 @@ function ReviewBusiness({
                 : 'La tienda volverá a revisión. El vendedor podrá preparar productos inactivos.'}
           </p>
           <button
-            className="button"
+            className={ui.button}
             disabled={busy}
             onClick={async () => {
               if (lock.current || !target) return;
@@ -289,11 +290,7 @@ function ReviewBusiness({
           >
             {busy ? 'Guardando decisión…' : 'Confirmar decisión'}
           </button>
-          <button
-            className="button button-outline"
-            disabled={busy}
-            onClick={() => setReview(false)}
-          >
+          <button className={ui.buttonOutline} disabled={busy} onClick={() => setReview(false)}>
             Volver a editar
           </button>
         </>
@@ -311,9 +308,9 @@ export function AdminBusinessPage() {
     return r.data;
   };
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <AdminNav />
-      <Link className="back-link" to="/admin/negocios">
+      <Link className={ui.backLink} to="/admin/negocios">
         ← Revisión de tiendas
       </Link>
       {result.isPending ? (
@@ -328,12 +325,12 @@ export function AdminBusinessPage() {
         <>
           <div className="market-heading">
             <div>
-              <p className="eyebrow">REVISIÓN DEL NEGOCIO</p>
+              <p className={ui.eyebrow}>REVISIÓN DEL NEGOCIO</p>
               <h1>{business.name}</h1>
               <span className="available-badge">{businessStates[business.status]}</span>
             </div>
             <button
-              className="button button-outline"
+              className={ui.buttonOutline}
               disabled={result.isFetching}
               onClick={() => void result.refetch()}
             >
@@ -341,12 +338,12 @@ export function AdminBusinessPage() {
             </button>
           </div>
           {result.isRefetchError && (
-            <p role="alert" className="form-alert">
+            <p role="alert" className={ui.formAlert}>
               No se pudo actualizar la tienda. Se muestran los últimos datos consultados.
             </p>
           )}
           <div className="checkout-review-grid">
-            <section className="form-card">
+            <section className={ui.formCard}>
               <h2>Datos del negocio</h2>
               <p>Identificador público: {business.slug}</p>
               <p className="preserve-text">{business.description || 'Sin descripción'}</p>
@@ -359,7 +356,7 @@ export function AdminBusinessPage() {
               <p>Registrada: {new Date(business.createdAt).toLocaleString('es-GT')}</p>
               <p>Actualizada: {new Date(business.updatedAt).toLocaleString('es-GT')}</p>
             </section>
-            <section className="form-card">
+            <section className={ui.formCard}>
               <h2>Responsable</h2>
               <p>{business.owner.name}</p>
               <p>

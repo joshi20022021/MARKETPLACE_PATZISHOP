@@ -1,4 +1,5 @@
-﻿import { Suspense, useState } from 'react';
+import { ui } from '../components/ui';
+import { Suspense, useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Brand } from '../components/Brand';
 import { ShopIcon } from '../components/ShopIcon';
@@ -28,7 +29,9 @@ export function SiteLayout() {
         <span className="ml-2 hidden sm:inline">PATZICÍA, GUATEMALA</span>
       </div>
       <div className="sticky top-0 z-30 border-b border-patzi-green/10 bg-patzi-cream/95 backdrop-blur-md">
-        <header className="wrap flex flex-col gap-4 py-4 lg:min-h-24 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:py-5">
+        <header
+          className={`${ui.wrap} flex flex-col gap-4 py-4 lg:min-h-24 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:py-5`}
+        >
           <div className="flex shrink-0 items-center gap-5">
             <Brand />
             <span className="hidden border-l border-patzi-green/15 pl-5 text-[10px] leading-4 text-patzi-muted xl:block">
@@ -74,7 +77,7 @@ export function SiteLayout() {
                   Mi cuenta
                 </NavLink>
                 <button
-                  className="button button-small"
+                  className={ui.buttonSmall}
                   disabled={leaving}
                   onClick={async () => {
                     setLeaving(true);
@@ -97,7 +100,7 @@ export function SiteLayout() {
                 <Link className={navLink} to="/registro?tipo=vendedor">
                   Quiero vender
                 </Link>
-                <Link className="button button-small ml-auto lg:ml-2" to="/ingresar">
+                <Link className={`${ui.buttonSmall} ml-auto lg:ml-2`} to="/ingresar">
                   Ingresar <ShopIcon name="arrow" className="size-3.5" />
                 </Link>
               </>
@@ -106,14 +109,14 @@ export function SiteLayout() {
         </header>
       </div>
       {error && (
-        <p className="form-alert wrap" role="alert">
+        <p className={`${ui.formAlert} ${ui.wrap}`} role="alert">
           {error}
         </p>
       )}
       <main id="contenido" tabIndex={-1}>
         <Suspense
           fallback={
-            <p className="wrap page-state" role="status">
+            <p className={`${ui.wrap} ${ui.pageState}`} role="status">
               Cargando página…
             </p>
           }
@@ -122,7 +125,9 @@ export function SiteLayout() {
         </Suspense>
       </main>
       <footer className="border-t border-patzi-green/10 bg-white/60">
-        <div className="wrap flex flex-col justify-between gap-6 py-9 md:flex-row md:items-center md:py-12">
+        <div
+          className={`${ui.wrap} flex flex-col justify-between gap-6 py-9 md:flex-row md:items-center md:py-12`}
+        >
           <div>
             <Brand />
             <p className="mt-3 mb-0 text-xs text-patzi-muted">

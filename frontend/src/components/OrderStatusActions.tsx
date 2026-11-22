@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useEffect, useId, useRef, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
@@ -51,7 +52,7 @@ export function OrderStatusActions({
           : 'Elige únicamente el siguiente paso permitido.'}
       </p>
       {error && (
-        <p className="form-alert" role="alert">
+        <p className={ui.formAlert} role="alert">
           {error}
         </p>
       )}
@@ -59,7 +60,7 @@ export function OrderStatusActions({
         <div>
           <p>No se enviará otra operación hasta consultar el estado actual.</p>
           <button
-            className="button"
+            className={ui.button}
             disabled={busy}
             onClick={async () => {
               if (lock.current) return;
@@ -105,7 +106,7 @@ export function OrderStatusActions({
             >
               <fieldset disabled={busy}>
                 {!customer && (
-                  <div className="field">
+                  <div className={ui.field}>
                     <label htmlFor={`${uid}-status`}>Nuevo estado</label>
                     <select
                       id={`${uid}-status`}
@@ -121,7 +122,7 @@ export function OrderStatusActions({
                     </select>
                   </div>
                 )}
-                <div className="field">
+                <div className={ui.field}>
                   <label htmlFor={`${uid}-note`}>
                     Nota visible al cliente y la tienda (opcional)
                   </label>
@@ -133,7 +134,7 @@ export function OrderStatusActions({
                     onChange={(event) => setNote(event.target.value)}
                   />
                 </div>
-                <button className="button button-outline" type="submit" disabled={!target}>
+                <button className={ui.buttonOutline} type="submit" disabled={!target}>
                   {customer ? 'Revisar cancelación' : 'Revisar cambio'}
                 </button>
               </fieldset>
@@ -150,7 +151,7 @@ export function OrderStatusActions({
               </p>
               {note && <p className="preserve-text">Nota: {note}</p>}
               <button
-                className="button"
+                className={ui.button}
                 disabled={busy}
                 onClick={async () => {
                   if (lock.current || !target) return;
@@ -222,11 +223,7 @@ export function OrderStatusActions({
                     ? 'Confirmar cancelación'
                     : 'Confirmar cambio de estado'}
               </button>
-              <button
-                className="button button-outline"
-                disabled={busy}
-                onClick={() => setReview(false)}
-              >
+              <button className={ui.buttonOutline} disabled={busy} onClick={() => setReview(false)}>
                 Volver a editar
               </button>
             </div>

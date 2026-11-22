@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,29 +17,27 @@ export function RegisterPage() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: { role: search.get('tipo') === 'vendedor' ? 'SELLER' : 'CUSTOMER' },
   });
-  const role = watch('role');
   if (session.status === 'authenticated') return <Navigate to="/cuenta" replace />;
   return (
-    <section className="auth-page wrap">
-      <div className="auth-story">
-        <p className="eyebrow">HAY UN LUGAR PARA TI</p>
+    <section className={`${ui.authPage} ${ui.wrap}`}>
+      <div className={ui.authStory}>
+        <p className={ui.eyebrow}>HAY UN LUGAR PARA TI</p>
         <h1>
           Somos vecinos.
           <br />
           Seamos comunidad.
         </h1>
         <p>Conecta con el talento local o dale un nuevo espacio a tu negocio.</p>
-        <div className="story-mark" aria-hidden="true">
+        <div className={ui.storyMark} aria-hidden="true">
           ✳
         </div>
       </div>
-      <div className="form-card">
+      <div className={ui.formCard}>
         <h2>Crea tu cuenta</h2>
         <p>Empieza con lo que te gusta hacer.</p>
         <form
@@ -58,13 +57,13 @@ export function RegisterPage() {
           })}
           noValidate
         >
-          <fieldset className="role-selector">
+          <fieldset className={ui.roleSelector}>
             <legend>Quiero participar como</legend>
-            <label className={role === 'CUSTOMER' ? 'selected' : ''}>
+            <label>
               <input type="radio" value="CUSTOMER" {...register('role')} />
               Cliente
             </label>
-            <label className={role === 'SELLER' ? 'selected' : ''}>
+            <label>
               <input type="radio" value="SELLER" {...register('role')} />
               Vendedor
             </label>
@@ -88,7 +87,7 @@ export function RegisterPage() {
             error={errors.password?.message}
             creating
           />
-          <p className="field-hint">Al menos 12 caracteres; máximo 72 bytes.</p>
+          <p className={ui.fieldHint}>Al menos 12 caracteres; máximo 72 bytes.</p>
           <PasswordField
             label="Confirmar contraseña"
             registration={register('confirmPassword')}
@@ -96,18 +95,18 @@ export function RegisterPage() {
             creating
           />
           {error && (
-            <p className="form-alert" role="alert">
+            <p className={ui.formAlert} role="alert">
               {error}
             </p>
           )}
           <button
-            className="button button-full"
+            className={`${ui.button} ${ui.buttonFull}`}
             disabled={isSubmitting || session.status === 'loading'}
           >
             {isSubmitting ? 'Creando cuenta…' : 'Crear cuenta'}
           </button>
         </form>
-        <p className="form-foot">
+        <p className={ui.formFoot}>
           ¿Ya tienes cuenta? <Link to="/ingresar">Ingresa aquí</Link>
         </p>
       </div>

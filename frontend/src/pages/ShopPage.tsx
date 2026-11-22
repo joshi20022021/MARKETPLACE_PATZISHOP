@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,15 +29,15 @@ export function ShopPage() {
   });
   if (shop.isPending)
     return (
-      <div className="wrap page-state" role="status">
+      <div className={`${ui.wrap} ${ui.pageState}`} role="status">
         Cargando tu tienda…
       </div>
     );
   if (shop.isError)
     return (
-      <div className="wrap page-state">
+      <div className={`${ui.wrap} ${ui.pageState}`}>
         <p role="alert">{errorMessage(shop.error)}</p>
-        <button className="button" onClick={() => void shop.refetch()}>
+        <button className={ui.button} onClick={() => void shop.refetch()}>
           Reintentar
         </button>
       </div>
@@ -72,16 +73,16 @@ function ShopForm({ shop }: { shop: Business | null }) {
     REJECTED: 'No aprobada',
   };
   return (
-    <section className="wrap account-page shop-page">
+    <section className={`${ui.wrap} ${ui.accountPage} shop-page`}>
       <SellerNav />
-      <Link className="back-link" to="/cuenta">
+      <Link className={ui.backLink} to="/cuenta">
         ← Mi cuenta
       </Link>
-      <p className="eyebrow">TU NEGOCIO, MÁS CERCA</p>
+      <p className={ui.eyebrow}>TU NEGOCIO, MÁS CERCA</p>
       <h1>{shop ? 'Mi tienda' : 'Presenta tu tienda'}</h1>
-      <p className="page-intro">Cuéntanos qué hace especial a tu negocio.</p>
-      <div className="account-grid">
-        <div className="form-card">
+      <p className={ui.pageIntro}>Cuéntanos qué hace especial a tu negocio.</p>
+      <div className={ui.accountGrid}>
+        <div className={ui.formCard}>
           <h2>Datos del negocio</h2>
           <form
             noValidate
@@ -121,7 +122,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
               maxLength={160}
               autoCapitalize="none"
             />
-            <div className="field">
+            <div className={ui.field}>
               <label htmlFor="shop-description">Descripción</label>
               <textarea
                 id="shop-description"
@@ -132,7 +133,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
                 aria-describedby={errors.description ? 'description-error' : undefined}
               />
               {errors.description && (
-                <small className="field-error" id="description-error">
+                <small className={ui.fieldError} id="description-error">
                   {errors.description.message}
                 </small>
               )}
@@ -144,7 +145,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
               error={errors.email?.message}
               autoComplete="email"
             />
-            <div className="form-row">
+            <div className={ui.formRow}>
               <FormField
                 label="Teléfono"
                 type="tel"
@@ -161,7 +162,7 @@ function ShopForm({ shop }: { shop: Business | null }) {
             </div>
             <details className="image-links">
               <summary>Imágenes de tu tienda (opcional)</summary>
-              <p className="field-hint">Pega enlaces públicos HTTP(S) de tu logo y portada.</p>
+              <p className={ui.fieldHint}>Pega enlaces públicos HTTP(S) de tu logo y portada.</p>
               <FormField
                 label="URL del logo"
                 type="url"
@@ -176,21 +177,21 @@ function ShopForm({ shop }: { shop: Business | null }) {
               />
             </details>
             {error && (
-              <p className="form-alert" role="alert">
+              <p className={ui.formAlert} role="alert">
                 {error}
               </p>
             )}
             {saved && (
-              <p className="form-success" role="status">
+              <p className={ui.formSuccess} role="status">
                 Los datos de tu tienda se guardaron.
               </p>
             )}
-            <button className="button" disabled={isSubmitting}>
+            <button className={ui.button} disabled={isSubmitting}>
               {isSubmitting ? 'Guardando…' : shop ? 'Guardar cambios' : 'Crear mi tienda'}
             </button>
           </form>
         </div>
-        <aside className="account-aside">
+        <aside className={ui.accountAside}>
           <span aria-hidden="true">✳</span>
           <h2>Un espacio para lo tuyo</h2>
           {shop && (

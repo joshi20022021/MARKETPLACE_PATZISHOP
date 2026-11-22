@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { api, useSession } from '../services/session';
@@ -15,18 +16,18 @@ export function AdminDashboardPage() {
   });
   const value = result.data;
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <AdminNav />
       <div className="market-heading">
         <div>
-          <p className="eyebrow">EL COMERCIO DE NUESTRA COMUNIDAD</p>
+          <p className={ui.eyebrow}>EL COMERCIO DE NUESTRA COMUNIDAD</p>
           <h1>
             Panel <em>administrador.</em>
           </h1>
           <p>Actividad global de PatziShop.</p>
         </div>
         <button
-          className="button button-outline"
+          className={ui.buttonOutline}
           disabled={result.isFetching}
           onClick={() => void result.refetch()}
         >
@@ -66,23 +67,23 @@ export function AdminDashboardPage() {
             ))}
           </div>
           <div className="seller-amounts">
-            <article className="form-card">
+            <article className={ui.formCard}>
               <h2>Importe contra entrega</h2>
               <strong>{money(value.orders.cashOnDeliveryTotal)}</strong>
               <p>Suma histórica de subpedidos no cancelados. No equivale a dinero cobrado.</p>
             </article>
-            <article className="form-card">
+            <article className={ui.formCard}>
               <h2>Importe simulado</h2>
               <strong>{money(value.orders.simulatedTotal)}</strong>
               <p>Importe de prueba no cancelado. Sin dinero real.</p>
             </article>
           </div>
-          <p className="muted">
+          <p className={ui.muted}>
             Toda la actividad, sin envío. Los estados de pedidos corresponden a subpedidos; cada
             compra se cuenta una sola vez. Tienda activa indica su estado; productos publicados
             aplica también stock, categoría y vendedor vigentes.
           </p>
-          <Link className="button" to="/admin/negocios?status=PENDING">
+          <Link className={ui.button} to="/admin/negocios?status=PENDING">
             Revisar tiendas pendientes ↗
           </Link>
         </>

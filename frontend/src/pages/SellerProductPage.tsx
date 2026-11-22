@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useEffect, useRef, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
@@ -38,14 +39,14 @@ export function SellerProductPage() {
     queryFn: ({ signal }) => categories(signal),
   });
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <SellerNav />
-      <Link className="back-link" to="/vendedor/productos">
+      <Link className={ui.backLink} to="/vendedor/productos">
         ← Mis productos
       </Link>
       <div className="market-heading">
         <div>
-          <p className="eyebrow">LO QUE OFRECES, A TU MANERA</p>
+          <p className={ui.eyebrow}>LO QUE OFRECES, A TU MANERA</p>
           <h1>
             {id ? 'Tu' : 'Nuevo'} <em>producto.</em>
           </h1>
@@ -56,9 +57,9 @@ export function SellerProductPage() {
       ) : shop.isError ? (
         <RemoteError error={shop.error} retry={() => void shop.refetch()} />
       ) : !shop.data ? (
-        <div className="form-card">
+        <div className={ui.formCard}>
           <h2>Primero presenta tu tienda</h2>
-          <Link className="button" to="/cuenta/tienda">
+          <Link className={ui.button} to="/cuenta/tienda">
             Crear mi tienda ↗
           </Link>
         </div>
@@ -171,12 +172,12 @@ function ProductEditor({
         </p>
       )}
       {error && (
-        <p className="form-alert" role="alert">
+        <p className={ui.formAlert} role="alert">
           {error}
         </p>
       )}
       {saved && (
-        <p className="form-success" role="status">
+        <p className={ui.formSuccess} role="status">
           Producto guardado.
         </p>
       )}
@@ -188,7 +189,7 @@ function ProductEditor({
           </p>
           {base ? (
             <button
-              className="button"
+              className={ui.button}
               disabled={busy}
               onClick={() =>
                 void run(async () => {
@@ -205,13 +206,13 @@ function ProductEditor({
               Volver a cargar datos
             </button>
           ) : (
-            <Link className="button" to="/vendedor/productos">
+            <Link className={ui.button} to="/vendedor/productos">
               Consultar mis productos
             </Link>
           )}
         </div>
       )}
-      <div className="form-card seller-editor">
+      <div className={`${ui.formCard} seller-editor`}>
         <form
           noValidate
           onSubmit={handleSubmit((input) => {
@@ -244,7 +245,7 @@ function ProductEditor({
               error={errors.name?.message}
               maxLength={180}
             />
-            <div className="form-row">
+            <div className={ui.formRow}>
               <FormField
                 label="Identificador del producto"
                 registration={register('slug')}
@@ -259,7 +260,7 @@ function ProductEditor({
                 maxLength={80}
               />
             </div>
-            <div className="field">
+            <div className={ui.field}>
               <label htmlFor="seller-category">Categoría</label>
               <select
                 id="seller-category"
@@ -278,12 +279,12 @@ function ProductEditor({
                 ))}
               </select>
               {errors.categoryId && (
-                <small className="field-error" id="category-error">
+                <small className={ui.fieldError} id="category-error">
                   {errors.categoryId.message}
                 </small>
               )}
             </div>
-            <div className="field">
+            <div className={ui.field}>
               <label htmlFor="seller-description">Descripción</label>
               <textarea
                 id="seller-description"
@@ -293,10 +294,10 @@ function ProductEditor({
                 aria-invalid={!!errors.description}
               />
               {errors.description && (
-                <small className="field-error">{errors.description.message}</small>
+                <small className={ui.fieldError}>{errors.description.message}</small>
               )}
             </div>
-            <div className="form-row">
+            <div className={ui.formRow}>
               <FormField
                 label="Precio (GTQ)"
                 inputMode="decimal"
@@ -314,7 +315,7 @@ function ProductEditor({
                 error={errors.stock?.message}
               />
             </div>
-            <div className="field">
+            <div className={ui.field}>
               <label htmlFor="seller-status">Estado del producto</label>
               <select id="seller-status" {...register('status')}>
                 {Object.entries(productStates).map(([value, label]) => (
@@ -328,11 +329,11 @@ function ProductEditor({
                 ))}
               </select>
             </div>
-            <p className="field-hint">
+            <p className={ui.fieldHint}>
               Las existencias son una cantidad absoluta. Solo se envían los campos modificados.
               Activar requiere tienda aprobada y categoría disponible; cero unidades queda agotado.
             </p>
-            <button className="button" type="submit">
+            <button className={ui.button} type="submit">
               {busy ? 'Guardando…' : base ? 'Guardar producto' : 'Crear producto'}
             </button>
           </fieldset>
@@ -354,7 +355,7 @@ function ProductEditor({
             <div>
               <p>¿Eliminar este producto y sus imágenes? Esta acción no se puede deshacer.</p>
               <button
-                className="button"
+                className={ui.button}
                 disabled={disabled}
                 onClick={() =>
                   void run(async () => {
@@ -366,7 +367,7 @@ function ProductEditor({
                 Eliminar definitivamente
               </button>
               <button
-                className="button button-outline"
+                className={ui.buttonOutline}
                 disabled={busy}
                 onClick={() => setDeleting(false)}
               >
@@ -375,7 +376,7 @@ function ProductEditor({
             </div>
           ) : (
             <button
-              className="button button-outline"
+              className={ui.buttonOutline}
               disabled={disabled}
               onClick={() => setDeleting(true)}
             >

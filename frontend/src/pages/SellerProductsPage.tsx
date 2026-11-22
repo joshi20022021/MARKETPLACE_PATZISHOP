@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -41,17 +42,17 @@ export function SellerProductsPage() {
       ),
   });
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <SellerNav />
       <div className="market-heading">
         <div>
-          <p className="eyebrow">CADA PRODUCTO CUENTA</p>
+          <p className={ui.eyebrow}>CADA PRODUCTO CUENTA</p>
           <h1>
             Mis <em>productos.</em>
           </h1>
         </div>
         {shop.data && ['ACTIVE', 'PENDING'].includes(shop.data.status) && (
-          <Link className="button" to="/vendedor/productos/nuevo">
+          <Link className={ui.button} to="/vendedor/productos/nuevo">
             Nuevo producto ↗
           </Link>
         )}
@@ -59,7 +60,7 @@ export function SellerProductsPage() {
       {!filters ? (
         <div className="remote-state">
           <h2>Revisa los filtros del enlace</h2>
-          <button className="button" onClick={() => setParams({})}>
+          <button className={ui.button} onClick={() => setParams({})}>
             Restablecer filtros
           </button>
         </div>
@@ -68,9 +69,9 @@ export function SellerProductsPage() {
       ) : shop.isError ? (
         <RemoteError error={shop.error} retry={() => void shop.refetch()} />
       ) : !shop.data ? (
-        <div className="form-card">
+        <div className={ui.formCard}>
           <h2>Primero presenta tu tienda</h2>
-          <Link className="button" to="/cuenta/tienda">
+          <Link className={ui.button} to="/cuenta/tienda">
             Crear mi tienda ↗
           </Link>
         </div>
@@ -107,7 +108,7 @@ export function SellerProductsPage() {
                       <p>{product.stock} unidades</p>
                     </div>
                     <Link
-                      className="button button-outline"
+                      className={ui.buttonOutline}
                       to={`/vendedor/productos/${product.id}/editar`}
                     >
                       {['ACTIVE', 'PENDING'].includes(shop.data!.status) ? 'Editar' : 'Consultar'}{' '}
@@ -167,11 +168,11 @@ function ProductFilters({
           ))}
         </select>
       </label>
-      <button className="button" type="submit">
+      <button className={ui.button} type="submit">
         Aplicar filtros
       </button>
       <button
-        className="button button-outline"
+        className={ui.buttonOutline}
         type="button"
         onClick={() => {
           setText('');

@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { Link } from 'react-router-dom';
 import { errorMessage, statusOf } from '../services/errors';
 export function RemoteError({
@@ -15,14 +16,14 @@ export function RemoteError({
         <>
           <h2>{resource} no está disponible</h2>
           <p>Puede haber cambiado o ya no estar publicado.</p>
-          <Link className="button" to="/catalogo">
+          <Link className={ui.button} to="/catalogo">
             Explorar catálogo
           </Link>
         </>
       ) : (
         <>
           <p role="alert">{errorMessage(error)}</p>
-          <button className="button" onClick={retry}>
+          <button className={ui.button} onClick={retry}>
             Reintentar
           </button>
         </>

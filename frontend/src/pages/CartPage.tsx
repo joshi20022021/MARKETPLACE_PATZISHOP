@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSession } from '../services/session';
@@ -20,39 +21,39 @@ function CustomerCart() {
   const change = useCartActions();
   if (user?.role !== 'CUSTOMER')
     return (
-      <section className="wrap page-state">
+      <section className={`${ui.wrap} ${ui.pageState}`}>
         <h1>El carrito es para clientes</h1>
         <p>Tu cuenta actual no tiene acceso a compras.</p>
-        <Link className="button" to="/catalogo">
+        <Link className={ui.button} to="/catalogo">
           Explorar catálogo
         </Link>
       </section>
     );
   if (cart.isPending)
     return (
-      <p className="wrap page-state" role="status">
+      <p className={`${ui.wrap} ${ui.pageState}`} role="status">
         Cargando tu carrito…
       </p>
     );
   if (cart.isError)
     return (
-      <div className="wrap page-state">
+      <div className={`${ui.wrap} ${ui.pageState}`}>
         <h1>No pudimos cargar tu carrito</h1>
         <p role="alert">{cartError(cart.error)}</p>
-        <button className="button" onClick={() => void cart.refetch()}>
+        <button className={ui.button} onClick={() => void cart.refetch()}>
           Reintentar
         </button>
       </div>
     );
   const value = cart.data;
   return (
-    <section className="wrap marketplace-page cart-page">
-      <Link className="back-link" to="/catalogo">
+    <section className={`${ui.wrap} marketplace-page cart-page`}>
+      <Link className={ui.backLink} to="/catalogo">
         ← Seguir explorando
       </Link>
       <div className="market-heading">
         <div>
-          <p className="eyebrow">DE TUS VECINOS, PARA TI</p>
+          <p className={ui.eyebrow}>DE TUS VECINOS, PARA TI</p>
           <h1>
             Mi <em>carrito.</em>
           </h1>
@@ -62,7 +63,7 @@ function CustomerCart() {
           </p>
         </div>
         <button
-          className="button button-outline"
+          className={ui.buttonOutline}
           disabled={cart.isFetching || change.isPending}
           onClick={() => {
             change.reset();
@@ -73,7 +74,7 @@ function CustomerCart() {
         </button>
       </div>
       {change.isError && (
-        <p role="alert" className="form-alert">
+        <p role="alert" className={ui.formAlert}>
           {cartError(change.error)}
         </p>
       )}
@@ -86,7 +87,7 @@ function CustomerCart() {
         <div className="remote-state">
           <h2>Tu carrito está esperando algo especial</h2>
           <p>Descubre productos de nuestra comunidad y agrega tus favoritos.</p>
-          <Link className="button" to="/catalogo">
+          <Link className={ui.button} to="/catalogo">
             Explorar productos
           </Link>
         </div>
@@ -132,20 +133,20 @@ function CustomerCart() {
               </div>
             </dl>
             {value.hasIssues && (
-              <p className="field-error" role="alert">
+              <p className={ui.fieldError} role="alert">
                 Hay productos que necesitan tu atención. Ajusta sus cantidades o quítalos; no se
                 incluyen en el total.
               </p>
             )}
             <p>El carrito no reserva productos. Precios y disponibilidad pueden cambiar.</p>
-            <p className="muted">
+            <p className={ui.muted}>
               Este total corresponde a productos disponibles; no incluye envío.
             </p>
-            <Link className="text-link" to="/catalogo">
+            <Link className={ui.textLink} to="/catalogo">
               Descubrir más productos ↗
             </Link>
             {!value.hasIssues && !change.isPending && !cart.isFetching && (
-              <Link className="button button-full checkout-link" to="/checkout">
+              <Link className={`${ui.button} ${ui.buttonFull} checkout-link`} to="/checkout">
                 Preparar entrega ↗
               </Link>
             )}
@@ -176,7 +177,7 @@ function CartLine({
         <h3>{item.product ? <Link to={`/productos/${item.product.slug}`}>{name}</Link> : name}</h3>
         {item.product && <p>{money(item.product.price)} por unidad</p>}
         {item.issue && (
-          <p className="field-error">
+          <p className={ui.fieldError}>
             {item.issue === 'UNAVAILABLE'
               ? 'Ya no está publicado o disponible. Puedes quitarlo.'
               : `Ahora puedes elegir hasta ${item.maxQuantity} ${item.maxQuantity === 1 ? 'unidad' : 'unidades'}.`}
@@ -211,17 +212,22 @@ function CartLine({
               aria-invalid={Boolean(error)}
               aria-describedby={error ? `cart-error-${item.id}` : undefined}
             />
-            <button className="button button-outline button-small" disabled={busy || !item.product}>
+            <button className={ui.buttonOutlineSmall} disabled={busy || !item.product}>
               Guardar cantidad
             </button>
           </div>
           {error && (
-            <p id={`cart-error-${item.id}`} className="field-error" role="alert">
+            <p id={`cart-error-${item.id}`} className={ui.fieldError} role="alert">
               {error}
             </p>
           )}
         </form>
-        <button type="button" className="text-button cart-remove" disabled={busy} onClick={remove}>
+        <button
+          type="button"
+          className={`${ui.textButton} cart-remove`}
+          disabled={busy}
+          onClick={remove}
+        >
           Quitar {name}
         </button>
       </div>

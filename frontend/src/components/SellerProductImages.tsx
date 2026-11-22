@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useEffect, useRef, useState } from 'react';
 import { api, useSession } from '../services/session';
 import { sellerProductSchema, type SellerProduct } from '../services/seller';
@@ -16,7 +17,7 @@ export function SellerProductImages({
   const [remove, setRemove] = useState<string | null>(null);
   const session = useSession();
   return (
-    <section className="form-card seller-images">
+    <section className={`${ui.formCard} seller-images`}>
       <h2>Imágenes del producto</h2>
       <p>
         Hasta seis imágenes JPEG, PNG o WebP de 5 MiB como máximo. La primera disponible es la
@@ -31,7 +32,7 @@ export function SellerProductImages({
               <div>
                 <p>¿Eliminar esta imagen?</p>
                 <button
-                  className="button button-small"
+                  className={ui.buttonSmall}
                   disabled={disabled}
                   onClick={() =>
                     void run(async () => {
@@ -43,7 +44,7 @@ export function SellerProductImages({
                   Confirmar eliminación
                 </button>
                 <button
-                  className="button button-outline button-small"
+                  className={ui.buttonOutlineSmall}
                   disabled={disabled}
                   onClick={() => setRemove(null)}
                 >
@@ -52,7 +53,7 @@ export function SellerProductImages({
               </div>
             ) : (
               <button
-                className="button button-outline button-small"
+                className={ui.buttonOutlineSmall}
                 disabled={disabled}
                 onClick={() => setRemove(image.id)}
               >
@@ -104,11 +105,11 @@ export function SellerProductImages({
           }}
         />
         {error && (
-          <p role="alert" className="field-error">
+          <p role="alert" className={ui.fieldError}>
             {error}
           </p>
         )}
-        <button className="button" disabled={disabled || !file || product.images.length >= 6}>
+        <button className={ui.button} disabled={disabled || !file || product.images.length >= 6}>
           Subir imagen
         </button>
       </form>

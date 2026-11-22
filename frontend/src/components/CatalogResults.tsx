@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
@@ -25,7 +26,7 @@ export function CatalogResults({ businessSlug }: { businessSlug?: string }) {
       <div className="remote-state">
         <h2>Revisa los filtros del enlace</h2>
         <p>La página o el rango de precios no es válido.</p>
-        <button className="button" onClick={() => setParams({})}>
+        <button className={ui.button} onClick={() => setParams({})}>
           Limpiar filtros
         </button>
       </div>
@@ -80,7 +81,7 @@ function CatalogQuery({
             placeholder="¿Qué estás buscando?"
             maxLength={120}
           />
-          <div className="field">
+          <div className={ui.field}>
             <label htmlFor="category-filter">Categoría</label>
             <select
               id="category-filter"
@@ -101,7 +102,7 @@ function CatalogQuery({
                 )}
             </select>
             {errors.categoryId && (
-              <small className="field-error" id="category-error">
+              <small className={ui.fieldError} id="category-error">
                 {errors.categoryId.message}
               </small>
             )}
@@ -111,7 +112,7 @@ function CatalogQuery({
               <p>No pudimos cargar las categorías.</p>
               <button
                 type="button"
-                className="text-button"
+                className={ui.textButton}
                 onClick={() => void categoryQuery.refetch()}
               >
                 Reintentar categorías
@@ -135,7 +136,7 @@ function CatalogQuery({
               placeholder="500.00"
             />
           </fieldset>
-          <div className="field">
+          <div className={ui.field}>
             <label htmlFor="sort-filter">Ordenar por</label>
             <select id="sort-filter" {...register('sort')}>
               <option value="newest">Más recientes</option>
@@ -143,8 +144,12 @@ function CatalogQuery({
               <option value="price-desc">Mayor precio</option>
             </select>
           </div>
-          <button className="button button-full">Aplicar filtros</button>
-          <button className="text-button clear-filters" type="button" onClick={() => setParams({})}>
+          <button className={`${ui.button} ${ui.buttonFull}`}>Aplicar filtros</button>
+          <button
+            className={`${ui.textButton} clear-filters`}
+            type="button"
+            onClick={() => setParams({})}
+          >
             Limpiar filtros
           </button>
         </form>
@@ -181,7 +186,7 @@ function CatalogQuery({
                     ? 'Vuelve a una página anterior o ajusta los filtros.'
                     : 'Prueba otra búsqueda o vuelve pronto para descubrir nuevas propuestas.'}
                 </p>
-                <button className="button button-outline" onClick={() => setParams({})}>
+                <button className={ui.buttonOutline} onClick={() => setParams({})}>
                   Ver todos los productos
                 </button>
               </div>

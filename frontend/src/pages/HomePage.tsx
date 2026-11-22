@@ -1,4 +1,5 @@
-﻿import { Link } from 'react-router-dom';
+import { ui } from '../components/ui';
+import { Link } from 'react-router-dom';
 import { ShopIcon } from '../components/ShopIcon';
 
 const discoveries = [
@@ -41,7 +42,7 @@ const discoveries = [
 export function HomePage() {
   return (
     <>
-      <section className="wrap pt-5 md:pt-8" aria-labelledby="home-title">
+      <section className={`${ui.wrap} pt-5 md:pt-8`} aria-labelledby="home-title">
         <div className="relative isolate grid overflow-hidden rounded-[2rem] bg-patzi-ink text-white lg:min-h-[590px] lg:grid-cols-[1.05fr_1fr] lg:rounded-[2.5rem]">
           <div className="relative z-10 px-7 pt-10 pb-9 sm:px-12 sm:pt-14 lg:py-16 lg:pl-16 lg:pr-8">
             <p className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-3.5 py-2 text-[9px] font-semibold tracking-[0.16em] text-patzi-gold sm:text-[10px]">
@@ -61,7 +62,7 @@ export function HomePage() {
               tienda favorita y conecta con lo nuestro.
             </p>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Link className="button button-light min-h-13 px-6" to="/catalogo">
+              <Link className={`${ui.buttonLight} min-h-13 px-6`} to="/catalogo">
                 Explorar productos <ShopIcon name="arrow" className="size-4" />
               </Link>
               <Link
@@ -108,7 +109,7 @@ export function HomePage() {
       </section>
 
       <section
-        className="wrap grid gap-5 border-b border-patzi-green/15 py-7 sm:grid-cols-3 md:gap-8 md:py-9"
+        className={`${ui.wrap} grid gap-5 border-b border-patzi-green/15 py-7 sm:grid-cols-3 md:gap-8 md:py-9`}
         aria-label="El mercado de nuestra comunidad"
       >
         {[
@@ -140,7 +141,7 @@ export function HomePage() {
         ))}
       </section>
 
-      <section className="wrap py-12 md:py-18" aria-labelledby="discover-title">
+      <section className={`${ui.wrap} py-12 md:py-18`} aria-labelledby="discover-title">
         <div className="mb-7 flex flex-col justify-between gap-5 md:mb-9 md:flex-row md:items-end">
           <div>
             <p className="mb-3 text-[10px] font-bold tracking-[0.2em] text-patzi-coral">
@@ -193,7 +194,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="wrap mb-14 md:mb-20" aria-labelledby="community-title">
+      <section className={`${ui.wrap} mb-14 md:mb-20`} aria-labelledby="community-title">
         <div className="relative isolate overflow-hidden rounded-[2rem] bg-patzi-sage px-7 py-10 sm:p-12 lg:flex lg:items-center lg:justify-between lg:gap-10">
           <ShopIcon
             name="spark"
@@ -217,7 +218,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="shrink-0">
-            <Link className="button" to="/registro">
+            <Link className={ui.button} to="/registro">
               Crea tu cuenta <ShopIcon name="arrow" className="size-4" />
             </Link>
             <p className="mt-3 mb-0 text-center text-[11px] text-patzi-muted">

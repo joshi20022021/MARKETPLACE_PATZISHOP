@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,20 +43,20 @@ export function LoginPage() {
       : '/cuenta';
   if (session.status === 'authenticated') return <Navigate to={destination} replace />;
   return (
-    <section className="auth-page wrap">
-      <div className="auth-story">
-        <p className="eyebrow">QUÉ BUENO VERTE DE NUEVO</p>
+    <section className={`${ui.authPage} ${ui.wrap}`}>
+      <div className={ui.authStory}>
+        <p className={ui.eyebrow}>QUÉ BUENO VERTE DE NUEVO</p>
         <h1>
           Lo cercano
           <br />
           nos conecta.
         </h1>
         <p>Entra a tu cuenta y sigue siendo parte de nuestro comercio local.</p>
-        <div className="story-mark" aria-hidden="true">
+        <div className={ui.storyMark} aria-hidden="true">
           ✳
         </div>
       </div>
-      <div className="form-card">
+      <div className={ui.formCard}>
         <h2>Ingresa a PatziShop</h2>
         <p>Tu comunidad está aquí.</p>
         <form
@@ -79,18 +80,18 @@ export function LoginPage() {
           />
           <PasswordField registration={register('password')} error={errors.password?.message} />
           {error && (
-            <p className="form-alert" role="alert">
+            <p className={ui.formAlert} role="alert">
               {error}
             </p>
           )}
           <button
-            className="button button-full"
+            className={`${ui.button} ${ui.buttonFull}`}
             disabled={isSubmitting || session.status === 'loading'}
           >
             {isSubmitting ? 'Ingresando…' : 'Ingresar'}
           </button>
         </form>
-        <p className="form-foot">
+        <p className={ui.formFoot}>
           ¿Aún no tienes cuenta? <Link to="/registro">Crea una aquí</Link>
         </p>
       </div>

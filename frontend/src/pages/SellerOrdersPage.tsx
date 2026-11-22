@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { api, useSession } from '../services/session';
@@ -36,18 +37,18 @@ export function SellerOrdersPage() {
       ),
   });
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <SellerNav />
       <div className="market-heading">
         <div>
-          <p className="eyebrow">CADA ENTREGA TIENE UNA HISTORIA</p>
+          <p className={ui.eyebrow}>CADA ENTREGA TIENE UNA HISTORIA</p>
           <h1>
             Mis <em>pedidos.</em>
           </h1>
           <p>Solo los subpedidos que corresponden a tu tienda.</p>
         </div>
         <button
-          className="button button-outline"
+          className={ui.buttonOutline}
           disabled={orders.isFetching || !filters}
           onClick={() => void orders.refetch()}
         >
@@ -57,7 +58,7 @@ export function SellerOrdersPage() {
       {!filters ? (
         <div className="remote-state">
           <h2>Revisa los filtros del enlace</h2>
-          <button className="button" onClick={() => setParams({})}>
+          <button className={ui.button} onClick={() => setParams({})}>
             Restablecer filtros
           </button>
         </div>
@@ -139,9 +140,9 @@ export function SellerOrderPage() {
     return r.data;
   };
   return (
-    <section className="wrap marketplace-page seller-page order-page">
+    <section className={`${ui.wrap} marketplace-page seller-page order-page`}>
       <SellerNav />
-      <Link className="back-link" to="/vendedor/pedidos">
+      <Link className={ui.backLink} to="/vendedor/pedidos">
         ← Pedidos de mi tienda
       </Link>
       {order.isPending ? (
@@ -156,14 +157,14 @@ export function SellerOrderPage() {
         <>
           <div className="market-heading">
             <div>
-              <p className="eyebrow">LO QUE TU TIENDA PREPARA</p>
+              <p className={ui.eyebrow}>LO QUE TU TIENDA PREPARA</p>
               <h1>
                 Pedido <em>#{order.data.orderNumber}</em>
               </h1>
               <p>{order.data.business.name}</p>
             </div>
             <button
-              className="button button-outline"
+              className={ui.buttonOutline}
               disabled={order.isFetching}
               onClick={() => void order.refetch()}
             >
@@ -171,13 +172,13 @@ export function SellerOrderPage() {
             </button>
           </div>
           {order.isRefetchError && (
-            <p role="alert" className="form-alert">
+            <p role="alert" className={ui.formAlert}>
               No se pudo actualizar el pedido. Se muestra la última información consultada.
             </p>
           )}
           <span className="available-badge">{orderStatus[order.data.status]}</span>
           {order.data.simulation && (
-            <p className="form-alert">Pago simulado de prueba. Sin dinero real.</p>
+            <p className={ui.formAlert}>Pago simulado de prueba. Sin dinero real.</p>
           )}
           <div className="checkout-review-grid">
             <div>

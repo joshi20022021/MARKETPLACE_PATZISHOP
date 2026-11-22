@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
@@ -41,7 +42,7 @@ export function ConfirmOrder({
       )}
       <button
         type="button"
-        className="button"
+        className={ui.button}
         disabled={pending}
         onClick={async () => {
           if (sending.current || !session.user) return;

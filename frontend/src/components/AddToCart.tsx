@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSession } from '../services/session';
@@ -8,13 +9,13 @@ export function AddToCart({ productId }: { productId: string }) {
   if (session.status === 'loading') return <p role="status">Comprobando tu sesión…</p>;
   if (session.status === 'unavailable')
     return (
-      <Link className="button" to="/carrito">
+      <Link className={ui.button} to="/carrito">
         Comprueba tu sesión para comprar
       </Link>
     );
   if (!session.user)
     return (
-      <Link className="button" to="/ingresar" state={{ from: location.pathname }}>
+      <Link className={ui.button} to="/ingresar" state={{ from: location.pathname }}>
         Ingresa para agregar al carrito
       </Link>
     );
@@ -60,24 +61,24 @@ function AddForm({ productId }: { productId: string }) {
           aria-invalid={Boolean(invalid)}
           aria-describedby={invalid ? `quantity-error-${productId}` : undefined}
         />
-        <button className="button" disabled={change.isPending}>
+        <button className={ui.button} disabled={change.isPending}>
           {change.isPending ? 'Agregando…' : 'Agregar al carrito'}
         </button>
       </div>
       {invalid && (
-        <p className="field-error" id={`quantity-error-${productId}`} role="alert">
+        <p className={ui.fieldError} id={`quantity-error-${productId}`} role="alert">
           {invalid}
         </p>
       )}
       {change.isError && (
-        <p role="alert" className="field-error">
+        <p role="alert" className={ui.fieldError}>
           {cartError(change.error)}
         </p>
       )}
       {change.isSuccess && (
         <p role="status">
           Producto agregado.{' '}
-          <Link className="text-link" to="/carrito">
+          <Link className={ui.textLink} to="/carrito">
             Ver mi carrito ↗
           </Link>
         </p>

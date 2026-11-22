@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import type { CheckoutPreview } from '../services/checkout';
@@ -20,7 +21,7 @@ export function CheckoutReview({
   }, []);
   return (
     <section className="checkout-review" aria-label="Revisión de entrega">
-      <p className="eyebrow">TUS DATOS, A LA VISTA</p>
+      <p className={ui.eyebrow}>TUS DATOS, A LA VISTA</p>
       <h2 ref={heading} tabIndex={-1}>
         Revisión de entrega
       </h2>
@@ -77,11 +78,11 @@ export function CheckoutReview({
           <p>Envío pendiente de cotización; no está incluido.</p>
         </div>
       </div>
-      <p className="muted">
+      <p className={ui.muted}>
         Esta revisión no reserva inventario. Confirma únicamente cuando los datos y productos sean
         correctos.
       </p>
-      <Link className="text-link" to="/carrito">
+      <Link className={ui.textLink} to="/carrito">
         Volver a mi carrito ↗
       </Link>
       <ConfirmOrder

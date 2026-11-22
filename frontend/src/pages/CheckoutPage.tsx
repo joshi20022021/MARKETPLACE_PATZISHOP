@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,10 +24,10 @@ export function CheckoutPage() {
   const session = useSession();
   if (session.user?.role !== 'CUSTOMER')
     return (
-      <section className="wrap page-state">
+      <section className={`${ui.wrap} ${ui.pageState}`}>
         <h1>El checkout es para clientes</h1>
         <p>Tu cuenta actual no tiene acceso a compras.</p>
-        <Link className="button" to="/catalogo">
+        <Link className={ui.button} to="/catalogo">
           Explorar catálogo
         </Link>
       </section>
@@ -78,17 +79,17 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
   });
   if (cart.isPending || options.isPending)
     return (
-      <p className="wrap page-state" role="status">
+      <p className={`${ui.wrap} ${ui.pageState}`} role="status">
         Preparando tu entrega…
       </p>
     );
   if (cart.isError || options.isError)
     return (
-      <section className="wrap page-state">
+      <section className={`${ui.wrap} ${ui.pageState}`}>
         <h1>No pudimos preparar tu entrega</h1>
         <p role="alert">{checkoutError(cart.error ?? options.error)}</p>
         <button
-          className="button"
+          className={ui.button}
           onClick={() => {
             void cart.refetch();
             void options.refetch();
@@ -100,14 +101,14 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
     );
   if (!cart.data.itemCount || cart.data.hasIssues)
     return (
-      <section className="wrap page-state">
+      <section className={`${ui.wrap} ${ui.pageState}`}>
         <h1>{cart.data.hasIssues ? 'Tu carrito necesita atención' : 'Tu carrito está vacío'}</h1>
         <p>
           {cart.data.hasIssues
             ? 'Ajusta o quita los productos que ya no están disponibles antes de revisar tu entrega.'
             : 'Agrega productos de nuestra comunidad para continuar.'}
         </p>
-        <Link className="button" to={cart.data.hasIssues ? '/carrito' : '/catalogo'}>
+        <Link className={ui.button} to={cart.data.hasIssues ? '/carrito' : '/catalogo'}>
           {cart.data.hasIssues ? 'Revisar mi carrito' : 'Explorar productos'}
         </Link>
       </section>
@@ -116,13 +117,13 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
   const summary =
     review && review.signature === JSON.stringify(value) && !cart.isFetching ? review.value : null;
   return (
-    <section className="wrap marketplace-page checkout-page">
-      <Link className="back-link" to="/carrito">
+    <section className={`${ui.wrap} marketplace-page checkout-page`}>
+      <Link className={ui.backLink} to="/carrito">
         ← Mi carrito
       </Link>
       <div className="market-heading">
         <div>
-          <p className="eyebrow">UN PASO MÁS CERCA</p>
+          <p className={ui.eyebrow}>UN PASO MÁS CERCA</p>
           <h1>
             Prepara tu <em>entrega.</em>
           </h1>
@@ -135,7 +136,7 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
       </p>
       <div className="checkout-layout">
         <form
-          className="form-card checkout-form"
+          className={`${ui.formCard} checkout-form`}
           noValidate
           onChange={() => {
             revision.current += 1;
@@ -225,7 +226,7 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
               maxLength={20}
             />
             <p className="checkout-country">País: Guatemala</p>
-            <div className="field">
+            <div className={ui.field}>
               <label htmlFor="delivery-instructions">Indicaciones de entrega (opcional)</label>
               <textarea
                 id="delivery-instructions"
@@ -238,7 +239,7 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
                 }
               />
               {errors.delivery?.deliveryInstructions && (
-                <small className="field-error" id="instructions-error">
+                <small className={ui.fieldError} id="instructions-error">
                   {errors.delivery.deliveryInstructions.message}
                 </small>
               )}
@@ -255,15 +256,15 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
                 </span>
               </label>
             ))}
-            {errors.paymentMethod && <p className="field-error">Selecciona un método válido.</p>}
+            {errors.paymentMethod && <p className={ui.fieldError}>Selecciona un método válido.</p>}
           </fieldset>
           {error && (
-            <p className="form-alert" role="alert">
+            <p className={ui.formAlert} role="alert">
               {error}
             </p>
           )}
           <button
-            className="button button-full"
+            className={`${ui.button} ${ui.buttonFull}`}
             disabled={isSubmitting || cart.isFetching || confirming}
           >
             {isSubmitting ? 'Revisando…' : 'Revisar entrega'}
@@ -295,7 +296,7 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
             </div>
           </dl>
           <p>Envío pendiente de cotización. Precios y disponibilidad se comprueban al revisar.</p>
-          <Link className="text-link" to="/carrito">
+          <Link className={ui.textLink} to="/carrito">
             Editar carrito ↗
           </Link>
         </aside>

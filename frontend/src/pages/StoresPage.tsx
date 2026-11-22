@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 import { businessPageSchema, publicApi, safeImageUrl } from '../services/marketplace';
@@ -30,21 +31,21 @@ export function StoresPage() {
       ),
   });
   return (
-    <section className="wrap marketplace-page">
+    <section className={`${ui.wrap} marketplace-page`}>
       <div className="market-heading relative isolate overflow-hidden">
         <ShopIcon
           name="store"
           className="pointer-events-none absolute -top-10 right-12 -z-10 hidden size-64 rotate-12 text-patzi-green/5 lg:block"
         />
         <div>
-          <p className="eyebrow">PERSONAS REALES, NEGOCIOS DE AQUÍ</p>
+          <p className={ui.eyebrow}>PERSONAS REALES, NEGOCIOS DE AQUÍ</p>
           <h1>
             Conoce a<br />
             <em>tus vecinos.</em>
           </h1>
           <p>Cada tienda tiene una historia. Descubre la suya.</p>
         </div>
-        <Link className="text-link" to="/catalogo">
+        <Link className={ui.textLink} to="/catalogo">
           Explorar productos ↗
         </Link>
       </div>
@@ -67,13 +68,13 @@ export function StoresPage() {
             defaultValue={search}
             placeholder="Nombre o descripción del negocio"
           />
-          <button className="button">Buscar</button>
+          <button className={ui.button}>Buscar</button>
         </div>
       </form>
       {!valid ? (
         <div className="remote-state">
           <h2>El enlace contiene filtros inválidos</h2>
-          <button className="button" onClick={() => setParams({})}>
+          <button className={ui.button} onClick={() => setParams({})}>
             Limpiar búsqueda
           </button>
         </div>
@@ -108,7 +109,7 @@ export function StoresPage() {
             <div className="remote-state">
               <h2>No encontramos tiendas aquí</h2>
               <p>Prueba otra búsqueda o vuelve a la primera página.</p>
-              <button className="button button-outline" onClick={() => setParams({})}>
+              <button className={ui.buttonOutline} onClick={() => setParams({})}>
                 Ver todas las tiendas
               </button>
             </div>

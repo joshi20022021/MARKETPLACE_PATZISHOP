@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { publicApi, publicBusinessSchema, safeImageUrl } from '../services/marketplace';
@@ -15,13 +16,13 @@ export function PublicShopPage() {
   });
   if (store.isPending)
     return (
-      <p className="wrap page-state" role="status">
+      <p className={`${ui.wrap} ${ui.pageState}`} role="status">
         Cargando tienda…
       </p>
     );
   if (store.isError)
     return (
-      <div className="wrap page-state">
+      <div className={`${ui.wrap} ${ui.pageState}`}>
         <RemoteError
           resource="Esta tienda"
           error={store.error}
@@ -31,8 +32,8 @@ export function PublicShopPage() {
     );
   const value = store.data;
   return (
-    <section className="wrap marketplace-page">
-      <Link className="back-link" to="/tiendas">
+    <section className={`${ui.wrap} marketplace-page`}>
+      <Link className={ui.backLink} to="/tiendas">
         ← Todas las tiendas
       </Link>
       {safeImageUrl(value.banner) && (
@@ -53,7 +54,7 @@ export function PublicShopPage() {
           eager
         />
         <div>
-          <p className="eyebrow">UN NEGOCIO DE NUESTRA COMUNIDAD</p>
+          <p className={ui.eyebrow}>UN NEGOCIO DE NUESTRA COMUNIDAD</p>
           <h1>{value.name}</h1>
           <p className="preserve-text">
             {value.description || 'Descubre los productos de nuestra tienda.'}

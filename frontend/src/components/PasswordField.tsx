@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useState } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FormField } from './FormField';
@@ -14,7 +15,7 @@ export function PasswordField({
 }) {
   const [visible, setVisible] = useState(false);
   return (
-    <div className="password-field">
+    <div className={ui.passwordField}>
       <FormField
         label={label}
         registration={registration}
@@ -23,7 +24,7 @@ export function PasswordField({
         autoComplete={creating ? 'new-password' : 'current-password'}
       />
       <button
-        className="text-button password-toggle"
+        className={`${ui.textButton} ${ui.passwordToggle}`}
         type="button"
         aria-pressed={visible}
         onClick={() => setVisible(!visible)}

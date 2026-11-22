@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { api, useSession } from '../services/session';
@@ -14,18 +15,18 @@ export function SellerDashboardPage() {
       dashboardSchema.parse((await api.get('/seller/dashboard', { signal })).data),
   });
   return (
-    <section className="wrap marketplace-page seller-page">
+    <section className={`${ui.wrap} marketplace-page seller-page`}>
       <SellerNav />
       <div className="market-heading">
         <div>
-          <p className="eyebrow">TU NEGOCIO, DÍA A DÍA</p>
+          <p className={ui.eyebrow}>TU NEGOCIO, DÍA A DÍA</p>
           <h1>
             Mi <em>panel.</em>
           </h1>
           <p>Un vistazo a tus productos y pedidos.</p>
         </div>
         <button
-          className="button button-outline"
+          className={ui.buttonOutline}
           disabled={result.isFetching}
           onClick={() => void result.refetch()}
         >
@@ -37,10 +38,10 @@ export function SellerDashboardPage() {
       ) : result.isError ? (
         <RemoteError error={result.error} retry={() => void result.refetch()} />
       ) : !result.data.business ? (
-        <div className="form-card">
+        <div className={ui.formCard}>
           <h2>Tu tienda empieza aquí</h2>
           <p>Crea tu negocio para preparar tus productos.</p>
-          <Link className="button" to="/cuenta/tienda">
+          <Link className={ui.button} to="/cuenta/tienda">
             Presentar mi tienda ↗
           </Link>
         </div>
@@ -76,24 +77,24 @@ export function SellerDashboardPage() {
             ))}
           </div>
           <div className="seller-amounts">
-            <article className="form-card">
+            <article className={ui.formCard}>
               <h2>Pedidos contra entrega</h2>
               <strong>{money(result.data.orders.cashOnDeliveryTotal)}</strong>
               <p>
                 Importe histórico de tus subpedidos no cancelados. No equivale a dinero cobrado.
               </p>
             </article>
-            <article className="form-card">
+            <article className={ui.formCard}>
               <h2>Pedidos simulados</h2>
               <strong>{money(result.data.orders.simulatedTotal)}</strong>
               <p>Importe de prueba no cancelado. Sin cobro de dinero real.</p>
             </article>
           </div>
-          <p className="muted">
+          <p className={ui.muted}>
             Totales de toda la actividad de tu tienda; envío no incluido. Activo es el estado del
             producto: su visibilidad también depende de categoría, tienda y existencias.
           </p>
-          <Link className="button" to="/vendedor/productos">
+          <Link className={ui.button} to="/vendedor/productos">
             Administrar productos ↗
           </Link>
         </>

@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
@@ -22,13 +23,13 @@ export function ProductPage() {
   });
   if (product.isPending)
     return (
-      <p className="wrap page-state" role="status">
+      <p className={`${ui.wrap} ${ui.pageState}`} role="status">
         Cargando producto…
       </p>
     );
   if (product.isError)
     return (
-      <div className="wrap page-state">
+      <div className={`${ui.wrap} ${ui.pageState}`}>
         <RemoteError
           resource="Este producto"
           error={product.error}
@@ -49,7 +50,7 @@ function ProductDetail({ product }: { product: PublicProduct }) {
   const [selected, setSelected] = useState<string | null>(null);
   const current = selected && images.includes(selected) ? selected : (images[0] ?? null);
   return (
-    <section className="wrap marketplace-page">
+    <section className={`${ui.wrap} marketplace-page`}>
       <nav className="breadcrumbs" aria-label="Ruta del producto">
         <Link to="/catalogo">Catálogo</Link>
         <span aria-hidden="true">/</span>
@@ -77,7 +78,7 @@ function ProductDetail({ product }: { product: PublicProduct }) {
           )}
         </div>
         <div className="product-detail-copy">
-          <Link className="eyebrow text-link" to={`/tiendas/${product.business.slug}`}>
+          <Link className={`${ui.eyebrow} ${ui.textLink}`} to={`/tiendas/${product.business.slug}`}>
             {product.business.name} ↗
           </Link>
           <h1>{product.name}</h1>
@@ -91,7 +92,7 @@ function ProductDetail({ product }: { product: PublicProduct }) {
             <div>
               <h2>Conoce a quien lo hace</h2>
               <p>Un producto de {product.business.name}, un negocio de nuestra comunidad.</p>
-              <Link className="button button-outline" to={`/tiendas/${product.business.slug}`}>
+              <Link className={ui.buttonOutline} to={`/tiendas/${product.business.slug}`}>
                 Visitar tienda ↗
               </Link>
             </div>

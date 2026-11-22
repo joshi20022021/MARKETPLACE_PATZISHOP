@@ -1,3 +1,4 @@
+import { ui } from '../components/ui';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api, useSession } from '../services/session';
@@ -25,18 +26,18 @@ export function OrdersPage() {
   if (session.user?.role !== 'CUSTOMER') return <OrderRoleNotice />;
   if (!valid)
     return (
-      <section className="wrap page-state">
+      <section className={`${ui.wrap} ${ui.pageState}`}>
         <h1>Revisa la página del enlace</h1>
-        <button className="button" onClick={() => setParams({})}>
+        <button className={ui.button} onClick={() => setParams({})}>
           Volver al inicio
         </button>
       </section>
     );
   return (
-    <section className="wrap marketplace-page">
+    <section className={`${ui.wrap} marketplace-page`}>
       <div className="market-heading">
         <div>
-          <p className="eyebrow">TUS COMPRAS LOCALES</p>
+          <p className={ui.eyebrow}>TUS COMPRAS LOCALES</p>
           <h1>
             Mis <em>pedidos.</em>
           </h1>
@@ -51,7 +52,7 @@ export function OrdersPage() {
           {!orders.data.data.length ? (
             <div className="remote-state">
               <h2>No hay pedidos en esta página</h2>
-              <Link className="button" to="/catalogo">
+              <Link className={ui.button} to="/catalogo">
                 Explorar productos
               </Link>
             </div>
@@ -103,19 +104,19 @@ export function OrderPage() {
   if (session.user?.role !== 'CUSTOMER') return <OrderRoleNotice />;
   if (order.isPending)
     return (
-      <p className="wrap page-state" role="status">
+      <p className={`${ui.wrap} ${ui.pageState}`} role="status">
         Cargando tu pedido…
       </p>
     );
   if (!order.data)
     return (
-      <section className="wrap page-state">
+      <section className={`${ui.wrap} ${ui.pageState}`}>
         <RemoteError
           resource="Este pedido"
           error={order.error}
           retry={() => void order.refetch()}
         />
-        <Link className="text-link" to="/pedidos">
+        <Link className={ui.textLink} to="/pedidos">
           Mis pedidos ↗
         </Link>
       </section>
@@ -127,19 +128,19 @@ export function OrderPage() {
     return result.data;
   };
   return (
-    <section className="wrap marketplace-page order-page">
-      <Link className="back-link" to="/pedidos">
+    <section className={`${ui.wrap} marketplace-page order-page`}>
+      <Link className={ui.backLink} to="/pedidos">
         ← Mis pedidos
       </Link>
       <div className="market-heading">
         <div>
-          <p className="eyebrow">GRACIAS POR COMPRAR CERCA</p>
+          <p className={ui.eyebrow}>GRACIAS POR COMPRAR CERCA</p>
           <h1>
             Pedido <em>#{value.number}</em>
           </h1>
         </div>
         <button
-          className="button button-outline"
+          className={ui.buttonOutline}
           disabled={order.isFetching}
           onClick={() => void order.refetch()}
         >
@@ -150,12 +151,12 @@ export function OrderPage() {
         Tu pedido está registrado. Consulta el avance de cada tienda y su historial.
       </p>
       {order.isRefetchError && (
-        <p role="alert" className="form-alert">
+        <p role="alert" className={ui.formAlert}>
           No se pudo actualizar el pedido. Se muestra la última información consultada.
         </p>
       )}
       {value.simulation && (
-        <p className="form-alert">Pago simulado de prueba. No se cobró dinero real.</p>
+        <p className={ui.formAlert}>Pago simulado de prueba. No se cobró dinero real.</p>
       )}
       <div className="checkout-review-grid">
         <div>
@@ -233,9 +234,9 @@ export function OrderPage() {
 }
 function OrderRoleNotice() {
   return (
-    <section className="wrap page-state">
+    <section className={`${ui.wrap} ${ui.pageState}`}>
       <h1>Estos pedidos son para clientes</h1>
-      <Link className="button" to="/catalogo">
+      <Link className={ui.button} to="/catalogo">
         Explorar catálogo
       </Link>
     </section>

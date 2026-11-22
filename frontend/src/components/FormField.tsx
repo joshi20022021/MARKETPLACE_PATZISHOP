@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { useId, type InputHTMLAttributes } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 type Props = InputHTMLAttributes<HTMLInputElement> & {
@@ -9,7 +10,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 export function FormField({ label, registration, error, hint, ...input }: Props) {
   const id = useId();
   return (
-    <div className="field">
+    <div className={ui.field}>
       <label htmlFor={id}>{label}</label>
       <input
         {...input}
@@ -19,7 +20,7 @@ export function FormField({ label, registration, error, hint, ...input }: Props)
         aria-describedby={error || hint ? `${id}-help` : undefined}
       />
       {(error || hint) && (
-        <small id={`${id}-help`} className={error ? 'field-error' : ''}>
+        <small id={`${id}-help`} className={error ? ui.fieldError : ui.fieldHint}>
           {error || hint}
         </small>
       )}

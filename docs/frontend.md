@@ -9,6 +9,21 @@ La fase 15 conecta el panel vendedor con métricas, gestión de productos e imá
 La fase 16 conecta estados por tienda, historial y cancelación temprana del cliente.
 La fase 17 conecta métricas globales y revisión de tiendas en el panel ADMIN.
 
+## Migración integral por bloques (2026-11-21)
+
+El rediseño inicial migró la interfaz pública, pero conservó CSS manual para compra y paneles.
+La migración integral separa unidades verificables, sin cambiar API ni reglas de negocio:
+
+| Bloque | Alcance                                                                        | Estado                                                      |
+| ------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| 1      | Patrones ui.ts, botones, formularios, ingreso, registro, cuenta y sesión       | Implementado; check, 120 pruebas frontend y build correctos |
+| 2      | Catálogo restante, producto, tienda pública, carrito, entrega y pedidos        | Pendiente                                                   |
+| 3      | Panel vendedor, productos/imágenes, administración y retirada del CSS heredado | Pendiente                                                   |
+
+`components/ui.ts` define cadenas completas de utilidades Tailwind reutilizadas por React;
+los estados seleccionados, inválidos y deshabilitados conservan sus atributos accesibles.
+El CSS anterior solo se retirará una vez migrados todos sus consumidores.
+
 ## Identidad visual con Tailwind CSS (2026-11-21)
 
 La interfaz pública usa Tailwind CSS 4.3.3, ya instalado con el plugin de Vite. La portada
