@@ -4,6 +4,17 @@ Este archivo resume cambios reales; Git conserva el detalle de cada unidad de tr
 Los avances se documentan y guardan en commits coherentes durante el desarrollo, sin esperar
 al cierre de una fase completa.
 
+## 2026-11-21 — Rediseño de la interfaz con Tailwind CSS
+
+- Portada verde oscura con fotografía existente, acentos dorados, titulares grandes y tarjetas asimétricas de descubrimiento.
+- Encabezado fijo, navegación por rol con estado activo, logo, productos, filtros y directorio rediseñados con utilidades Tailwind.
+- Nueva entrada app.css con @theme y @apply; estilos funcionales anteriores importados en components para permitir prioridad a utilities.
+- Retiradas 679 líneas de storefront.css; iconos SVG reutilizables sin nuevas dependencias ni fuentes externas.
+- check, 120 pruebas frontend y build correctos; capas y utilidades verificadas en CSS compilado. Revisión visual de escritorio/móvil pendiente por fallo del pipe nativo de Computer Use tras reintento y reinicio.
+- Stack local reconstruido en https://localhost:8443 con servicios saludables y stack:check correcto; bundles Tailwind, WebP y endpoints públicos de categorías/productos/tiendas comprobados por HTTPS.
+- Auditoría ejecutada: 20 avisos existentes (13 moderados, 7 altos), sin corrección disponible según npm; dependencias y lockfile sin cambios.
+- Documentación y capturas históricas identificadas; RutaSegura.py y miniproyecto.py conservados sin cambios y fuera del commit.
+
 ## 2026-11-17 — Identidad visual del marketplace
 
 - Nueva portada editorial con fotografía ambiental propia, acentos de barro/ocre y accesos a productos, tiendas y vendedores.

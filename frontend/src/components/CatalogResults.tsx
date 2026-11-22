@@ -64,10 +64,14 @@ function CatalogQuery({
     formState: { errors },
   } = useForm<Filters>({ resolver: zodResolver(filterSchema), defaultValues: values });
   return (
-    <div className="catalog-layout">
-      <aside className="catalog-filters">
-        <form noValidate onSubmit={handleSubmit((value) => setParams(filterParams(value)))}>
-          <h2>Encuentra lo tuyo</h2>
+    <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-9">
+      <aside className="catalog-filters lg:sticky lg:top-30">
+        <form
+          className="grid grid-cols-1 gap-x-5 sm:grid-cols-2 lg:grid-cols-1"
+          noValidate
+          onSubmit={handleSubmit((value) => setParams(filterParams(value)))}
+        >
+          <h2 className="sm:col-span-2 lg:col-span-1">Encuentra lo tuyo</h2>
           <FormField
             label="Buscar productos"
             registration={register('search')}
@@ -114,7 +118,7 @@ function CatalogQuery({
               </button>
             </div>
           )}
-          <fieldset className="price-fields">
+          <fieldset className="price-fields sm:col-span-2 lg:col-span-1">
             <legend>Precio en quetzales</legend>
             <FormField
               label="Desde"
@@ -162,7 +166,7 @@ function CatalogQuery({
               <span>De negocios locales</span>
             </div>
             {products.data.data.length ? (
-              <div className="product-grid">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {products.data.data.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}

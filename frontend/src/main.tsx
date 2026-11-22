@@ -5,8 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './services/query-client';
 import { initializeSession } from './services/session';
 import { AppRoutes } from './routes/AppRoutes';
-import './styles.css';
-import './storefront.css';
+import './app.css';
 initializeSession();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

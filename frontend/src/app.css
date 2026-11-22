@@ -1,0 +1,133 @@
+﻿@import 'tailwindcss';
+@import './styles.css' layer(components);
+
+@theme {
+  --color-patzi-green: #183d34;
+  --color-patzi-ink: #102d29;
+  --color-patzi-cream: #faf8f1;
+  --color-patzi-gold: #f3c66a;
+  --color-patzi-coral: #b14e32;
+  --color-patzi-sage: #e8eee5;
+  --color-patzi-muted: #60716b;
+  --font-sans: 'Segoe UI Variable', 'Segoe UI', Arial, sans-serif;
+  --font-editorial: Georgia, 'Times New Roman', serif;
+}
+
+/* Los estilos funcionales existentes quedan por debajo de las utilidades. */
+@layer components {
+  :root {
+    @apply bg-patzi-cream font-sans text-patzi-green;
+  }
+  ::selection {
+    @apply bg-patzi-gold text-patzi-ink;
+  }
+  .wrap {
+    width: min(1320px, calc(100% - 40px));
+  }
+  .button {
+    @apply min-h-12 gap-3 rounded-full border border-patzi-green bg-patzi-green px-6 py-3 text-sm font-semibold text-white shadow-none transition duration-200;
+  }
+  .button:hover {
+    @apply bg-patzi-ink shadow-lg shadow-patzi-green/10;
+  }
+  .button:disabled {
+    @apply cursor-wait opacity-60 shadow-none;
+  }
+  .button-small {
+    @apply min-h-11 px-5 py-2.5 text-xs;
+  }
+  .button-light {
+    @apply border-patzi-gold bg-patzi-gold text-patzi-ink;
+  }
+  .button-light:hover {
+    @apply bg-amber-200 text-patzi-ink;
+  }
+  .button-outline {
+    @apply border-patzi-green/25 bg-transparent text-patzi-green;
+  }
+  .button-outline:hover {
+    @apply bg-patzi-sage;
+  }
+  .text-link {
+    @apply text-sm decoration-patzi-coral/40 underline-offset-4;
+  }
+  .eyebrow {
+    @apply text-[10px] font-bold tracking-[0.18em];
+  }
+  .field input,
+  .field select,
+  .field textarea,
+  .store-search input {
+    @apply rounded-xl border-patzi-green/20 bg-white focus:border-patzi-green focus:ring-2 focus:ring-patzi-green/10;
+  }
+  .field input[aria-invalid='true'],
+  .field select[aria-invalid='true'],
+  .field textarea[aria-invalid='true'] {
+    @apply border-red-700;
+  }
+  .form-card {
+    @apply rounded-3xl border-patzi-green/10 bg-white shadow-xl shadow-patzi-green/5;
+  }
+  .auth-story h1,
+  .account-page h1,
+  .product-detail-copy h1 {
+    @apply font-sans font-semibold tracking-tight;
+  }
+  .marketplace-page {
+    @apply pt-8 pb-20 md:pt-12;
+  }
+  .market-heading {
+    @apply mb-10 items-end rounded-3xl border border-patzi-green/10 bg-patzi-sage p-6 md:p-10;
+  }
+  .market-heading h1 {
+    @apply mt-3 mb-5 font-sans text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl;
+  }
+  .market-heading h1 em {
+    @apply font-editorial font-normal text-patzi-coral;
+  }
+  .market-heading .eyebrow {
+    @apply text-patzi-muted;
+  }
+  .catalog-filters {
+    @apply rounded-3xl border border-patzi-green/10 bg-white p-6 shadow-sm;
+  }
+  .catalog-filters h2 {
+    @apply mb-6 border-b border-patzi-green/10 pb-5 font-sans text-lg font-semibold;
+  }
+  .results-bar {
+    @apply rounded-xl border-b border-patzi-green/10 px-1 pb-4;
+  }
+  .remote-state {
+    @apply rounded-3xl border border-dashed border-patzi-green/20 bg-white;
+  }
+  .public-image {
+    @apply rounded-2xl bg-patzi-sage;
+  }
+  .image-placeholder {
+    @apply bg-none bg-patzi-sage text-patzi-muted;
+  }
+  .store-card {
+    @apply rounded-3xl border border-patzi-green/10 bg-white p-2 shadow-sm transition-shadow hover:shadow-lg hover:shadow-patzi-green/10;
+  }
+  .store-card-copy {
+    @apply p-5;
+  }
+  .store-card-copy h2 {
+    @apply font-sans text-xl font-semibold tracking-tight;
+  }
+  .store-card-copy > span {
+    @apply text-xs font-semibold text-patzi-coral;
+  }
+  .checkout-summary,
+  .cart-summary {
+    @apply rounded-3xl border border-patzi-green/10 bg-white;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-patzi-coral;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      width: min(1320px, calc(100% - 80px));
+    }
+  }
+}

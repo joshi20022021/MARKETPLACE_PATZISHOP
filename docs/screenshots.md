@@ -1,8 +1,8 @@
 # Capturas de la aplicación
 
 Estas capturas son históricas: corresponden al diseño del 2026-10-26, anterior al
-[rediseño del 2026-11-17](frontend.md). No se han sustituido por maquetas. La conexión nativa
-del navegador no estuvo disponible durante el rediseño y no se obtuvieron capturas nuevas.
+[rediseño con Tailwind del 2026-11-21](frontend.md). No se han sustituido por maquetas. La conexión
+nativa del navegador tampoco estuvo disponible en esta revisión y no se obtuvieron capturas nuevas.
 
 Capturas reales tomadas el 2026-10-26 en Brave, usando frontend de desarrollo y API NestJS
 contra una base exclusiva de documentación. No son maquetas ni imágenes generadas. Los nombres,

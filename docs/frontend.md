@@ -9,20 +9,32 @@ La fase 15 conecta el panel vendedor con métricas, gestión de productos e imá
 La fase 16 conecta estados por tienda, historial y cancelación temprana del cliente.
 La fase 17 conecta métricas globales y revisión de tiendas en el panel ADMIN.
 
-## Identidad visual (2026-11-17)
+## Identidad visual con Tailwind CSS (2026-11-21)
 
-La portada usa una composición editorial: papel marfil, verde pino, barro y ocre, titulares
-sans serif con acentos en Georgia, fotografía ambiental y accesos a catálogo, tiendas y registro.
-Los enlaces muestran su destino y la navegación marca catálogo/tiendas con `aria-current`.
-Las tarjetas del catálogo conservan sus datos de la API; no se inventan productos ni métricas.
+La interfaz pública usa Tailwind CSS 4.3.3, ya instalado con el plugin de Vite. La portada
+combina una superficie verde oscura con fotografía ambiental y acentos dorados, titulares grandes
+y accesos asimétricos a catálogo, tiendas y vendedores. Encabezado fijo con navegación activa,
+tarjetas de producto, directorio y filtros comparten la misma identidad. Los datos comerciales
+siguen viniendo de la API; no se inventan productos ni métricas.
 
-`src/storefront.css` contiene la identidad compartida y los componentes de la nueva portada;
-`src/styles.css` conserva los estilos funcionales de formularios, paneles y compra. Se retiraron
-las reglas de la portada anterior. No se añadieron dependencias ni fuentes externas.
-La navegación se distribuye en varias filas en pantallas pequeñas; la portada y sus tarjetas
-pasan a una columna. Se conservan foco visible, salto al contenido y movimiento reducido.
+`src/app.css` es la única entrada de estilos: importa Tailwind, define colores y fuentes con
+`@theme` y carga `src/styles.css` en `layer(components)`. Así las utilidades de los componentes
+React tienen prioridad sobre el CSS funcional existente. Los patrones compartidos usan `@apply`;
+se retiró `storefront.css`, que acumulaba 679 líneas de CSS manual. Referencias oficiales:
+[tema](https://tailwindcss.com/docs/theme) y [capas y componentes](https://tailwindcss.com/docs/adding-custom-styles).
 
-La imagen final está en `frontend/public/images/comunidad-artesana.webp` (1440 × 960, 272028 bytes),
+HomePage, SiteLayout, Brand, ProductCard, CatalogResults y las vistas de catálogo/tiendas usan
+utilidades de Tailwind para composición, variantes responsive y estados hover/activo.
+`ShopIcon` reutiliza SVG decorativos sin otra librería. Las clases variables se guardan como
+cadenas completas para que Tailwind las detecte al compilar. No se añadieron dependencias,
+fuentes externas ni nuevas imágenes. Se conservan foco visible, salto al contenido, movimiento
+reducido, etiquetas de controles y enlaces según rol.
+
+La portada pasa a dos columnas en `lg`, los productos a dos en `sm` y tres en `xl`, y el
+encabezado permite varias filas. Los filtros pasan de una columna a dos en `sm` y a la barra
+lateral en `lg`. En escritorio la barra queda fija bajo el encabezado al desplazarse.
+
+La imagen existente está en `frontend/public/images/comunidad-artesana.webp` (1440 × 960, 272028 bytes),
 con dimensiones declaradas, prioridad alta y texto alternativo. Se creó con la habilidad imagegen
 en modo integrado, se revisó el resultado y se optimizó a WebP con Sharp. Es una composición
 ambiental generada con IA, identificada en pantalla; no representa inventario ni un negocio real.
@@ -30,16 +42,19 @@ Prompt utilizado: fotografía editorial cálida de cerámica de barro, cesta de 
 pino y ocre y una rama, sobre una repisa y pared de yeso crema; luz natural matutina, sombras
 suaves, textura artesanal, encuadre horizontal 3:2, sin personas, texto, marcas ni etiquetas.
 
-Verificación: check, 120 pruebas frontend y build de producción correctos. La revisión visual de
+Verificación del 2026-11-21: check, 120 pruebas frontend y build de producción correctos; capas
+components/utilities y utilidades de portada presentes en el CSS compilado. La revisión visual de
 escritorio/móvil y el recorrido con API desde navegador quedan pendientes: el helper de
 Computer Use no pudo conectarse a su pipe nativo, incluso después del reintento y reinicio.
 Las [capturas existentes](screenshots.md) documentan el diseño anterior.
 El stack local fue reconstruido en https://localhost:8443 y pasó stack:check (TLS verificado,
 SPA, proxy, readiness y sesión). El WebP respondió 200 como image/webp, con contenido idéntico
 al asset del proyecto. Estas comprobaciones HTTP no sustituyen la revisión visual pendiente.
+Los bundles JS/CSS servidos incluyen las utilidades nuevas; categorías, productos y tiendas
+respondieron 200 a consultas públicas de comprobación, sin modificar datos comerciales.
 
-La auditoría de dependencias del 2026-11-17 reporta 27 avisos (11 moderados, 16 altos), con
-`No fix available` para follow-redirects, glob, minimatch y picomatch y sus cadenas dependientes.
+La auditoría de dependencias del 2026-11-21 reporta 20 avisos (13 moderados, 7 altos), con
+`No fix available` para effect, follow-redirects, glob, minimatch y sus cadenas dependientes.
 El rediseño no modifica package.json ni el lockfile; no equivale a una auditoría aprobada.
 
 ## Desarrollo local

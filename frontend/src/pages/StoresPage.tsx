@@ -4,6 +4,7 @@ import { businessPageSchema, publicApi, safeImageUrl } from '../services/marketp
 import { PublicImage } from '../components/PublicImage';
 import { RemoteError } from '../components/RemoteState';
 import { Pagination } from '../components/Pagination';
+import { ShopIcon } from '../components/ShopIcon';
 export function StoresPage() {
   const [params, setParams] = useSearchParams();
   const search = (params.get('search') ?? '').trim();
@@ -30,7 +31,11 @@ export function StoresPage() {
   });
   return (
     <section className="wrap marketplace-page">
-      <div className="market-heading">
+      <div className="market-heading relative isolate overflow-hidden">
+        <ShopIcon
+          name="store"
+          className="pointer-events-none absolute -top-10 right-12 -z-10 hidden size-64 rotate-12 text-patzi-green/5 lg:block"
+        />
         <div>
           <p className="eyebrow">PERSONAS REALES, NEGOCIOS DE AQUÍ</p>
           <h1>
@@ -44,7 +49,7 @@ export function StoresPage() {
         </Link>
       </div>
       <form
-        className="store-search"
+        className="store-search rounded-3xl border border-patzi-green/10 bg-white p-6"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
@@ -85,7 +90,7 @@ export function StoresPage() {
             nuestra comunidad
           </p>
           {stores.data.data.length ? (
-            <div className="store-grid">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {stores.data.data.map((store) => (
                 <article className="store-card" key={store.id}>
                   <Link to={`/tiendas/${store.slug}`}>
