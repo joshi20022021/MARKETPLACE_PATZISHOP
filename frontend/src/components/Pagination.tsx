@@ -9,7 +9,7 @@ export function Pagination({ page, totalPages }: { page: number; totalPages: num
   };
   if (totalPages < 2 && page === 1) return null;
   return (
-    <nav className="pagination" aria-label="Paginación">
+    <nav className={ui.pagination} aria-label="Paginación">
       <span aria-live="polite">
         Página {page} de {totalPages || 1}
       </span>

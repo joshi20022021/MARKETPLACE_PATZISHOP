@@ -11,7 +11,7 @@ export function RemoteError({
   resource?: string;
 }) {
   return (
-    <div className="remote-state">
+    <div className={ui.remoteState}>
       {statusOf(error) === 404 ? (
         <>
           <h2>{resource} no está disponible</h2>

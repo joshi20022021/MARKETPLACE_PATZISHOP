@@ -20,15 +20,15 @@ export function CheckoutReview({
     heading.current?.focus();
   }, []);
   return (
-    <section className="checkout-review" aria-label="Revisión de entrega">
+    <section className={ui.checkoutReview} aria-label="Revisión de entrega">
       <p className={ui.eyebrow}>TUS DATOS, A LA VISTA</p>
       <h2 ref={heading} tabIndex={-1}>
         Revisión de entrega
       </h2>
-      <p role="status" className="checkout-notice">
+      <p role="status" className={ui.checkoutNotice}>
         Datos revisados. Todavía no se ha creado un pedido ni se ha realizado un cobro.
       </p>
-      <div className="checkout-review-grid">
+      <div className={ui.checkoutReviewGrid}>
         <div>
           <h3>Recibe</h3>
           <p>
@@ -37,7 +37,7 @@ export function CheckoutReview({
             {value.delivery.phone}
           </p>
           <h3>Dirección</h3>
-          <p className="preserve-text">
+          <p className={ui.preserveText}>
             {value.delivery.addressLine}
             <br />
             {value.delivery.city}, {value.delivery.region}
@@ -47,7 +47,7 @@ export function CheckoutReview({
           {value.delivery.deliveryInstructions && (
             <>
               <h3>Indicaciones</h3>
-              <p className="preserve-text">{value.delivery.deliveryInstructions}</p>
+              <p className={ui.preserveText}>{value.delivery.deliveryInstructions}</p>
             </>
           )}
           <h3>{value.payment.label}</h3>
@@ -57,7 +57,7 @@ export function CheckoutReview({
         <div>
           <h3>Productos por tienda</h3>
           {value.cart.groups.map((group) => (
-            <section className="checkout-store" key={group.business?.id ?? 'unavailable'}>
+            <section className={ui.checkoutStore} key={group.business?.id ?? 'unavailable'}>
               <h4>{group.business?.name}</h4>
               <ul>
                 {group.items.map((item) => (
@@ -72,7 +72,7 @@ export function CheckoutReview({
               <p>Subtotal: {money(group.subtotal)}</p>
             </section>
           ))}
-          <p className="checkout-review-total">
+          <p className={ui.checkoutReviewTotal}>
             Total de productos <strong>{money(value.payment.amount)}</strong>
           </p>
           <p>Envío pendiente de cotización; no está incluido.</p>

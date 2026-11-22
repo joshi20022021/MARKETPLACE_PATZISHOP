@@ -9,6 +9,7 @@ al cierre de una fase completa.
 - Bloque 1: patrones reutilizables ui.ts y migración de botones, campos, validación visual, contraseñas, ingreso, registro, cuenta y estados de sesión/error.
 - Selección de rol basada en input:checked, foco visible y disposición adaptable conservados; sin cambios en API, permisos o contratos de formularios.
 - El CSS heredado se mantiene temporalmente para compra y paneles hasta completar los bloques siguientes.
+- Bloque 2: catálogo restante, imágenes, producto, tienda pública, carrito, cantidades, entrega, revisión y recibos migrados a utilidades Tailwind. Formatos de imagen explícitos para portada y galería; check, 120 pruebas y build correctos.
 
 ## 2026-11-21 — Rediseño de la interfaz con Tailwind CSS
 

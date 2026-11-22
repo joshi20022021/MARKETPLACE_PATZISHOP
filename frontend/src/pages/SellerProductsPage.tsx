@@ -42,9 +42,9 @@ export function SellerProductsPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <SellerNav />
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>CADA PRODUCTO CUENTA</p>
           <h1>
@@ -58,7 +58,7 @@ export function SellerProductsPage() {
         )}
       </div>
       {!filters ? (
-        <div className="remote-state">
+        <div className={ui.remoteState}>
           <h2>Revisa los filtros del enlace</h2>
           <button className={ui.button} onClick={() => setParams({})}>
             Restablecer filtros
@@ -84,7 +84,7 @@ export function SellerProductsPage() {
             apply={setParams}
           />
           {!['ACTIVE', 'PENDING'].includes(shop.data.status) && (
-            <p className="checkout-notice">
+            <p className={ui.checkoutNotice}>
               Tu tienda permite consultar productos. Su estado actual impide editarlos.
             </p>
           )}
@@ -101,7 +101,7 @@ export function SellerProductsPage() {
                     <div>
                       <h2>{product.name}</h2>
                       <p>SKU: {product.sku}</p>
-                      <span className="available-badge">{productStates[product.status]}</span>
+                      <span className={ui.availableBadge}>{productStates[product.status]}</span>
                     </div>
                     <div>
                       <strong>{money(product.price)}</strong>
@@ -118,7 +118,7 @@ export function SellerProductsPage() {
                 ))}
               </div>
               {!products.data.data.length && (
-                <div className="remote-state">
+                <div className={ui.remoteState}>
                   <h2>No hay productos en esta página</h2>
                   <p>Cambia los filtros o prepara tu primer producto.</p>
                 </div>

@@ -23,7 +23,7 @@ export function CatalogResults({ businessSlug }: { businessSlug?: string }) {
     filters = readFilters(params);
   } catch {
     return (
-      <div className="remote-state">
+      <div className={ui.remoteState}>
         <h2>Revisa los filtros del enlace</h2>
         <p>La página o el rango de precios no es válido.</p>
         <button className={ui.button} onClick={() => setParams({})}>
@@ -66,7 +66,7 @@ function CatalogQuery({
   } = useForm<Filters>({ resolver: zodResolver(filterSchema), defaultValues: values });
   return (
     <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-9">
-      <aside className="catalog-filters lg:sticky lg:top-30">
+      <aside className={`${ui.catalogFilters} lg:sticky lg:top-30`}>
         <form
           className="grid grid-cols-1 gap-x-5 sm:grid-cols-2 lg:grid-cols-1"
           noValidate
@@ -108,7 +108,7 @@ function CatalogQuery({
             )}
           </div>
           {categoryQuery.isError && (
-            <div className="filter-warning">
+            <div className={ui.filterWarning}>
               <p>No pudimos cargar las categorías.</p>
               <button
                 type="button"
@@ -119,7 +119,7 @@ function CatalogQuery({
               </button>
             </div>
           )}
-          <fieldset className="price-fields sm:col-span-2 lg:col-span-1">
+          <fieldset className={`${ui.priceFields} sm:col-span-2 lg:col-span-1`}>
             <legend>Precio en quetzales</legend>
             <FormField
               label="Desde"
@@ -146,7 +146,7 @@ function CatalogQuery({
           </div>
           <button className={`${ui.button} ${ui.buttonFull}`}>Aplicar filtros</button>
           <button
-            className={`${ui.textButton} clear-filters`}
+            className={`${ui.textButton} ${ui.clearFilters}`}
             type="button"
             onClick={() => setParams({})}
           >
@@ -154,16 +154,16 @@ function CatalogQuery({
           </button>
         </form>
       </aside>
-      <div className="catalog-content" aria-busy={products.isFetching}>
+      <div className={ui.catalogContent} aria-busy={products.isFetching}>
         {products.isPending ? (
-          <p className="remote-state" role="status">
+          <p className={ui.remoteState} role="status">
             Buscando productos de nuestra comunidad…
           </p>
         ) : products.isError ? (
           <RemoteError error={products.error} retry={() => void products.refetch()} />
         ) : (
           <>
-            <div className="results-bar">
+            <div className={ui.resultsBar}>
               <p role="status">
                 <strong>{products.data.meta.total}</strong>{' '}
                 {products.data.meta.total === 1 ? 'producto disponible' : 'productos disponibles'}
@@ -177,7 +177,7 @@ function CatalogQuery({
                 ))}
               </div>
             ) : (
-              <div className="remote-state">
+              <div className={ui.remoteState}>
                 <h2>
                   {page > 1 ? 'No hay productos en esta página' : 'Todavía no hay coincidencias'}
                 </h2>

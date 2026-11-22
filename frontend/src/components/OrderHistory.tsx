@@ -1,3 +1,4 @@
+import { ui } from './ui';
 import { orderStatus, type OrderPart } from '../services/orders';
 export function OrderHistory({ history }: { history: OrderPart['history'] }) {
   return (
@@ -14,7 +15,7 @@ export function OrderHistory({ history }: { history: OrderPart['history'] }) {
               <time dateTime={entry.createdAt}>
                 {new Date(entry.createdAt).toLocaleString('es-GT')}
               </time>
-              {entry.note && <p className="preserve-text">{entry.note}</p>}
+              {entry.note && <p className={ui.preserveText}>{entry.note}</p>}
             </li>
           ))}
         </ol>

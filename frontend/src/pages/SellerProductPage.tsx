@@ -39,12 +39,12 @@ export function SellerProductPage() {
     queryFn: ({ signal }) => categories(signal),
   });
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <SellerNav />
       <Link className={ui.backLink} to="/vendedor/productos">
         ← Mis productos
       </Link>
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>LO QUE OFRECES, A TU MANERA</p>
           <h1>
@@ -167,7 +167,7 @@ function ProductEditor({
   return (
     <>
       {!editable && (
-        <p className="checkout-notice">
+        <p className={ui.checkoutNotice}>
           La tienda está suspendida o no aprobada. Puedes consultar sus productos; no modificarlos.
         </p>
       )}
@@ -182,7 +182,7 @@ function ProductEditor({
         </p>
       )}
       {uncertain && (
-        <div className="checkout-notice">
+        <div className={ui.checkoutNotice}>
           <p>
             Comprueba el resultado antes de repetir la operación. Volver a cargar descarta los
             cambios sin guardar.

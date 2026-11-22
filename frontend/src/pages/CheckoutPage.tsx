@@ -117,11 +117,11 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
   const summary =
     review && review.signature === JSON.stringify(value) && !cart.isFetching ? review.value : null;
   return (
-    <section className={`${ui.wrap} marketplace-page checkout-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage}`}>
       <Link className={ui.backLink} to="/carrito">
         ← Mi carrito
       </Link>
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>UN PASO MÁS CERCA</p>
           <h1>
@@ -130,13 +130,13 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
           <p>Revisa tus datos y elige cómo prefieres pagar.</p>
         </div>
       </div>
-      <p className="checkout-notice">
+      <p className={ui.checkoutNotice}>
         Revisa la entrega antes de confirmar. El importe mostrado corresponde a productos y no
         incluye envío.
       </p>
-      <div className="checkout-layout">
+      <div className={ui.checkoutLayout}>
         <form
-          className={`${ui.formCard} checkout-form`}
+          className={`${ui.formCard} ${ui.checkoutForm}`}
           noValidate
           onChange={() => {
             revision.current += 1;
@@ -200,7 +200,7 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
               maxLength={500}
               required
             />
-            <div className="checkout-fields">
+            <div className={ui.checkoutFields}>
               <FormField
                 label="Municipio o ciudad"
                 registration={register('delivery.city')}
@@ -225,7 +225,7 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
               autoComplete="shipping postal-code"
               maxLength={20}
             />
-            <p className="checkout-country">País: Guatemala</p>
+            <p className={ui.checkoutCountry}>País: Guatemala</p>
             <div className={ui.field}>
               <label htmlFor="delivery-instructions">Indicaciones de entrega (opcional)</label>
               <textarea
@@ -245,10 +245,10 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
               )}
             </div>
           </fieldset>
-          <fieldset className="payment-options" disabled={isSubmitting || confirming}>
+          <fieldset className={ui.paymentOptions} disabled={isSubmitting || confirming}>
             <legend>2. Forma de pago</legend>
             {options.data.paymentMethods.map((option) => (
-              <label className="payment-option" key={option.method}>
+              <label className={ui.paymentOption} key={option.method}>
                 <input type="radio" value={option.method} {...register('paymentMethod')} />
                 <span>
                   <strong>{option.label}</strong>
@@ -269,18 +269,18 @@ function CheckoutForm({ onUncertain }: { onUncertain: (key: string) => void }) {
           >
             {isSubmitting ? 'Revisando…' : 'Revisar entrega'}
           </button>
-          <p className="checkout-privacy">
+          <p className={ui.checkoutPrivacy}>
             Al confirmar se guardará una copia de la entrega en tu pedido. Si sales antes, los datos
             del formulario se descartan.
           </p>
         </form>
-        <aside className="cart-summary checkout-summary">
+        <aside className={ui.cartSummary}>
           <h2>Tu carrito</h2>
           {value.groups.map((group) => (
-            <div className="checkout-store" key={group.business?.id ?? 'unavailable'}>
+            <div className={ui.checkoutStore} key={group.business?.id ?? 'unavailable'}>
               <h3>{group.business?.name}</h3>
               {group.items.map((item) => (
-                <p className="checkout-summary-item" key={item.id}>
+                <p className={ui.checkoutSummaryItem} key={item.id}>
                   <span>
                     {item.quantity} × {item.product?.name}
                   </span>

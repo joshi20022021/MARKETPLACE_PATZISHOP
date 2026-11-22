@@ -30,13 +30,13 @@ export function ConfirmOrder({
   const sending = useRef(false);
   const [key] = useState(() => crypto.randomUUID());
   return (
-    <div className="confirm-order">
+    <div className={ui.confirmOrder}>
       <p>
         Al confirmar se creará tu pedido y se descontarán las cantidades disponibles. El total
         corresponde a productos; no incluye envío.
       </p>
       {value.payment.simulation && (
-        <p className="checkout-notice">
+        <p className={ui.checkoutNotice}>
           Compra de prueba: el pago se marcará como simulado, sin cobrar dinero real.
         </p>
       )}

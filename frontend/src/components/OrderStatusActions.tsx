@@ -141,7 +141,7 @@ export function OrderStatusActions({
             </form>
           ) : (
             <div>
-              <p className="checkout-notice">
+              <p className={ui.checkoutNotice}>
                 Vas a cambiar {orderStatus[part.status]} a{' '}
                 <strong>{orderStatus[target as OrderState]}</strong>.{' '}
                 {target === 'CANCELLED'
@@ -149,7 +149,7 @@ export function OrderStatusActions({
                   : 'El cambio quedará registrado en el historial.'}{' '}
                 No se ejecutan cobros ni reembolsos.
               </p>
-              {note && <p className="preserve-text">Nota: {note}</p>}
+              {note && <p className={ui.preserveText}>Nota: {note}</p>}
               <button
                 className={ui.button}
                 disabled={busy}

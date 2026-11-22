@@ -44,9 +44,9 @@ export function AdminBusinessesPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <AdminNav />
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>UN ESPACIO PARA CADA NEGOCIO</p>
           <h1>
@@ -63,7 +63,7 @@ export function AdminBusinessesPage() {
         </button>
       </div>
       {!filters ? (
-        <div className="remote-state">
+        <div className={ui.remoteState}>
           <h2>Revisa los filtros del enlace</h2>
           <button className={ui.button} onClick={() => setParams({})}>
             Restablecer filtros
@@ -111,13 +111,13 @@ export function AdminBusinessesPage() {
           ) : (
             <>
               <p role="status">{result.data.meta.total} tiendas encontradas</p>
-              <div className="order-list">
+              <div className={ui.orderList}>
                 {result.data.data.map((row) => (
-                  <article className="order-list-card" key={row.id}>
+                  <article className={ui.orderListCard} key={row.id}>
                     <h2>
                       <Link to={`/admin/negocios/${row.id}`}>{row.name} ↗</Link>
                     </h2>
-                    <span className="available-badge">{businessStates[row.status]}</span>
+                    <span className={ui.availableBadge}>{businessStates[row.status]}</span>
                     <p>{row.slug}</p>
                     <p>Responsable: {row.owner.name}</p>
                     <p>{new Date(row.createdAt).toLocaleDateString('es-GT')}</p>
@@ -125,7 +125,7 @@ export function AdminBusinessesPage() {
                 ))}
               </div>
               {!result.data.data.length && (
-                <div className="remote-state">
+                <div className={ui.remoteState}>
                   <h2>No hay tiendas en esta página</h2>
                   <p>Prueba otros filtros o vuelve a la página anterior.</p>
                 </div>
@@ -227,7 +227,7 @@ function ReviewBusiness({
         </form>
       ) : (
         <>
-          <p className="checkout-notice">
+          <p className={ui.checkoutNotice}>
             Vas a cambiar {business.name} de {businessStates[business.status]} a{' '}
             <strong>{target && businessStates[target]}</strong>.
           </p>
@@ -308,7 +308,7 @@ export function AdminBusinessPage() {
     return r.data;
   };
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <AdminNav />
       <Link className={ui.backLink} to="/admin/negocios">
         ← Revisión de tiendas
@@ -323,11 +323,11 @@ export function AdminBusinessPage() {
         />
       ) : (
         <>
-          <div className="market-heading">
+          <div className={ui.marketHeading}>
             <div>
               <p className={ui.eyebrow}>REVISIÓN DEL NEGOCIO</p>
               <h1>{business.name}</h1>
-              <span className="available-badge">{businessStates[business.status]}</span>
+              <span className={ui.availableBadge}>{businessStates[business.status]}</span>
             </div>
             <button
               className={ui.buttonOutline}
@@ -342,17 +342,17 @@ export function AdminBusinessPage() {
               No se pudo actualizar la tienda. Se muestran los últimos datos consultados.
             </p>
           )}
-          <div className="checkout-review-grid">
+          <div className={ui.checkoutReviewGrid}>
             <section className={ui.formCard}>
               <h2>Datos del negocio</h2>
               <p>Identificador público: {business.slug}</p>
-              <p className="preserve-text">{business.description || 'Sin descripción'}</p>
+              <p className={ui.preserveText}>{business.description || 'Sin descripción'}</p>
               <p>
                 {business.email}
                 <br />
                 {business.phone}
               </p>
-              <p className="preserve-text">{business.address}</p>
+              <p className={ui.preserveText}>{business.address}</p>
               <p>Registrada: {new Date(business.createdAt).toLocaleString('es-GT')}</p>
               <p>Actualizada: {new Date(business.updatedAt).toLocaleString('es-GT')}</p>
             </section>

@@ -50,19 +50,19 @@ function ProductDetail({ product }: { product: PublicProduct }) {
   const [selected, setSelected] = useState<string | null>(null);
   const current = selected && images.includes(selected) ? selected : (images[0] ?? null);
   return (
-    <section className={`${ui.wrap} marketplace-page`}>
-      <nav className="breadcrumbs" aria-label="Ruta del producto">
+    <section className={`${ui.wrap} ${ui.marketplacePage}`}>
+      <nav className={ui.breadcrumbs} aria-label="Ruta del producto">
         <Link to="/catalogo">Catálogo</Link>
         <span aria-hidden="true">/</span>
         <Link to={`/catalogo?categoryId=${product.category.id}`}>{product.category.name}</Link>
         <span aria-hidden="true">/</span>
         <span>{product.name}</span>
       </nav>
-      <div className="product-detail">
-        <div className="product-gallery">
+      <div className={ui.productDetail}>
+        <div className={ui.productGallery}>
           <PublicImage key={current} src={mediaUrl(current)} alt={product.name} eager />
           {images.length > 1 && (
-            <div className="gallery-thumbs" role="group" aria-label="Imágenes del producto">
+            <div className={ui.galleryThumbs} role="group" aria-label="Imágenes del producto">
               {images.map((url, index) => (
                 <button
                   key={url}
@@ -77,17 +77,17 @@ function ProductDetail({ product }: { product: PublicProduct }) {
             </div>
           )}
         </div>
-        <div className="product-detail-copy">
+        <div className={ui.productDetailCopy}>
           <Link className={`${ui.eyebrow} ${ui.textLink}`} to={`/tiendas/${product.business.slug}`}>
             {product.business.name} ↗
           </Link>
           <h1>{product.name}</h1>
-          <p className="detail-price">{money(product.price)}</p>
-          <span className="available-badge">Disponible</span>
+          <p className={ui.detailPrice}>{money(product.price)}</p>
+          <span className={ui.availableBadge}>Disponible</span>
           <AddToCart productId={product.id} />
           <h2>Sobre este producto</h2>
-          <p className="preserve-text">{product.description}</p>
-          <div className="seller-note">
+          <p className={ui.preserveText}>{product.description}</p>
+          <div className={ui.sellerNote}>
             <span aria-hidden="true">✳</span>
             <div>
               <h2>Conoce a quien lo hace</h2>

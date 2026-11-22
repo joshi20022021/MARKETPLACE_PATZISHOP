@@ -32,7 +32,7 @@ export function PublicShopPage() {
     );
   const value = store.data;
   return (
-    <section className={`${ui.wrap} marketplace-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage}`}>
       <Link className={ui.backLink} to="/tiendas">
         ← Todas las tiendas
       </Link>
@@ -41,32 +41,33 @@ export function PublicShopPage() {
           key={value.banner}
           src={safeImageUrl(value.banner)}
           alt={`Portada de ${value.name}`}
-          className="store-banner"
+          className={ui.storeBanner}
+          shape="banner"
           eager
         />
       )}
-      <div className="shop-intro">
+      <div className={ui.shopIntro}>
         <PublicImage
           key={value.logo}
           src={safeImageUrl(value.logo)}
           alt={`Logo de ${value.name}`}
-          className="shop-logo"
+          className={ui.shopLogo}
           eager
         />
         <div>
           <p className={ui.eyebrow}>UN NEGOCIO DE NUESTRA COMUNIDAD</p>
           <h1>{value.name}</h1>
-          <p className="preserve-text">
+          <p className={ui.preserveText}>
             {value.description || 'Descubre los productos de nuestra tienda.'}
           </p>
         </div>
       </div>
-      <div className="shop-contact">
+      <div className={ui.shopContact}>
         <span>⌁ {value.address}</span>
         <a href={`mailto:${value.email}`}>{value.email}</a>
         <a href={`tel:${value.phone.replace(/[^+0-9]/gu, '')}`}>{value.phone}</a>
       </div>
-      <h2 className="section-title">Los productos de esta tienda</h2>
+      <h2 className={ui.sectionTitle}>Los productos de esta tienda</h2>
       <CatalogResults businessSlug={value.slug} />
     </section>
   );

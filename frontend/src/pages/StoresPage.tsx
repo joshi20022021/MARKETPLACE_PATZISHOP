@@ -31,8 +31,8 @@ export function StoresPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} marketplace-page`}>
-      <div className="market-heading relative isolate overflow-hidden">
+    <section className={`${ui.wrap} ${ui.marketplacePage}`}>
+      <div className={`${ui.marketHeading} relative isolate overflow-hidden`}>
         <ShopIcon
           name="store"
           className="pointer-events-none absolute -top-10 right-12 -z-10 hidden size-64 rotate-12 text-patzi-green/5 lg:block"
@@ -50,7 +50,7 @@ export function StoresPage() {
         </Link>
       </div>
       <form
-        className="store-search rounded-3xl border border-patzi-green/10 bg-white p-6"
+        className={`${ui.storeSearch} rounded-3xl border border-patzi-green/10 bg-white p-6`}
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
@@ -72,31 +72,31 @@ export function StoresPage() {
         </div>
       </form>
       {!valid ? (
-        <div className="remote-state">
+        <div className={ui.remoteState}>
           <h2>El enlace contiene filtros inválidos</h2>
           <button className={ui.button} onClick={() => setParams({})}>
             Limpiar búsqueda
           </button>
         </div>
       ) : stores.isPending ? (
-        <p className="remote-state" role="status">
+        <p className={ui.remoteState} role="status">
           Buscando tiendas…
         </p>
       ) : stores.isError ? (
         <RemoteError error={stores.error} retry={() => void stores.refetch()} />
       ) : (
         <>
-          <p className="results-bar" role="status">
+          <p className={ui.resultsBar} role="status">
             {stores.data.meta.total} {stores.data.meta.total === 1 ? 'tienda' : 'tiendas'} en
             nuestra comunidad
           </p>
           {stores.data.data.length ? (
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {stores.data.data.map((store) => (
-                <article className="store-card" key={store.id}>
+                <article className={ui.storeCard} key={store.id}>
                   <Link to={`/tiendas/${store.slug}`}>
                     <PublicImage key={store.logo} src={safeImageUrl(store.logo)} alt={store.name} />
-                    <div className="store-card-copy">
+                    <div className={ui.storeCardCopy}>
                       <h2>{store.name}</h2>
                       <p>{store.description || 'Conoce los productos de este negocio local.'}</p>
                       <span>Visitar tienda ↗</span>
@@ -106,7 +106,7 @@ export function StoresPage() {
               ))}
             </div>
           ) : (
-            <div className="remote-state">
+            <div className={ui.remoteState}>
               <h2>No encontramos tiendas aquí</h2>
               <p>Prueba otra búsqueda o vuelve a la primera página.</p>
               <button className={ui.buttonOutline} onClick={() => setParams({})}>

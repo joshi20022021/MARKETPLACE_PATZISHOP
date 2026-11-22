@@ -16,9 +16,9 @@ export function AdminDashboardPage() {
   });
   const value = result.data;
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <AdminNav />
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>EL COMERCIO DE NUESTRA COMUNIDAD</p>
           <h1>

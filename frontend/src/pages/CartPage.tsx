@@ -47,11 +47,11 @@ function CustomerCart() {
     );
   const value = cart.data;
   return (
-    <section className={`${ui.wrap} marketplace-page cart-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage}`}>
       <Link className={ui.backLink} to="/catalogo">
         ← Seguir explorando
       </Link>
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>DE TUS VECINOS, PARA TI</p>
           <h1>
@@ -79,12 +79,12 @@ function CustomerCart() {
         </p>
       )}
       {change.isSuccess && (
-        <p role="status" className="cart-notice">
+        <p role="status" className={ui.cartNotice}>
           Carrito actualizado.
         </p>
       )}
       {!value.itemCount ? (
-        <div className="remote-state">
+        <div className={ui.remoteState}>
           <h2>Tu carrito está esperando algo especial</h2>
           <p>Descubre productos de nuestra comunidad y agrega tus favoritos.</p>
           <Link className={ui.button} to="/catalogo">
@@ -92,11 +92,11 @@ function CustomerCart() {
           </Link>
         </div>
       ) : (
-        <div className="cart-layout">
-          <div className="cart-groups" aria-busy={change.isPending || cart.isFetching}>
+        <div className={ui.cartLayout}>
+          <div className={ui.cartGroups} aria-busy={change.isPending || cart.isFetching}>
             {value.groups.map((group) => (
-              <section className="cart-group" key={group.business?.id ?? 'unavailable'}>
-                <div className="cart-group-heading">
+              <section className={ui.cartGroup} key={group.business?.id ?? 'unavailable'}>
+                <div className={ui.cartGroupHeading}>
                   <h2>
                     {group.business ? (
                       <Link to={`/tiendas/${group.business.slug}`}>{group.business.name} ↗</Link>
@@ -120,14 +120,14 @@ function CustomerCart() {
               </section>
             ))}
           </div>
-          <aside className="cart-summary">
+          <aside className={ui.cartSummary}>
             <h2>Tu resumen</h2>
             <dl>
               <div>
                 <dt>Subtotal disponible</dt>
                 <dd>{money(value.subtotal)}</dd>
               </div>
-              <div className="cart-total">
+              <div className={ui.cartTotal}>
                 <dt>Total de productos</dt>
                 <dd>{money(value.total)}</dd>
               </div>
@@ -146,7 +146,7 @@ function CustomerCart() {
               Descubrir más productos ↗
             </Link>
             {!value.hasIssues && !change.isPending && !cart.isFetching && (
-              <Link className={`${ui.button} ${ui.buttonFull} checkout-link`} to="/checkout">
+              <Link className={`${ui.button} ${ui.buttonFull} ${ui.checkoutLink}`} to="/checkout">
                 Preparar entrega ↗
               </Link>
             )}
@@ -171,9 +171,9 @@ function CartLine({
   const [error, setError] = useState('');
   const name = item.product?.name ?? 'Producto no disponible';
   return (
-    <article className="cart-line">
+    <article className={ui.cartLine}>
       <PublicImage src={mediaUrl(item.product?.mainImage ?? null)} alt={name} />
-      <div className="cart-line-copy">
+      <div className={ui.cartLineCopy}>
         <h3>{item.product ? <Link to={`/productos/${item.product.slug}`}>{name}</Link> : name}</h3>
         {item.product && <p>{money(item.product.price)} por unidad</p>}
         {item.issue && (
@@ -185,7 +185,7 @@ function CartLine({
         )}
         <form
           noValidate
-          className="cart-quantity-form"
+          className={ui.cartQuantityForm}
           onSubmit={(event) => {
             event.preventDefault();
             const result = quantitySchema.safeParse(Number(quantity));
@@ -198,7 +198,7 @@ function CartLine({
           }}
         >
           <label htmlFor={`cart-quantity-${item.id}`}>Cantidad de {name}</label>
-          <div className="quantity-action">
+          <div className={ui.quantityAction}>
             <input
               id={`cart-quantity-${item.id}`}
               type="number"
@@ -224,14 +224,14 @@ function CartLine({
         </form>
         <button
           type="button"
-          className={`${ui.textButton} cart-remove`}
+          className={`${ui.textButton} ${ui.cartRemove}`}
           disabled={busy}
           onClick={remove}
         >
           Quitar {name}
         </button>
       </div>
-      <strong className="cart-line-total">
+      <strong className={ui.cartLineTotal}>
         {item.lineTotal ? money(item.lineTotal) : 'Sin subtotal'}
       </strong>
     </article>

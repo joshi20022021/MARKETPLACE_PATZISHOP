@@ -28,7 +28,7 @@ function AddForm({ productId }: { productId: string }) {
   const change = useCartActions();
   return (
     <form
-      className="add-to-cart"
+      className={ui.addToCart}
       noValidate
       onSubmit={(event) => {
         event.preventDefault();
@@ -43,7 +43,7 @@ function AddForm({ productId }: { productId: string }) {
       }}
     >
       <label htmlFor={`quantity-${productId}`}>Cantidad</label>
-      <div className="quantity-action">
+      <div className={ui.quantityAction}>
         <input
           id={`quantity-${productId}`}
           type="number"

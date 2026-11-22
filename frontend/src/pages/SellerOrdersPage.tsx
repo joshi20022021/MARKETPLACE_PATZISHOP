@@ -37,9 +37,9 @@ export function SellerOrdersPage() {
       ),
   });
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <SellerNav />
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>CADA ENTREGA TIENE UNA HISTORIA</p>
           <h1>
@@ -56,7 +56,7 @@ export function SellerOrdersPage() {
         </button>
       </div>
       {!filters ? (
-        <div className="remote-state">
+        <div className={ui.remoteState}>
           <h2>Revisa los filtros del enlace</h2>
           <button className={ui.button} onClick={() => setParams({})}>
             Restablecer filtros
@@ -91,14 +91,14 @@ export function SellerOrdersPage() {
           ) : (
             <>
               <p role="status">{orders.data.meta.total} subpedidos encontrados</p>
-              <div className="order-list">
+              <div className={ui.orderList}>
                 {orders.data.data.map((part) => (
-                  <article className="order-list-card" key={part.id}>
+                  <article className={ui.orderListCard} key={part.id}>
                     <h2>
                       <Link to={`/vendedor/pedidos/${part.id}`}>Pedido #{part.orderNumber} ↗</Link>
                     </h2>
                     <p>{new Date(part.createdAt).toLocaleString('es-GT')}</p>
-                    <span className="available-badge">{orderStatus[part.status]}</span>
+                    <span className={ui.availableBadge}>{orderStatus[part.status]}</span>
                     <p>
                       Subtotal de tu tienda: <strong>{money(part.subtotal)}</strong>
                     </p>
@@ -110,7 +110,7 @@ export function SellerOrdersPage() {
                 ))}
               </div>
               {!orders.data.data.length && (
-                <div className="remote-state">
+                <div className={ui.remoteState}>
                   <h2>No hay subpedidos en esta página</h2>
                   <p>Los nuevos pedidos aparecerán cuando un cliente confirme una compra.</p>
                 </div>
@@ -140,7 +140,7 @@ export function SellerOrderPage() {
     return r.data;
   };
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page order-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page ${ui.orderPage}`}>
       <SellerNav />
       <Link className={ui.backLink} to="/vendedor/pedidos">
         ← Pedidos de mi tienda
@@ -155,7 +155,7 @@ export function SellerOrderPage() {
         />
       ) : (
         <>
-          <div className="market-heading">
+          <div className={ui.marketHeading}>
             <div>
               <p className={ui.eyebrow}>LO QUE TU TIENDA PREPARA</p>
               <h1>
@@ -176,11 +176,11 @@ export function SellerOrderPage() {
               No se pudo actualizar el pedido. Se muestra la última información consultada.
             </p>
           )}
-          <span className="available-badge">{orderStatus[order.data.status]}</span>
+          <span className={ui.availableBadge}>{orderStatus[order.data.status]}</span>
           {order.data.simulation && (
             <p className={ui.formAlert}>Pago simulado de prueba. Sin dinero real.</p>
           )}
-          <div className="checkout-review-grid">
+          <div className={ui.checkoutReviewGrid}>
             <div>
               <h2>Entrega</h2>
               <p>
@@ -188,7 +188,7 @@ export function SellerOrderPage() {
                 <br />
                 {order.data.delivery.phone}
               </p>
-              <p className="preserve-text">
+              <p className={ui.preserveText}>
                 {order.data.delivery.addressLine}
                 <br />
                 {order.data.delivery.city}, {order.data.delivery.region}
@@ -196,7 +196,7 @@ export function SellerOrderPage() {
                 Guatemala {order.data.delivery.postalCode}
               </p>
               {order.data.delivery.deliveryInstructions && (
-                <p className="preserve-text">{order.data.delivery.deliveryInstructions}</p>
+                <p className={ui.preserveText}>{order.data.delivery.deliveryInstructions}</p>
               )}
               <p>
                 Método: {order.data.simulation ? 'Simulado (prueba)' : 'Contra entrega'}. Estado de
@@ -212,7 +212,7 @@ export function SellerOrderPage() {
               </p>
               <p>El avance o la cancelación no registra cobros ni reembolsos.</p>
             </div>
-            <section className="checkout-store">
+            <section className={ui.checkoutStore}>
               <h2>Productos de tu tienda</h2>
               <ul>
                 {order.data.items.map((item) => (

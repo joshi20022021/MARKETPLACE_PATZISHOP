@@ -15,9 +15,9 @@ export function SellerDashboardPage() {
       dashboardSchema.parse((await api.get('/seller/dashboard', { signal })).data),
   });
   return (
-    <section className={`${ui.wrap} marketplace-page seller-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} seller-page`}>
       <SellerNav />
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>TU NEGOCIO, DÍA A DÍA</p>
           <h1>
@@ -49,7 +49,7 @@ export function SellerDashboardPage() {
         <>
           <div className="seller-business">
             <h2>{result.data.business.name}</h2>
-            <span className="available-badge">{businessStates[result.data.business.status]}</span>
+            <span className={ui.availableBadge}>{businessStates[result.data.business.status]}</span>
             <p>
               {result.data.business.status === 'ACTIVE'
                 ? 'Tu tienda puede publicar productos disponibles.'

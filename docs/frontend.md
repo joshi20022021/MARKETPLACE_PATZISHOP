@@ -17,7 +17,7 @@ La migración integral separa unidades verificables, sin cambiar API ni reglas d
 | Bloque | Alcance                                                                        | Estado                                                      |
 | ------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------- |
 | 1      | Patrones ui.ts, botones, formularios, ingreso, registro, cuenta y sesión       | Implementado; check, 120 pruebas frontend y build correctos |
-| 2      | Catálogo restante, producto, tienda pública, carrito, entrega y pedidos        | Pendiente                                                   |
+| 2      | Catálogo restante, producto, tienda pública, carrito, entrega y pedidos        | Implementado; check, 120 pruebas frontend y build correctos |
 | 3      | Panel vendedor, productos/imágenes, administración y retirada del CSS heredado | Pendiente                                                   |
 
 `components/ui.ts` define cadenas completas de utilidades Tailwind reutilizadas por React;

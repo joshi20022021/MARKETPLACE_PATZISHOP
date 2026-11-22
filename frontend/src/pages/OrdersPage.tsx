@@ -34,8 +34,8 @@ export function OrdersPage() {
       </section>
     );
   return (
-    <section className={`${ui.wrap} marketplace-page`}>
-      <div className="market-heading">
+    <section className={`${ui.wrap} ${ui.marketplacePage}`}>
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>TUS COMPRAS LOCALES</p>
           <h1>
@@ -50,16 +50,16 @@ export function OrdersPage() {
       ) : (
         <>
           {!orders.data.data.length ? (
-            <div className="remote-state">
+            <div className={ui.remoteState}>
               <h2>No hay pedidos en esta página</h2>
               <Link className={ui.button} to="/catalogo">
                 Explorar productos
               </Link>
             </div>
           ) : (
-            <div className="order-list">
+            <div className={ui.orderList}>
               {orders.data.data.map((order) => (
-                <article className="order-list-card" key={order.id}>
+                <article className={ui.orderListCard} key={order.id}>
                   <h2>
                     <Link to={`/pedidos/${order.id}`}>Pedido #{order.number} ↗</Link>
                   </h2>
@@ -128,11 +128,11 @@ export function OrderPage() {
     return result.data;
   };
   return (
-    <section className={`${ui.wrap} marketplace-page order-page`}>
+    <section className={`${ui.wrap} ${ui.marketplacePage} ${ui.orderPage}`}>
       <Link className={ui.backLink} to="/pedidos">
         ← Mis pedidos
       </Link>
-      <div className="market-heading">
+      <div className={ui.marketHeading}>
         <div>
           <p className={ui.eyebrow}>GRACIAS POR COMPRAR CERCA</p>
           <h1>
@@ -147,7 +147,7 @@ export function OrderPage() {
           Actualizar pedido
         </button>
       </div>
-      <p role="status" className="checkout-notice">
+      <p role="status" className={ui.checkoutNotice}>
         Tu pedido está registrado. Consulta el avance de cada tienda y su historial.
       </p>
       {order.isRefetchError && (
@@ -158,7 +158,7 @@ export function OrderPage() {
       {value.simulation && (
         <p className={ui.formAlert}>Pago simulado de prueba. No se cobró dinero real.</p>
       )}
-      <div className="checkout-review-grid">
+      <div className={ui.checkoutReviewGrid}>
         <div>
           <h2>Tu entrega</h2>
           <p>
@@ -166,7 +166,7 @@ export function OrderPage() {
             <br />
             {value.delivery.phone}
           </p>
-          <p className="preserve-text">
+          <p className={ui.preserveText}>
             {value.delivery.addressLine}
             <br />
             {value.delivery.city}, {value.delivery.region}
@@ -174,7 +174,7 @@ export function OrderPage() {
             Guatemala {value.delivery.postalCode}
           </p>
           {value.delivery.deliveryInstructions && (
-            <p className="preserve-text">{value.delivery.deliveryInstructions}</p>
+            <p className={ui.preserveText}>{value.delivery.deliveryInstructions}</p>
           )}
           <h2>Pago</h2>
           <p>
@@ -203,9 +203,9 @@ export function OrderPage() {
         <div>
           <h2>Por tienda</h2>
           {value.sellerOrders.map((group) => (
-            <section className="checkout-store" key={group.id}>
+            <section className={ui.checkoutStore} key={group.id}>
               <h3>{group.business.name}</h3>
-              <span className="available-badge">{orderStatus[group.status]}</span>
+              <span className={ui.availableBadge}>{orderStatus[group.status]}</span>
               <ul>
                 {group.items.map((item) => (
                   <li key={item.id}>
